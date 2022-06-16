@@ -1,0 +1,18 @@
+<script>
+export default {
+    name: "summary-card",
+    props: ["record"],
+    data: function () {
+        var data = {};
+        data.dataset = this.$root.defaultDataset;
+        return data;
+    },
+    methods: {
+        showIndexCard: function() {
+            var record_id = this.record[this.dataset.config.id_field].value;
+            this.$router.push({name: "record", params: { id: record_id }})
+        }
+    },
+    template: "#templateSummaryCard"
+}
+</script>

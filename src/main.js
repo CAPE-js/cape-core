@@ -1,4 +1,84 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import { defineComponent } from 'vue'
+import jQuery from 'jquery'
+import { CapeTools } from './CapeTools.js'
 
-createApp(App).mount('#app')
+import HomePage from './components/HomePage.vue'
+import RecordPage from './components/RecordPage.vue'
+
+//import moment from 'moment'
+
+// format date
+// TODO
+/*
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(value*1000).toISOString();
+    }
+});
+*/
+
+// multiselect 
+//TODO - just make this a component with a longer name
+//Vue.component('multiselect', window.VueMultiselect.default) // eslint-disable-line
+
+
+
+
+fetch( data_location ) // eslint-disable-line
+    .then( response => response.json() ) 
+    .then( response => { 
+
+        let pages = [ 'data' ];
+        if( Object.prototype.hasOwnProperty.call( response.datasets[0], 'extra_pages' ) ) {
+            pages = pages.concat( response.datasets[0]['extra_pages'] );
+        }
+
+        let routes = [
+            {name: 'root',   path: '/',                     component: HomePage},
+            {name: 'record', path: '/record/:id',           component: RecordPage},
+            {name: 'browse', path: '/browse/:field/:value', component: HomePage},
+        ];
+        pages.forEach( pageId => {
+            let templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
+            let component = defineComponent( {
+                name: pageId + "-page",
+                data: function () {
+                    let data = {};
+                    data.dataset = this.$root.defaultDataset;
+                    return data;
+                },
+                methods: {
+                    downloadJSON: function() {
+                        let filename = this.dataset.config.id+".json";
+                        CapeTools.download( filename, JSON.stringify(this.dataset.raw_records), "application/json" );
+                    },
+                    downloadCSV: function() {
+                        let table = CapeTools.records_to_table( this.dataset.config.fields, this.dataset.records );
+                        let csv = CapeTools.table_to_csv( table );
+                        let filename = this.dataset.config.id+".csv";
+                        CapeTools.download( filename, csv, "text/csv;charset=utf-8" );
+                    }
+                }, 
+                template: "#"+templateId
+            });
+            routes.push( { name: pageId, path: '/'+pageId, component: component } );
+        });
+            
+        let capeRouter = createRouter({ routes: routes, history: createWebHistory() });
+        capeRouter.afterEach((to, from) => {
+            if( from.name !== null ) {
+                // coming from an existing route, rather than a first time page load
+                let content_vertical_offset = jQuery("#app").offset().top;
+                jQuery('html,body').scrollTop(content_vertical_offset);
+            }
+        });
+
+        let app = createApp(App, { app_status: app_status, site_data: response }); // eslint-disable-line
+        app.use(capeRouter);
+        app.mount('#app')
+    });
+
+
