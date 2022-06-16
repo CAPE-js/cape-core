@@ -7,8 +7,10 @@
 </template>
 
 <script>
+import FieldLabelAndValue from "./FieldLabelAndValue.vue"
 export default {
     name: "field-label-and-value-if-set",
+    components: { FieldLabelAndValue },
     props: ["typedValue","linkValue"]
 }
 </script>

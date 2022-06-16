@@ -1,4 +1,5 @@
 <script>
+import moment from 'moment'
 export default {
     name: "field-value",
     props: {"typedValue": Object, "linkValue":{type:Boolean,default:true}},
@@ -7,11 +8,11 @@ export default {
             var rvalue = value;
             if( this.typedValue.field.type == 'date' ) {
                 var day = moment( rvalue );
-                rvalue = day.format("dddd, D MMMM  YYYY");
+                rvalue = day.format("dddd, D MMMM YYYY");
             }
             if( this.linkValue ) {
                 var path = "/browse/" + this.typedValue.field.id + "/" + value;
-                rvalue = createElement( "router-link", {attrs:{to: path}}, rvalue );
+                rvalue = document.createElement( "router-link", {attrs:{to: path}}, rvalue );
             }
             return rvalue;
         }
@@ -33,7 +34,7 @@ export default {
         } else {
             rendered_value = [this.renderSingleValue( createElement, this.typedValue.value )];
         }
-        return createElement("div", {class: classList }, rendered_value);
+        return document.createElement("div", {class: classList }, rendered_value);
     }
 }
 </script>

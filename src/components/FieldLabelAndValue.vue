@@ -13,8 +13,10 @@
 
 
 <script>
+import FieldValue from "./FieldValue.vue"
 export default {
     name: "field-label-and-value",
+    components: { FieldValue },
     props: ["typedValue","linkValue"]
 }
 </script>

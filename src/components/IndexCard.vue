@@ -1,9 +1,11 @@
 <script>
 import jQuery from "jquery"
+import FieldLabelAndValueIfSet from "./FieldLabelAndValueIfSet.vue"
 import FieldLabelAndValue from "./FieldLabelAndValue.vue"
+import FieldValue from "./FieldValue.vue"
 export default {
     name: "index-card",
-    components: { FieldLabelAndValue },
+    components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
     props: ["record"],
     mounted: function() {
         // enable tooltips
