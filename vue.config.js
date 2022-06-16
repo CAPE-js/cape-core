@@ -12,7 +12,7 @@ module.exports = defineConfig({
       splitChunks: false, 
     },
     output: {
-      filename: 'main.js',
+      filename: 'cape.js',
       path: path.resolve(__dirname, 'dist'),
     }
   },
