@@ -14,6 +14,10 @@ module.exports = defineConfig({
     output: {
       filename: 'main.js',
       path: path.resolve(__dirname, 'dist'),
-    },
+    }
+  },
+  chainWebpack: config => {
+    // set HTML to not minify
+    config.plugin('html').tap( options => { options[0].minify=false; return options; } );
   }
 })
