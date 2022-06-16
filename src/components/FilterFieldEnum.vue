@@ -103,6 +103,7 @@
           </div>
         </div>
         <div v-if="filterStyle['one-of'] == 'multiselect'">
+          <!--
           <multiselect
             v-model="filter.terms"
             :options="filter.field.multiselectOptions"
@@ -121,6 +122,7 @@
               >❌</span></span>
             </template>
           </multiselect>
+-->
         </div>
       </template>
     </div>
@@ -128,11 +130,12 @@
 </template>
 
 
+
 <script>
 import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
-    name: "FilterFieldEnum",
+    name: "filter-field-enum",
     components: { DebouncedInput, FilterFieldLabel },
     props: ["filter"],
     computed: {

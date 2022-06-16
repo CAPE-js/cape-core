@@ -1,9 +1,17 @@
 
 <template>
-            <div class="col-sm-2 text-sm-right">
-                <label v-if="filter.field.description != null" data-toggle="tooltip" v-bind:title="filter.field.description" v-bind:for="'filter-'+filter.field.id">{{filter.field.label}}</label>
-                <label v-else v-bind:for="'filter-'+filter.field.id">{{filter.field.label}}</label>
-            </div>
+  <div class="col-sm-2 text-sm-right">
+    <label
+      v-if="filter.field.description != null"
+      data-toggle="tooltip"
+      :title="filter.field.description"
+      :for="'filter-'+filter.field.id"
+    >{{ filter.field.label }}</label>
+    <label
+      v-else
+      :for="'filter-'+filter.field.id"
+    >{{ filter.field.label }}</label>
+  </div>
 </template>
 
 <script>

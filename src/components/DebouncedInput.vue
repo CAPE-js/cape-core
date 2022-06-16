@@ -1,7 +1,13 @@
 
 
 <template>
-<input v-bind:placeholder="input_placeholder" v-bind:type="input_type" v-bind:value="input_value" v-bind:id="input_id" v-on:input="debounce_input">
+  <input
+    :id="input_id"
+    :placeholder="input_placeholder"
+    :type="input_type"
+    :value="input_value"
+    @input="debounce_input"
+  >
 </template>
 
 <script>

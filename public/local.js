@@ -1,5 +1,5 @@
 // relateive path to the data
-data_location = "site-data.json";
+data_location = "/site-data.json";
 
 // on preprod and prod this should be 
 // data_location = "dynamic/data.php";

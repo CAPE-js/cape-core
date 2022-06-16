@@ -41,10 +41,10 @@ import FilterFieldText from "./FilterFieldText.vue"
 import FilterFieldInteger from "./FilterFieldInteger.vue"
 import FilterFieldDate from "./FilterFieldDate.vue"
 import FilterFieldEnum from "./FilterFieldEnum.vue"
-import FilterFieldFreeText from "./FilterFieldFreeText.vue"
+import FilterFieldFreetext from "./FilterFieldFreetext.vue"
 export default {
-    name: "FilterForm",
-    components: { FilterFieldText, FilterFieldInteger, FilterFieldDate, FilterFieldEnum, FilterFieldFreeText },
+    name: "filter-form",
+    components: { FilterFieldText, FilterFieldInteger, FilterFieldDate, FilterFieldEnum, FilterFieldFreetext },
     props: ["filters"],
     data: function () {
         return {filter: this.$root.defaultDataset.filter};

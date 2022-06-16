@@ -60,7 +60,7 @@
 import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
-    name: "FilterFieldDate",
+    name: "filter-field-date",
     components: { DebouncedInput, FilterFieldLabel },
     props: ["filter"],
     computed: {

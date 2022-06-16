@@ -2,7 +2,7 @@
 <script>
 
 export default {
-    name: "CapeDataset",
+    name: "cape-dataset",
     props: [ 'dataset' ],
     template: "#templateDataset"
 };

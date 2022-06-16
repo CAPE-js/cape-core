@@ -20,10 +20,6 @@ Vue.filter('formatDate', function(value) {
 });
 */
 
-// multiselect 
-//TODO - just make this a component with a longer name
-//Vue.component('multiselect', window.VueMultiselect.default) // eslint-disable-line
-
 
 
 

@@ -264,3 +264,7 @@ TODO fix load error messages
 }
 
 </script>
+
+<style>
+@import'~bootstrap/dist/css/bootstrap.css'
+</style>

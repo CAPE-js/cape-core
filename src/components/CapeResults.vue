@@ -1,22 +1,37 @@
 
 
 <template>
-    <div>
-        <div v-if="results.length == 0" class="card mb-1">
-            <div class="card-body">No records match your filter terms.</div>
-        </div>
-
-        <div v-else>
-            <results-summary v-bind:results="results" v-bind:options="options" v-bind:visible_records_count="visible_records.length"></results-summary>
-            <div v-for="record in visible_records" v-bind:key="record" >
-                <summary-card v-bind:record="record"></summary-card>
-            </div>
-            <div class="floating-summary">
-                <results-summary v-bind:results="results" v-bind:options="options" v-bind:visible_records_count="visible_records.length"></results-summary>
-            </div>
-        </div>
-
+  <div>
+    <div
+      v-if="results.length == 0"
+      class="card mb-1"
+    >
+      <div class="card-body">
+        No records match your filter terms.
+      </div>
     </div>
+
+    <div v-else>
+      <results-summary
+        :results="results"
+        :options="options"
+        :visible_records_count="visible_records.length"
+      />
+      <div
+        v-for="record in visible_records"
+        :key="record"
+      >
+        <summary-card :record="record" />
+      </div>
+      <div class="floating-summary">
+        <results-summary
+          :results="results"
+          :options="options"
+          :visible_records_count="visible_records.length"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 

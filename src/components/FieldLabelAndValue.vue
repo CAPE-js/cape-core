@@ -1,0 +1,22 @@
+<template>
+<div>
+    <div class="field-label-and-value">
+      <div v-if="!typedValue" class='cape-error'>[Error, trying to render non-existant field]</div>
+      <template v-else-if="typedValue.field.value != ''">
+        <div class="field-label" v-if="typedValue.field.description != null" data-toggle="tooltip" v-bind:title="typedValue.field.description">{{typedValue.field.label}}</div>
+        <div class="field-label" v-else>{{typedValue.field.label}}</div>
+        <field-value v-bind:typedValue="typedValue" v-bind:linkValue="linkValue"></field-value>
+      </template>
+    </div>
+</div>
+</template>
+
+
+<script>
+export default {
+    name: "field-label-and-value",
+    props: ["typedValue","linkValue"]
+}
+</script>
+
+

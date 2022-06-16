@@ -166,7 +166,8 @@ export default {
     },
     updated: function() {
         // enable tooltips
-        jQuery('[data-toggle="tooltip"]').tooliip();
+//TODO tooltips need enabling 
+        // jQuery('[data-toggle="tooltip"]').tooltip();
     },
     methods: {
         onRouteUpdate: function(to) {
