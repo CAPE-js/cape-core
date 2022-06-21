@@ -6,6 +6,7 @@ module.exports = {
     // 'plugin:vue/recommended' // Use this if you are using Vue.js 2.x.
   ],
   rules: {
+    'vue/component-definition-name-casing': 'off',
     'vue/no-mutating-props': 'off'
   }
 }

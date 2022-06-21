@@ -1,4 +1,4 @@
-# foo
+# Cape Framework
 
 ## Project setup
 ```
