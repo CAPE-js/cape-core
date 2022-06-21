@@ -4,8 +4,8 @@ import FieldLabelAndValue from "./FieldLabelAndValue.vue"
 import FieldValue from "./FieldValue.vue"
 export default {
     name: "summary-card",
-    props: ["record"],
     components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
+    props: ["record"],
     data: function () {
         var data = {};
         data.dataset = this.$root.defaultDataset;

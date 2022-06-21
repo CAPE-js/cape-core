@@ -42,12 +42,12 @@ fetch( data_location ) // eslint-disable-line
             let templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
             let component = defineComponent( {
                 name: pageId + "-page",
+                components: { FieldsTable },
                 data: function () {
                     let data = {};
                     data.dataset = this.$root.defaultDataset;
                     return data;
                 },
-                components: { FieldsTable },
                 methods: {
                     downloadJSON: function() {
                         let filename = this.dataset.config.id+".json";

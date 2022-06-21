@@ -1,11 +1,16 @@
 
 <template>
-            <div class="form-row mb-1">
-                <filter-field-label v-bind:filter="filter"></filter-field-label>
-                <div class="col-sm-10">
-                    <debounced-input v-bind:type="'text'" v-model.trim="filter.term" class="form-control form-control-sm" v-bind:id="'filter-'+filter.field.id"></debounced-input>
-                </div>
-            </div>
+  <div class="form-row mb-1">
+    <filter-field-label :filter="filter" />
+    <div class="col-sm-10">
+      <debounced-input
+        :id="'filter-'+filter.field.id"
+        v-model.trim="filter.term"
+        :type="'text'"
+        class="form-control form-control-sm"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
