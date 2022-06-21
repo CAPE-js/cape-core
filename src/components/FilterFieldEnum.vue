@@ -132,11 +132,10 @@
 
 
 <script>
-import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
     name: "filter-field-enum",
-    components: { DebouncedInput, FilterFieldLabel },
+    components: { FilterFieldLabel },
     props: ["filter"],
     computed: {
         // some of the filter modes for enum have an optional alternate style

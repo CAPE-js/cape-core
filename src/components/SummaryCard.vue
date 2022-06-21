@@ -1,7 +1,11 @@
 <script>
+import FieldLabelAndValueIfSet from "./FieldLabelAndValueIfSet.vue"
+import FieldLabelAndValue from "./FieldLabelAndValue.vue"
+import FieldValue from "./FieldValue.vue"
 export default {
     name: "summary-card",
     props: ["record"],
+    components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
     data: function () {
         var data = {};
         data.dataset = this.$root.defaultDataset;

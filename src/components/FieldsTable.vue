@@ -11,7 +11,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="field in dataset.config.fields" v-bind:key="key" >
+                <tr v-for="field in dataset.config.fields" v-bind:key="field" >
                     <td>{{ field.id }}</td>
                     <td>{{ field.label }}</td>
                     <td>{{ field.type }} <span v-if="field.multiple"> list</span></td>

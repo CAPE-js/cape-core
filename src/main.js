@@ -7,6 +7,7 @@ import { CapeTools } from './CapeTools.js'
 
 import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'
+import FieldsTable from './components/FieldsTable.vue'
 
 //import moment from 'moment'
 
@@ -46,6 +47,7 @@ fetch( data_location ) // eslint-disable-line
                     data.dataset = this.$root.defaultDataset;
                     return data;
                 },
+                components: { FieldsTable },
                 methods: {
                     downloadJSON: function() {
                         let filename = this.dataset.config.id+".json";

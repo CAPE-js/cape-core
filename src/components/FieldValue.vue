@@ -1,10 +1,11 @@
 <script>
 import moment from 'moment'
+import { h } from 'vue'
 export default {
     name: "field-value",
     props: {"typedValue": Object, "linkValue":{type:Boolean,default:true}},
     methods: {
-        renderSingleValue: function( createElement, value ) {
+        renderSingleValue: function( value ) {
             var rvalue = value;
             if( this.typedValue.field.type == 'date' ) {
                 var day = moment( rvalue );
@@ -12,12 +13,12 @@ export default {
             }
             if( this.linkValue ) {
                 var path = "/browse/" + this.typedValue.field.id + "/" + value;
-                rvalue = document.createElement( "router-link", {attrs:{to: path}}, rvalue );
+                rvalue = h( "router-link", {attrs:{to: path}}, rvalue );
             }
             return rvalue;
         }
     },
-    render: function (createElement) {
+    render: function () {
         var rendered_value;
         var classList = ["field-value"];
         if (!this.typedValue.value || (this.typedValue.field.multiple===true&&this.typedValue.value.length==0)) {
@@ -29,12 +30,12 @@ export default {
                 if (rendered_value.length) {
                     rendered_value.push("; ");
                 }
-                rendered_value.push( this.renderSingleValue( createElement, this.typedValue.value[i] ) );
+                rendered_value.push( this.renderSingleValue( this.typedValue.value[i] ) );
             }
         } else {
-            rendered_value = [this.renderSingleValue( createElement, this.typedValue.value )];
+            rendered_value = [this.renderSingleValue( this.typedValue.value )];
         }
-        return document.createElement("div", {class: classList }, rendered_value);
+        return h("div", {class: classList }, rendered_value);
     }
 }
 </script>
