@@ -1,0 +1,25 @@
+
+Bugs
+- tooltips
+- next/prev arrows -- due to router not being used properly
+- form rendering - bootstrap
+- multiselect not working
+- date filter in main.js not working (is it needed?)
+- free text search not working
+
+
+*** NON BOOTSTRAP CSS CLASSES **
+card
+card-body
+floating-summary
+field-label-and-value
+cape-error
+field-label
+field-value
+field-null
+between-number-filter
+results-summary
+record-count
+
+custom__tag // multifield
+custom__remove // multifield

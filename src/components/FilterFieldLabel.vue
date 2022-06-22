@@ -17,6 +17,6 @@
 <script>
 export default {
     name: "filter-field-label", 
-    props: ["filter"]
+    props: { filter: { type: Object, default: null } }
 }
 </script>

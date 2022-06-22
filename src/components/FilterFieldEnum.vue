@@ -136,7 +136,7 @@ import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
     name: "filter-field-enum",
     components: { FilterFieldLabel },
-    props: ["filter"],
+    props: { filter: { type: Object, default: null } },
     computed: {
         // some of the filter modes for enum have an optional alternate style
         filterStyle: function() {

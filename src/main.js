@@ -40,6 +40,7 @@ fetch( data_location ) // eslint-disable-line
         ];
         pages.forEach( pageId => {
             let templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
+            // eslint-disable-next-line
             let component = defineComponent( {
                 name: pageId + "-page",
                 components: { FieldsTable },
@@ -74,7 +75,7 @@ fetch( data_location ) // eslint-disable-line
             }
         });
 
-        let app = createApp(App, { app_status: app_status, site_data: response }); // eslint-disable-line
+        let app = createApp(App, { appStatus: app_status, siteData: response }); // eslint-disable-line
         app.use(capeRouter);
         app.mount('#app')
     });

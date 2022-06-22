@@ -6,7 +6,9 @@ import FieldValue from "./FieldValue.vue"
 export default {
     name: "index-card",
     components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
-    props: ["record"],
+    props: {
+        record: { type: Object, default: null }
+    },
     mounted: function() {
         // enable tooltips
         // jQuery('[data-toggle="tooltip"]').tooltip(); TODO another disabled tooltip

@@ -45,9 +45,6 @@ import FilterFieldFreetext from "./FilterFieldFreetext.vue"
 export default {
     name: "filter-form",
     components: { FilterFieldText, FilterFieldInteger, FilterFieldDate, FilterFieldEnum, FilterFieldFreetext },
-    props: ["filters"],
-    data: function () {
-        return {filter: this.$root.defaultDataset.filter};
-    }
+    props: { filters: { type: Array, default: null } }
 }
 </script>

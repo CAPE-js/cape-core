@@ -5,7 +5,9 @@ import FieldValue from "./FieldValue.vue"
 export default {
     name: "summary-card",
     components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
-    props: ["record"],
+    props: {
+        record: { type: Object, default: null }
+    },
     data: function () {
         var data = {};
         data.dataset = this.$root.defaultDataset;

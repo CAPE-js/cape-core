@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <template v-if="app_status == 'test'">
+    <template v-if="appStatus == 'test'">
       <div class="row content">
         <div class="col">
           <div class="card bg-warning my-2">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </template>
-    <template v-if="app_status == 'dev'">
+    <template v-if="appStatus == 'dev'">
       <div class="row content">
         <div class="col">
           <div class="card bg-warning my-2">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </template>
-    <template v-if="app_status == 'pprd'">
+    <template v-if="appStatus == 'pprd'">
       <div class="row content">
         <div class="col">
           <div class="card bg-warning my-2">
@@ -35,19 +35,19 @@
       </div>
     </template>
     
-    <template v-if="site_data.status == 'ERROR'">
+    <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
           <div class="card bg-error my-2">
             <div class="card-body text-center">
               <h2>Unable to load data</h2>
-              <p>An error has occurred. The error was: {{ site_data.error_message }}.</p>
+              <p>An error has occurred. The error was: {{ siteData.error_message }}.</p>
             </div>
           </div>
         </div>
       </div>
     </template>
-    <template v-if="site_data.status == 'LOADING'">
+    <template v-if="siteData.status == 'LOADING'">
       <div class="row content">
         <div class="col">
           <div class="card bg-primary text-white my-2">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </template>
-    <template v-if="site_data.status == 'OK'">
+    <template v-if="siteData.status == 'OK'">
       <cape-dataset :dataset="defaultDataset" />
     </template>
   </div>
@@ -81,19 +81,28 @@ export default {
     components: {
         CapeDataset
     },
-    props: [ 'app_status', 'site_data' ],
+    props: {
+        appStatus: {
+            type: String,
+            default: 'dev'
+        },
+        siteData: {
+            type: Object,
+            default: null 
+        }
+    },
     created: function () {
 /*
         if (typeof this.data_location === 'undefined') {
-            this.site_data.status = "ERROR";
-            this.site_data.error_message = "Please ensure that local.js sets the property data_location";
+            this.siteData.status = "ERROR";
+            this.siteData.error_message = "Please ensure that local.js sets the property data_location";
             return;
         }
 
 TODO fix load error messages
         if (!CapeTools.is_object(data)) {
-            this.site_data.status = "ERROR";
-            this.site_data.error_message = "Downloaded data is not a JSON object";
+            this.siteData.status = "ERROR";
+            this.siteData.error_message = "Downloaded data is not a JSON object";
             return;
         }
 
@@ -104,10 +113,10 @@ TODO fix load error messages
 
         this.datasets_by_id = {};
         // populate records by ID. Nb. This is using the wrong ID data for now. TODO
-        for (let ds_i = 0; ds_i < this.site_data.datasets.length; ++ds_i) {
+        for (let ds_i = 0; ds_i < this.siteData.datasets.length; ++ds_i) {
             let dataset = {};
 
-            let source = this.site_data.datasets[ds_i];
+            let source = this.siteData.datasets[ds_i];
 
             // add config to dataset
             dataset.config = source.config;

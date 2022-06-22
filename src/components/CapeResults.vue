@@ -15,7 +15,7 @@
       <results-summary
         :results="results"
         :options="options"
-        :visible_records_count="visible_records.length"
+        :visible-records-count="visible_records.length"
       />
       <div
         v-for="record in visible_records"
@@ -27,7 +27,7 @@
         <results-summary
           :results="results"
           :options="options"
-          :visible_records_count="visible_records.length"
+          :visible-records-count="visible_records.length"
         />
       </div>
     </div>
@@ -41,7 +41,7 @@ import SummaryCard from "./SummaryCard.vue";
 export default {
     name: "cape-results",
     components: { ResultsSummary, SummaryCard },
-    props: ["results","options"],
+    props: { options: { type: Object, default: null}, results: { type: Array, default: ()=>[] }},
     computed: {
         visible_records: function() {
             if (this.options.show_all_results) {

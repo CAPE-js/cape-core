@@ -71,7 +71,7 @@ import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
     name: "filter-field-integer",
     components: { DebouncedInput, FilterFieldLabel },
-    props: ["filter"],
+    props: { filter: { type: Object, default: null } },
     computed: {
         num_of_cols_for_main_search_area: function () {
 		return( this.filter.change_filter_mode ? 8 : 10 );

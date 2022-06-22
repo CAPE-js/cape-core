@@ -5,16 +5,16 @@
       <div class="card-body">
         <div>
           <div
-            v-if="visible_records_count==results.length"
+            v-if="visibleRecordsCount==results.length"
             class="record-count"
           >
-            Showing all {{ visible_records_count }} matching records.
+            Showing all {{ visibleRecordsCount }} matching records.
           </div>
           <div
             v-else
             class="record-count"
           >
-            Showing first {{ visible_records_count }} of {{ results.length }} matching records.
+            Showing first {{ visibleRecordsCount }} of {{ results.length }} matching records.
           </div>
           <div class="switch switch-sm">
             <input
@@ -35,7 +35,11 @@
 <script>
 export default {
     name: "results-summary", 
-    props: ["results", "visible_records_count", "options"],
+    props: {
+        results: { type: Array, default: null },
+        visibleRecordsCount: { type: Number, default: 0 },
+        options: { type: Object, default: null }
+    }
 }
 </script>
 

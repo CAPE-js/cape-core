@@ -14,7 +14,12 @@
 import { debounce } from "lodash"
 export default {
     name: "debounced-input", 
-    props: { type:String, value:[String,Number], id:String, placeholder: {"type":String,"default":""}},
+    props: { 
+        type: { type: String, default: "text" } , 
+        value:{ type: [String,Number], default: "" }, 
+        id:   { type: String, default: null },
+        placeholder: { type:String, default: ""}
+    },
     // note: use computed to expose props as local values, this avoids bad practice vue warning.
     computed: {
         input_type: function() {
