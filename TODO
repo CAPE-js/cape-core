@@ -6,7 +6,10 @@ Bugs
 - multiselect not working
 - date filter in main.js not working (is it needed?)
 - free text search not working
-
+- "foods" search field not appearing
+- needs more bottom margin
+- advanced mode switch doesn't appear
+- text field doesn't work
 
 *** NON BOOTSTRAP CSS CLASSES **
 card
@@ -20,6 +23,7 @@ field-null
 between-number-filter
 results-summary
 record-count
+form-row
 
 custom__tag // multifield
 custom__remove // multifield
