@@ -17,7 +17,7 @@
 import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
-    name: "filter-field-freetext",
+    name: "FilterFieldFreetext",
     components: { DebouncedInput, FilterFieldLabel },
     props: { filter: { type: Object, default: null } }
 }

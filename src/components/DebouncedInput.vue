@@ -13,7 +13,7 @@
 <script>
 import { debounce } from "lodash"
 export default {
-    name: "debounced-input", 
+    name: "DebouncedInput", 
     props: { 
         type: { type: String, default: "text" } , 
         value:{ type: [String,Number], default: "" }, 

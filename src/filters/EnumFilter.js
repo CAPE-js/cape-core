@@ -61,7 +61,7 @@ export class EnumFilter extends CapeFilter {
     matchesValues(values) {
         if( this.mode == "is" ) {
             // find a value that matches the term
-            for(var i = 0; i < values.length; i++) {
+            for(let i = 0; i < values.length; i++) {
                 if (values[i] == this.term) {
                     return true;
                 }
@@ -69,7 +69,7 @@ export class EnumFilter extends CapeFilter {
             return false;
         } else if( this.mode == "one-of" ) {
             // do any of the terms match any of the values?
-            for(var i = 0; i < values.length; i++) {
+            for(let i = 0; i < values.length; i++) {
                 for(var j = 0; j < this.terms.length; j++)
                 // nb terms works differently in multiselect and is a list of objects
                 if (values[i] == this.terms[j].name) {

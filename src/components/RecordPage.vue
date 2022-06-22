@@ -17,7 +17,7 @@
 import IndexCard from "./IndexCard.vue";
 import NoRecord from "./NoRecord.vue";
 export default {
-    name: "record-page",
+    name: "RecordPage",
     components: { IndexCard, NoRecord },
     data: function () {
         var data = {};

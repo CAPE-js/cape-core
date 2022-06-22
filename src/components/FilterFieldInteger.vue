@@ -69,7 +69,7 @@
 import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
-    name: "filter-field-integer",
+    name: "FilterFieldInteger",
     components: { DebouncedInput, FilterFieldLabel },
     props: { filter: { type: Object, default: null } },
     computed: {

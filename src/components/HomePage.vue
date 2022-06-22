@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import jQuery from 'jquery'
+//import jQuery from 'jquery'
 import FilterForm from './FilterForm.vue'
 import CapeResults from './CapeResults.vue'
 import CapeIntro from './CapeIntro.vue'

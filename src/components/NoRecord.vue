@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "no-record", 
+    name: "NoRecord", 
     template: "#templateNoRecord"
 }
 </script>

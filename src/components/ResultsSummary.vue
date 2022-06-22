@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    name: "results-summary", 
+    name: "ResultsSummary", 
     props: {
         results: { type: Array, default: null },
         visibleRecordsCount: { type: Number, default: 0 },

@@ -3,7 +3,7 @@ import FieldLabelAndValueIfSet from "./FieldLabelAndValueIfSet.vue"
 import FieldLabelAndValue from "./FieldLabelAndValue.vue"
 import FieldValue from "./FieldValue.vue"
 export default {
-    name: "summary-card",
+    name: "SummaryCard",
     components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
     props: {
         record: { type: Object, default: null }

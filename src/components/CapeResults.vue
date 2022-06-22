@@ -39,7 +39,7 @@
 import ResultsSummary from "./ResultsSummary.vue";
 import SummaryCard from "./SummaryCard.vue";
 export default {
-    name: "cape-results",
+    name: "CapeResults",
     components: { ResultsSummary, SummaryCard },
     props: { options: { type: Object, default: null}, results: { type: Array, default: ()=>[] }},
     computed: {

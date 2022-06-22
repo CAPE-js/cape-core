@@ -18,7 +18,7 @@
 <script>
 import FieldLabelAndValue from "./FieldLabelAndValue.vue"
 export default {
-    name: "field-label-and-value-if-set",
+    name: "FieldLabelAndValueIfSet",
     components: { FieldLabelAndValue },
     props: { typedValue: { type: Object, default: null }, linkValue: { type: Boolean, default: true } }
 }

@@ -2,7 +2,7 @@
 import moment from 'moment'
 import { h } from 'vue'
 export default {
-    name: "field-value",
+    name: "FieldValue",
     props: { typedValue: { type: Object, default: null }, linkValue: { type: Boolean, default: true } },
     methods: {
         renderSingleValue: function( value ) {

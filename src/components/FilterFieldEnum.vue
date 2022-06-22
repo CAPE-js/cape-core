@@ -134,7 +134,7 @@
 <script>
 import FilterFieldLabel from "./FilterFieldLabel.vue"
 export default {
-    name: "filter-field-enum",
+    name: "FilterFieldEnum",
     components: { FilterFieldLabel },
     props: { filter: { type: Object, default: null } },
     computed: {
@@ -149,7 +149,7 @@ export default {
             if( this.filter.field['style'] ) {
                 if( this.filter.field['style']['is']     == 'radio' )    { style['is'] = "radio"; }
                 if( this.filter.field['style']['one-of'] == 'checkbox' ) { style['one-of'] = "checkbox"; }
-            };
+            }
             return style;
         },
         num_of_cols_for_main_search_area: function () {

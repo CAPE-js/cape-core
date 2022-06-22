@@ -1,4 +1,4 @@
-
+import { CapeTools } from '../CapeTools.js'
 import { CapeFilter } from "./CapeFilter.js";
 
 export class FreeTextFilter extends CapeFilter {
@@ -31,8 +31,8 @@ export class FreeTextFilter extends CapeFilter {
         
         var terms = this.term.toLowerCase().split(/\s+/);
     
-        termloop: for (var i = 0; i < terms.length; i++) {
-            var term = make_pattern(terms[i]);
+        for (var i = 0; i < terms.length; i++) {
+            var term = CapeTools.make_pattern(terms[i]);
             var term_found = false;
             var fieldnames = Object.keys( record );
             fieldloop: for( var j=0; j<fieldnames.length; j++ ) {
@@ -44,7 +44,7 @@ export class FreeTextFilter extends CapeFilter {
                 if (!record[fieldnames[j]].field.multiple) {
                     values = [values];
                 }
-                valueloop: for (var k = 0; k < values.length; k++) {
+                for (var k = 0; k < values.length; k++) {
                     var value = "" + values[k]; // force it into a string
                     if (value.match(term)) {
                         term_found = true;

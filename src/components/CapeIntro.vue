@@ -1,7 +1,7 @@
 
 <script>
 export default {
-    name: "cape-intro",
+    name: "CapeIntro",
     template: "#templateIntro"
 }
 </script>

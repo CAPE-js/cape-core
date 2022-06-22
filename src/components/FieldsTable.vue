@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    anem: "fields-table", 
+    name: "FieldsTable", 
     data: function () {
         var data = {};
         data.dataset = this.$root.defaultDataset;

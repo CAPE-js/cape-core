@@ -1,10 +1,10 @@
 <script>
-import jQuery from "jquery"
+//import jQuery from "jquery"
 import FieldLabelAndValueIfSet from "./FieldLabelAndValueIfSet.vue"
 import FieldLabelAndValue from "./FieldLabelAndValue.vue"
 import FieldValue from "./FieldValue.vue"
 export default {
-    name: "index-card",
+    name: "IndexCard",
     components: { FieldLabelAndValueIfSet, FieldLabelAndValue, FieldValue },
     props: {
         record: { type: Object, default: null }
