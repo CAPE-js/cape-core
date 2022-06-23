@@ -2,11 +2,10 @@
 Bugs
 - tooltips
 - next/prev arrows -- due to router not being used properly
-- multiselect not working
+- multiselect not working (indicated by "foods" search field not appearing)
 - date filter in main.js not working (is it needed?)
 - free text search not working
 - text field doesn't work
-- "foods" search field not appearing
 - needs more bottom margin
 - advanced mode switch doesn't appear
 
