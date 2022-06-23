@@ -9,21 +9,6 @@ import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'
 import FieldsTable from './components/FieldsTable.vue'
 
-//import moment from 'moment'
-
-// format date
-// TODO
-/*
-Vue.filter('formatDate', function(value) {
-    if (value) {
-        return moment(value*1000).toISOString();
-    }
-});
-*/
-
-
-
-
 fetch( data_location ) // eslint-disable-line
     .then( response => response.json() ) 
     .then( response => { 

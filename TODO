@@ -3,9 +3,6 @@
 
 - tooltips
 - multiselect not working (indicated by "foods" search field not appearing)
-- date filter in main.js not working (is it needed?)
-- free text search not working
-- text field doesn't work
 - advanced mode switch doesn't appear
 
 *** CHANGES IN USER SPACE ***
