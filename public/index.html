@@ -10,7 +10,6 @@
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
     <!--<link href="css/vue-multiselect.min.css" rel="stylesheet">-->
     <link href="/cape.css" rel="stylesheet">
-    <link href="/site.css" rel="stylesheet">
     <script src="/local.js"></script>
 
     <!--<link href="css/theme.min.css" rel="stylesheet">-->
@@ -25,6 +24,7 @@
 
 </head>
 <body>
+    <link href="/site.css" rel="stylesheet">
 <div class="container" id='page'>
 
   <div class="row small branding">
@@ -119,9 +119,9 @@
 <script type="text/x-template" id="templateIndexCard">
     <div>
         <div class="index-card-nav">
-            <a v-if="record.prev" v-bind:href="'#/record/'+record.prev">⬅️&nbsp;Previous</a>
+            <router-link v-if="record.prev" :to="'/record/'+record.prev">⬅️&nbsp;Previous</router-link>
             &nbsp;
-            <a v-if="record.next" style='float:right;display:inline-block' v-bind:href="'#/record/'+record.next">Next&nbsp;➡️</a>
+            <router-link v-if="record.next" style='float:right;display:inline-block' :to="'/record/'+record.next">Next&nbsp;➡️</router-link>
         </div>
         <div class="card index-card mb-6">
             <div class="card-body">

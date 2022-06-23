@@ -1,16 +1,27 @@
 
-Bugs
+*** Bugs ***
+
 - tooltips
-- next/prev arrows -- due to router not being used properly
 - multiselect not working (indicated by "foods" search field not appearing)
 - date filter in main.js not working (is it needed?)
 - free text search not working
 - text field doesn't work
-- needs more bottom margin
 - advanced mode switch doesn't appear
 
+*** CHANGES IN USER SPACE ***
 
-*** NON BOOTSTRAP CSS CLASSES **
+Alter next/prev in index.html to:
+            <router-link v-if="record.prev" :to="'/record/'+record.prev">⬅️&nbsp;Previous</router-link>
+            &nbsp;
+            <router-link v-if="record.next" style='float:right;display:inline-block' :to="'/record/'+record.next">Next&nbsp;➡️</router-link>
+
+Moved site.css into body so it applies after vue css elements (including bootstrap)
+
+
+
+
+
+*** NON BOOTSTRAP CSS CLASSES ***
 card
 card-body
 floating-summary
