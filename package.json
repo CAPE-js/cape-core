@@ -1,7 +1,6 @@
 {
-  "name": "foo",
+  "name": "@soton.ac.uk/cape-core",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -10,6 +9,7 @@
   "dependencies": {
     "autoprefixer": "10.4.5",
     "bootstrap": "4",
+    "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
     "jquery": "^3.6.0",
     "moment": "^2.29.3",
@@ -47,5 +47,17 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CAPE-js/cape-core.git"
+  },
+  "author": "University of Southampton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CAPE-js/cape-core/issues"
+  },
+  "homepage": "https://github.com/CAPE-js/cape-core#readme"
 }
