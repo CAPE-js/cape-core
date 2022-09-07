@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { defineComponent } from 'vue'
 import jQuery from 'jquery'
 import { CapeTools } from './CapeTools.js'
@@ -51,7 +51,7 @@ fetch( data_location ) // eslint-disable-line
             routes.push( { name: pageId, path: '/'+pageId, component: component } );
         });
             
-        let capeRouter = createRouter({ routes: routes, history: createWebHistory() });
+        let capeRouter = createRouter({ routes: routes, history: createWebHashHistory() });
         capeRouter.afterEach((to, from) => {
             if( from.name !== null ) {
                 // coming from an existing route, rather than a first time page load
