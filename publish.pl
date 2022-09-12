@@ -10,24 +10,35 @@ use JSON::PP;
 use strict;
 use warnings;
 
-my $BASE_DIR = "$FindBin::Bin";
-my $WORK_DIR = "/tmp/cape-dist.$$";
-my $REPO_URL = "git\@github.com:CAPE-js/cape-dist.git";
+# debugging options
+my $WRITE = 1; # if false, this won't push git or npm changes
+my $CLEAN = 1; # if false, this won't clean up the work directory
 
-my $PACKAGE_FILE = "$WORK_DIR/package.json";
-my $DIST_DIR = "$BASE_DIR/dist";
+my $BASE_DIR = "$FindBin::Bin";
+my $WORK_DIR = "/tmp/cape-build.$$";
+my $DIST_REPO_URL = "git\@github.com:CAPE-js/cape-dist.git";
+my $CORE_REPO_URL = "git\@github.com:CAPE-js/cape-core.git";
+
+my $CORE_REPO_DIR = "$WORK_DIR/core";
+my $DIST_REPO_DIR = "$WORK_DIR/dist";
+my $DIST_BUILD_DIR = "$CORE_REPO_DIR/dist";
+
+my $PACKAGE_FILE = "$DIST_REPO_DIR/package.json";
+
+# create temporary dir
+mkdir( $WORK_DIR ) || die "Failed to mkdir $WORK_DIR: $!";
 
 # checkout from git into a temporary location
-run_cmd( "git", "clone", $REPO_URL, $WORK_DIR );
+run_cmd( "git", "clone", $CORE_REPO_URL, $CORE_REPO_DIR );
+run_cmd( "git", "clone", $DIST_REPO_URL, $DIST_REPO_DIR );
 
 # build the production distribution
-chdir( $BASE_DIR );
+chdir( $CORE_REPO_DIR );
+run_cmd( "npm", "install" );
 run_cmd( "npm", "run", "build" );
 
 # copy the dist files over those in the dist repository
-run_cmd( "cp $DIST_DIR/* $WORK_DIR" ); # done without an array to allow glob
-
-chdir( $WORK_DIR );
+run_cmd( "cp $DIST_BUILD_DIR/* $DIST_REPO_DIR" ); # done without an array to allow glob
 
 # get package.json
 my $fh;
@@ -52,15 +63,20 @@ open( $fh, ">:utf8", $PACKAGE_FILE ) || die "cannot write $PACKAGE_FILE: $!";
 print {$fh} encode_json($j);
 close($fh);
 
-# update git
-run_cmd( "git", "commit", "-a", "-mVersion $newv" );
-run_cmd( "git", "push" );
+if( $WRITE ) {
+	# update git
+	chdir( $DIST_REPO_DIR );
+	run_cmd( "git", "commit", "-a", "-mVersion $newv" );
+	run_cmd( "git", "push" );
+	
+	# Publish to NPM
+	run_cmd( "npm", "publish" );
+}
 
-# Publish to NPM
-run_cmd( "npm", "publish" );
-
-# Clean up
-run_cmd( "rm", "-rf", $WORK_DIR );
+if( $CLEAN ) {
+	# Clean up
+	run_cmd( "rm", "-rf", $WORK_DIR );
+}
 
 exit(0);
 
