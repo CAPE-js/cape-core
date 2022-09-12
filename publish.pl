@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+# Running this script will create a new NPM cape distribution from the main branch of cape-core. It commits the changes to the cape-dist repository.
+
+# It checks it out from github so make sure you've done a git commit and a git push first.
+
 use FindBin;
 use JSON::PP;
 
@@ -17,13 +21,13 @@ my $DIST_DIR = "$BASE_DIR/dist";
 run_cmd( "git", "clone", $REPO_URL, $WORK_DIR );
 
 # build the production distribution
-run_cmd( "cd", $BASE_DIR );
+chdir( $BASE_DIR );
 run_cmd( "npm", "run", "build" );
 
 # copy the dist files over those in the dist repository
 run_cmd( "cp $DIST_DIR/* $WORK_DIR" ); # done without an array to allow glob
 
-run_cmd( "cd", $WORK_DIR );
+chdir( $WORK_DIR );
 
 # get package.json
 my $fh;
