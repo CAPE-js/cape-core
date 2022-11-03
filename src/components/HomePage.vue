@@ -273,7 +273,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-@import'/src/assets/switch.css';
-</style>
