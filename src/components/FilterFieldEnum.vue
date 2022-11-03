@@ -102,9 +102,8 @@
             >{{ option }}</label>
           </div>
         </div>
-        <div v-if="filterStyle['one-of'] == 'multiselect'">
-          <!--
-          <multiselect
+        <div v-if="filterStyle['one-of'] == 'multiselect'">          
+          <vue-multiselect
             v-model="filter.terms"
             :options="filter.field.multiselectOptions"
             :multiple="true"
@@ -121,43 +120,48 @@
                 @click="remove(option)"
               >❌</span></span>
             </template>
-          </multiselect>
--->
+          </vue-multiselect>
         </div>
       </template>
     </div>
   </div>
 </template>
 
-
-
 <script>
-import FilterFieldLabel from "./FilterFieldLabel.vue"
+import FilterFieldLabel from "./FilterFieldLabel.vue";
+import VueMultiselect from 'vue-multiselect'
+
 export default {
-    name: "FilterFieldEnum",
-    components: { FilterFieldLabel },
-    props: { filter: { type: Object, default: null } },
-    computed: {
-        // some of the filter modes for enum have an optional alternate style
-        filterStyle: function() {
-            // default styles
-            var style = { 
-                'is': 'select', 
-                'one-of': 'multiselect' 
-            };
-            // only accept valid options
-            if( this.filter.field['style'] ) {
-                if( this.filter.field['style']['is']     == 'radio' )    { style['is'] = "radio"; }
-                if( this.filter.field['style']['one-of'] == 'checkbox' ) { style['one-of'] = "checkbox"; }
-            }
-            return style;
-        },
-        num_of_cols_for_main_search_area: function () {
-		return( this.filter.change_filter_mode ? 8 : 10 );
-        }
+
+  name: "FilterFieldEnum",
+
+  components: {
+    FilterFieldLabel,
+    VueMultiselect
+  },
+
+  props: { filter: { type: Object, default: null } },
+
+  computed: {
+    // some of the filter modes for enum have an optional alternate style
+    filterStyle: function () {
+      // default styles
+      let style = {
+        'is': 'select',
+        'one-of': 'multiselect'
+      };
+      // only accept valid options
+      if (this.filter.field['style']) {
+        if (this.filter.field['style']['is'] == 'radio') { style['is'] = "radio"; }
+        if (this.filter.field['style']['one-of'] == 'checkbox') { style['one-of'] = "checkbox"; }
+      }
+      return style;
+    },
+    num_of_cols_for_main_search_area: function () {
+      return (this.filter.change_filter_mode ? 8 : 10);
     }
+  }
 }
 </script>
 
-
-
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
