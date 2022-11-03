@@ -2,8 +2,6 @@
 *** Bugs ***
 
 - tooltips
-- multiselect not working (indicated by "foods" search field not appearing)
-- advanced mode switch doesn't appear - nb. vue-bootstrap just installed provides some features/templates that might work for this
 
 *** CHANGES IN USER SPACE ***
 
