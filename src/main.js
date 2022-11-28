@@ -14,8 +14,8 @@ fetch( data_location ) // eslint-disable-line
     .then( response => { 
 
         let pages = [ 'data' ];
-        if( Object.prototype.hasOwnProperty.call( response.datasets[0], 'extra_pages' ) ) {
-            pages = pages.concat( response.datasets[0]['extra_pages'] );
+        if( Object.prototype.hasOwnProperty.call( response.datasets[0]['config'], 'extra_pages' ) ) {
+            pages = pages.concat( response.datasets[0]['config']['extra_pages'] );
         }
 
         let routes = [
@@ -49,6 +49,7 @@ fetch( data_location ) // eslint-disable-line
                 template: "#"+templateId
             });
             routes.push( { name: pageId, path: '/'+pageId, component: component } );
+            console.log( { name: pageId, path: '/'+pageId, component: component } );
         });
             
         let capeRouter = createRouter({ routes: routes, history: createWebHashHistory() });
