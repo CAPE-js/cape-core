@@ -49,7 +49,6 @@ fetch( data_location ) // eslint-disable-line
                 template: "#"+templateId
             });
             routes.push( { name: pageId, path: '/'+pageId, component: component } );
-            console.log( { name: pageId, path: '/'+pageId, component: component } );
         });
             
         let capeRouter = createRouter({ routes: routes, history: createWebHashHistory() });
