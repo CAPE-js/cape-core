@@ -1,16 +1,7 @@
 
 <template>
-  <div id="app">
-    <template v-if="appStatus == 'test'">
-      <NonProdWarning environment-name="test" />
-    </template>
-    <template v-if="appStatus == 'dev'">
-      <NonProdWarning environment-name="development" />
-    </template>
-    <template v-if="appStatus == 'pprd'">
-      <NonProdWarning environment-name="pre-production" />
-    </template>
-    
+  <div id="app">    
+    <nonProdWarning />    
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
@@ -50,25 +41,29 @@
 <script>
 import { CapeTools } from './CapeTools'
 import CapeDataset from './components/CapeDataset.vue'
-import NonProdWarning from './components/NonProdWarning.vue';
+import nonProdWarning from './components/NonProdWarning.vue';
+import { useEnvironmentStore } from './stores/environmentStore';
+import { mapState } from 'pinia';
 
 export default {
     el: '#app',
     name: 'CapeApp',
     components: {
-    CapeDataset,    
-    NonProdWarning
+      CapeDataset,    
+      nonProdWarning
 },
     props: {
-        appStatus: {
-            type: String,
-            default: 'dev'
-        },
+        
         siteData: {
             type: Object,
             default: null 
         }
     },
+
+    computed: {
+      ...mapState(useEnvironmentStore, ['appStatus'])
+    },
+
     created: function () {
 /*
         if (typeof this.data_location === 'undefined') {

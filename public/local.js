@@ -1,5 +1,5 @@
 // relateive path to the data
-data_location = "/site-data.json";
+const data_location = "/site-data.json";
 
 // on preprod and prod this should be 
 // data_location = "dynamic/data.php";
@@ -10,6 +10,8 @@ data_location = "/site-data.json";
 // and this file should have
 // data_location = "data.json";
 
-app_status='dev'
+const app_status='dev';
 // app_status='prod'
 // app_status='pprd'
+
+const build_id='local build'
