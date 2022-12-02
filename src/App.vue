@@ -2,37 +2,13 @@
 <template>
   <div id="app">
     <template v-if="appStatus == 'test'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is a testing instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
+      <NonProdWarning environment-name="test" />
     </template>
     <template v-if="appStatus == 'dev'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is a development instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
+      <NonProdWarning environment-name="development" />
     </template>
     <template v-if="appStatus == 'pprd'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is the pre-production instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
+      <NonProdWarning environment-name="pre-production" />
     </template>
     
     <template v-if="siteData.status == 'ERROR'">
@@ -74,13 +50,15 @@
 <script>
 import { CapeTools } from './CapeTools'
 import CapeDataset from './components/CapeDataset.vue'
+import NonProdWarning from './components/NonProdWarning.vue';
 
 export default {
     el: '#app',
     name: 'CapeApp',
     components: {
-        CapeDataset
-    },
+    CapeDataset,    
+    NonProdWarning
+},
     props: {
         appStatus: {
             type: String,
