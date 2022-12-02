@@ -1,16 +1,21 @@
 <template>
   <div 
     v-if="showWarning" 
-    class="row content"
+    class="row content"    
   >
     <div class="col">
       <div class="card bg-warning my-2">
         <div class="card-body text-center">
-          This is a {{ environmentDescription }} instance of this service. It uses the following build: <em>{{ buildId }}</em>
+          This is a {{ environmentDescription }} instance of this service. It uses the following build: <em>{{ buildId }}</em>.
         </div>
+        <span 
+          class="dismissable" 
+          title="Hide this message"
+          @click="close"          
+        >x</span>
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 
@@ -20,8 +25,14 @@ import { mapState } from 'pinia'
 
 export default {
 
+  data() {
+    return {
+        closed: false
+      }
+    },
+
   computed: {
-    
+
     // get values from the store and expose them as computed values.
     ...mapState(useEnvironmentStore, ['appStatus', 'buildId']),
 
@@ -38,11 +49,29 @@ export default {
       }
     },
 
-    showWarning: (store) => {
-      return store.appStatus != "prod";
+    showWarning(state) {
+      return !this.closed && state.appStatus != "prod";
     }
+  },
 
+  methods: {
+    close() {
+      this.closed = true;
+    }
   }
+
+  
 }
 
+  
 </script>
+
+<style scoped>
+.dismissable {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  font-size: large;
+  cursor: pointer;
+}
+</style>
