@@ -1,40 +1,7 @@
 
 <template>
-  <div id="app">
-    <template v-if="appStatus == 'test'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is a testing instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-    <template v-if="appStatus == 'dev'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is a development instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-    <template v-if="appStatus == 'pprd'">
-      <div class="row content">
-        <div class="col">
-          <div class="card bg-warning my-2">
-            <div class="card-body text-center">
-              This is the pre-production instance of this service.             
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-    
+  <div id="app">    
+    <nonProdWarning />    
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
@@ -74,23 +41,29 @@
 <script>
 import { CapeTools } from './CapeTools'
 import CapeDataset from './components/CapeDataset.vue'
+import nonProdWarning from './components/NonProdWarning.vue';
+import { useEnvironmentStore } from './stores/environmentStore';
+import { mapState } from 'pinia';
 
 export default {
     el: '#app',
     name: 'CapeApp',
     components: {
-        CapeDataset
-    },
+      CapeDataset,    
+      nonProdWarning
+},
     props: {
-        appStatus: {
-            type: String,
-            default: 'dev'
-        },
+        
         siteData: {
             type: Object,
             default: null 
         }
     },
+
+    computed: {
+      ...mapState(useEnvironmentStore, ['appStatus'])
+    },
+
     created: function () {
 /*
         if (typeof this.data_location === 'undefined') {

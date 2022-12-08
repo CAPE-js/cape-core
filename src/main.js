@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia';
 import App from './App.vue'
+
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { defineComponent } from 'vue'
 import jQuery from 'jquery'
@@ -8,6 +10,7 @@ import { CapeTools } from './CapeTools.js'
 import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'
 import FieldsTable from './components/FieldsTable.vue'
+import { useEnvironmentStore } from './stores/environmentStore';
 
 fetch( data_location ) // eslint-disable-line
     .then( response => response.json() ) 
@@ -60,8 +63,18 @@ fetch( data_location ) // eslint-disable-line
             }
         });
 
-        let app = createApp(App, { appStatus: app_status, siteData: response }); // eslint-disable-line
+        // pinia is a framework used for managing global state.
+        const pinia = createPinia();
+        const app = createApp(App, { siteData: response }); // eslint-disable-line
+
         app.use(capeRouter);
+        app.use(pinia);
+
+        // read data from local.js and populate the values into the environment store
+        const environmentStore = useEnvironmentStore();
+        environmentStore.appStatus = app_status; // eslint-disable-line
+        environmentStore.buildId = build_id; // eslint-disable-line
+
         app.mount('#app')
     });
 
