@@ -4,13 +4,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "npx playwright test"
   },
   "dependencies": {
+    "@playwright/test": "^1.28.1",
     "autoprefixer": "10.4.5",
     "bootstrap": "4",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
+    "csv": "^6.2.5",
     "jquery": "^3.6.0",
     "moment": "^2.29.3",
     "pinia": "^2.0.27",
