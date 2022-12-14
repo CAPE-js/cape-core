@@ -1,10 +1,11 @@
 import { BasePageObject } from "./basePageObject";
 import * as fs from 'fs';
+import { buildPath } from "../testSiteUrls";
 
 export class DataPageObject extends BasePageObject {
 
-    constructor(page) {
-        super(page, "http://localhost:8080/#/data");
+    constructor(page) {        
+        super(page, buildPath("data"));
         this.copyrightNotice = this.page.locator("#copyright-notice");
         this.creator = this.page.locator("#creator");
         this.attribution = this.page.locator("#attribution");
