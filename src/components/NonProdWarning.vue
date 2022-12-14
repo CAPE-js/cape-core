@@ -1,6 +1,7 @@
 <template>
   <div 
     v-if="showWarning" 
+    id="non-prod-warning"
     class="row content"    
   >
     <div class="col">
