@@ -79,9 +79,5 @@ export class HomePageObject extends BasePageObject {
     async dismissNonProdWarning() {
         await this.nonProdWarningCloseButton.click();    
     }
-
-    async setFreeTextSearch() {
-        await this.freeTextSearchTextBox.
-    }
 }
 
