@@ -6,6 +6,7 @@
       class="col-sm-2"
     >
       <select
+        :id="'filter-text-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
       >

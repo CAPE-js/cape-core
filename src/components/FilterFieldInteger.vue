@@ -7,6 +7,7 @@
       class="col-sm-2"
     >
       <select
+        :id="'filter-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
       >
@@ -39,7 +40,7 @@
       </template>
       <template v-if="filter.mode=='between'">
         <debounced-input
-          :id="'filter-'+filter.field.id"
+          :id="'filter-min-'+filter.field.id"
           v-model.number="filter.term"
           :type="'number'"
           :placeholder="filter.placeholder.between[0]"
@@ -50,7 +51,7 @@
         />
         and
         <debounced-input
-          :id="'filter-'+filter.field.id"
+          :id="'filter-max-'+filter.field.id"
           v-model.number="filter.term2"
           :type="'number'"
           :placeholder="filter.placeholder.between[1]"
