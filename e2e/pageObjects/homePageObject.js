@@ -15,8 +15,8 @@ export class HomePageObject extends BasePageObject {
         // general form controls
         this.newSearchButtonTop = this.page.locator("#new-search-top");
         this.newSearchButtonBottom = this.page.locator("#new-search-bottom");
-        this.showAllFiltersSwitchTop = this.page.locator("#show-all-filters-top");
-        this.showAllFiltersSwitchBottom = this.page.locator("#show-all-filters-bottom");
+        this.advancedSearchTop = this.page.locator("#show-all-filters-top");
+        this.advancedSearchBottom = this.page.locator("#show-all-filters-bottom");
         
         // freetext search
         this.freeTextSearchTextBox = this.page.locator("#filter-freetext");
@@ -29,15 +29,15 @@ export class HomePageObject extends BasePageObject {
 
         // auto
         this.autoMode = this.page.locator("#filter-mode-auto");
-        this.autoTextBox = this.page.locator("filter-auto");
-        this.autoMinTextBox = this.page.locator("filter-min-auto");
-        this.autoMaxTextBox = this.page.locator("filter-max-auto");
+        this.autoTextBox = this.page.locator("#filter-auto");
+        this.autoMinTextBox = this.page.locator("#filter-min-auto");
+        this.autoMaxTextBox = this.page.locator("#filter-max-auto");
 
         // date
         this.dateSearchMode = this.page.locator("#filter-mode-date");
         this.dateSearchTextBox = this.page.locator("#filter-date");
         this.dateBetweenFirstTextBox = this.page.locator("#filter-to-date");
-        this.dateBetweenSecondTextBox = this.page.locator("#filter-from-date");
+        this.dateBetweenLastTextBox = this.page.locator("#filter-from-date");
 
         // title
         this.titleSearchMode = this.page.locator("#filter-text-mode-title");
@@ -46,38 +46,65 @@ export class HomePageObject extends BasePageObject {
         // size
         this.sizeMode = this.page.locator("#filter-mode-size");
         this.sizeDropDownList = this.page.locator("filter-size");
-        this.sizeLargeCheckBox = this.page.locator("#filter-size-large");
-        this.sizeMediumCheckBox = this.page.locator("#filter-size-medium");
-        this.sizeSmallCheckBox = this.page.locator("#filter-size-small");
+        this.sizeLargeCheckBox = this.page.locator("#filter-size-Large");
+        this.sizeMediumCheckBox = this.page.locator("#filter-size-Medium");
+        this.sizeSmallCheckBox = this.page.locator("#filter-size-Small");
 
         // colour
         this.colourMode = this.page.locator("#filter-mode-colour");
         this.colourDropDownList = this.page.locator("#filter-colour");
-        // todo this.colourMultiSelect
+        this.colourMultiSelectWrapper = this.page.locator("#filter-multiselect-wrapper-colour");
 
         // likes
         this.likesMode = this.page.locator("#filter-mode-likes");
         this.likesDropDownList = this.page.locator("#filter-likes");
+        this.likesMultiSelectWrapper = this.page.locator("#filter-multiselect-wrapper-likes");
 
         // food
-        // todo this.foodMultiSelect
-
+        this.foodMultiSelectWrapper = this.page.locator("#filter-multiselect-wrapper-foods");
+        
         // drinks
         this.drinksMode = this.page.locator("#filter-mode-drinks");
-        this.drinksSelectBox = this.page.locator("#filter-drinks");
+        this.drinksDropDownList = this.page.locator("#filter-drinks");
+        this.drinksMultiSelectWrapper =this.page.locator("#filter-multiselect-wrapper-drinks");
 
         // 3 char colour
         this.threeCharColourMode = this.page.locator("#filter-mode-colour3");
         this.threeCharColourDropDownList = this.page.locator("#filter-colour3");
-        // todo this.threeCharColourMultiSelect
+        this.threeCharColourMultiSelectWrapper = this.page.locator("#filter-multiselect-wrapper-colour3");
 
         // order
         this.orderKey = this.page.locator("#order-key");
-        this.orderDirectino = this.page.locator("#order-direction");
+        this.orderDirection = this.page.locator("#order-direction");
+
+        // search results
+        this.recordCountTexts = this.page.locator('.record-count');
+        this.results = this.page.locator('#results');
     }
 
     async dismissNonProdWarning() {
         await this.nonProdWarningCloseButton.click();    
+    }
+
+    // advanced search
+    async setAdvancedSearch(checked) {
+        await this.advancedSearchTop.setChecked(checked);
+    }
+
+    async getAdvancedSearch() {
+        const checked = await this.advancedSearchTop.isChecked();
+        return checked;
+    }
+
+    // search results
+    async getSummaryCardCount() {
+        const count = await this.results.locator(".summary-card").count();
+        return count;
+    }
+
+    async getFirstSummaryCardText() {
+        const text = await this.results.locator(".summary-card:nth-child(1)").allInnerTexts();
+        return text.join();
     }
 }
 

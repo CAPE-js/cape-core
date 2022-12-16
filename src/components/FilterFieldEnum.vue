@@ -1,4 +1,3 @@
-
 <template>
   <div class="form-row mb-1">
     <filter-field-label :filter="filter" />
@@ -103,8 +102,12 @@
             >{{ option }}</label>
           </div>
         </div>
-        <div v-if="filterStyle['one-of'] == 'multiselect'">          
+        <div 
+          v-if="filterStyle['one-of'] == 'multiselect'"
+          :id="'filter-multiselect-wrapper-' + filter.field.id"          
+        >          
           <vue-multiselect
+            :id="'filter-multiselect-' + filter.field.id"
             v-model="filter.terms"
             :options="filter.field.multiselectOptions"
             :multiple="true"

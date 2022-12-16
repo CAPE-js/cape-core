@@ -1,6 +1,6 @@
 const config = {
     use: {
-        headless: false
+        headless: true
     }
 };
 
