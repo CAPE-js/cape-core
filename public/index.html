@@ -76,7 +76,7 @@
             <p id="creator">This dataset was created by <span v-for="(creator, index) in dataset.config.creators"><span>{{ creator.name }}</span><span v-if="index+1 < dataset.config.creators.length">, </span></span>.</p>
             <p id="attribution">If using this data, please attribute it as "{{ dataset.config.attribution.text }}" with a link to <a v-bind:href="dataset.config.attribution.url">{{dataset.config.attribution.url}}</a>.</p>
             <p>
-                <button id="button-download-json" v-on:click="downloadJSON" class="btn btn-secondary">Download JSON</button>
+                <button id="button-download-json" v-on:click="downloadJSON" class="btn btn-secondary">Download JSON</button>&nbsp;
                 <button id="button-download-csv" v-on:click="downloadCSV" class="btn btn-secondary">Download CSV</button>
             </p>
             <h2>About this software</h2>
