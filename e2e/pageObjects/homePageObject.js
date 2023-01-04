@@ -1,5 +1,6 @@
 import { BasePageObject } from "./basePageObject";
 import { rootUrl } from "../testSiteUrls"
+import { pickMultiSelectOption } from '../testHelper'
 
 export class HomePageObject extends BasePageObject {
 
@@ -45,7 +46,7 @@ export class HomePageObject extends BasePageObject {
         
         // size
         this.sizeMode = this.page.locator("#filter-mode-size");
-        this.sizeDropDownList = this.page.locator("filter-size");
+        this.sizeDropDownList = this.page.locator("#filter-size");
         this.sizeLargeCheckBox = this.page.locator("#filter-size-Large");
         this.sizeMediumCheckBox = this.page.locator("#filter-size-Medium");
         this.sizeSmallCheckBox = this.page.locator("#filter-size-Small");
@@ -78,8 +79,9 @@ export class HomePageObject extends BasePageObject {
         this.orderDirection = this.page.locator("#order-direction");
 
         // search results
-        this.recordCountTexts = this.page.locator('.record-count');
+        this.recordCountMessages = this.page.locator('.record-count');
         this.results = this.page.locator('#results');
+        this.noMatchingRecordsMessage = this.page.locator('#cape-no-matching-results');
     }
 
     async dismissNonProdWarning() {
@@ -102,9 +104,129 @@ export class HomePageObject extends BasePageObject {
         return count;
     }
 
-    async getFirstSummaryCardText() {
-        const text = await this.results.locator(".summary-card:nth-child(1)").allInnerTexts();
-        return text.join();
+    async getSummaryCardText(number) {
+        const text = await this.results.locator(`.summary-card`).allInnerTexts();
+        return text[number];
+    }
+
+    async orderByDateAscending() {
+        await this.orderKey.selectOption("date");
+        await this.orderDirection.selectOption("asc");
+    }
+
+    async orderByDateDescending() {
+        await this.orderKey.selectOption("date");
+        await this.orderDirection.selectOption("desc");
+    }
+
+    // record number
+    async setRecordNumberMode(modeOption) {
+        await this.recordNumberMode.selectOption(modeOption);
+    }    
+
+    // auto value
+    async setAutoMode(modeOption) {
+        await this.autoMode.selectOption(modeOption);
+    }
+
+    // date
+    async setDateMode(modeOption) {
+        await this.dateSearchMode.selectOption(modeOption);
+    }
+
+    // title
+    async setTitleMode(modeOption) {
+        await this.titleSearchMode.selectOption(modeOption);
+    }
+
+    // size
+    async setSizeMode(modeOption) {
+        await this.sizeMode.selectOption(modeOption);
+    }
+
+    async setSizeLarge() {
+        await this.sizeDropDownList.selectOption("Large");
+    }
+
+    // colour
+    async setColourMode(modeOption) {
+        await this.colourMode.selectOption(modeOption);
+    }
+
+    async setColourRed() {
+        await this.colourDropDownList.selectOption("Red");
+    }
+
+    async pickColourMultiSelectOptions(selectedOptions) {
+        const options = { 'Blue': 0, 'Red': 1, 'Yellow': 2 };
+        
+        for await (const value of selectedOptions) {
+            const index = options[value];
+            await pickMultiSelectOption(this.colourMultiSelectWrapper, index);
+        }  
+    }
+
+    // likes
+    async setLikesMode(modeOption) {
+        await this.likesMode.selectOption(modeOption);
+    }
+
+    async setLikesToWater() {
+        await this.likesDropDownList.selectOption("Water");
+    }
+
+    async pickLikesMultiSelectOptions(selectedOptions) {
+        const options = { 'Beer': 0, 'Chips': 1, 'Pizza': 2, 'Pop': 3, 'Water': 4, 'Wine': 5 };
+        
+        for await (const value of selectedOptions) {
+            const index = options[value];
+            await pickMultiSelectOption(this.likesMultiSelectWrapper, index);
+        }  
+    }
+
+    // food
+    async pickFoodMultiSelectOptions(selectedOptions) {
+        const options = { 'Chips': 0, 'Pizza': 1 };
+        
+        for await (const value of selectedOptions) {
+            const index = options[value];
+            await pickMultiSelectOption(this.foodMultiSelectWrapper, index);
+        }  
+    }
+
+    // drinks
+    async setDrinksMode(modeOption) {
+        await this.drinksMode.selectOption(modeOption);        
+    }
+
+    async setDrinksToWater() {
+        await this.drinksDropDownList.selectOption("Water");
+    }
+
+    async pickDrinksMultiSelectOptions(selectedOptions) {
+        const options = { 'Beer': 0, 'Pop': 1, 'Water': 2, 'Wine': 3};
+        
+        for await (const value of selectedOptions) {
+            const index = options[value];
+            await pickMultiSelectOption(this.drinksMultiSelectWrapper, index);
+        }  
+    }
+
+    // three char colour mode
+    async setThreeCharColourMode(modeOption) {
+        await this.threeCharColourMode.selectOption(modeOption);
+    }
+
+    async setThreeCharColourToBlu() {
+        await this.threeCharColourDropDownList.selectOption("Blu");
+    }
+
+    async pickThreeCharColourMultiSelectOptions(selectedOptions) {
+
+        const options = { 'Blu': 0, 'Red': 1, 'Yel': 2};
+        for await (const value of selectedOptions) {
+            const index = options[value];
+            await pickMultiSelectOption(this.threeCharColourMultiSelectWrapper, index);
+        }        
     }
 }
-

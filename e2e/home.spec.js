@@ -1,23 +1,23 @@
 import { test, expect } from '@playwright/test';
 import { HomePageObject } from './pageObjects/homePageObject';
-import { typeInDebounceTextBox } from './testHelper';
+import { typeInDebounceTextBox, ModeOption } from './testHelper';
 
 let homePage = null;
 
-test.describe('The homepage', () => {
+test.describe('The homepage', () => {    
 
     test.beforeEach(async ({ page }) => {
         homePage = new HomePageObject(page);
         await homePage.goto();        
     });
 
-    test.skip('shows dismissable non-prod warning message', async () => {
+    test('shows dismissable non-prod warning message', async () => {
         await expect(homePage.nonProdWarning).toBeVisible();
         await homePage.dismissNonProdWarning();
         await expect(homePage.nonProdWarning).not.toBeVisible();        
     }); 
 
-    test.skip('shows all filters when advanced search is selected', async () => {
+    test('shows all filters when advanced search is selected', async () => {
         
         // check the advanced search box
         await homePage.setAdvancedSearch(true);
@@ -61,7 +61,7 @@ test.describe('The homepage', () => {
         await expect(homePage.threeCharColourMultiSelectWrapper).toBeVisible();  
     });
 
-    test.skip('shows only default filters when advanced search is deselected', async () => {
+    test('shows only default filters when advanced search is deselected', async () => {
         
         await homePage.setAdvancedSearch(false);
 
@@ -106,43 +106,421 @@ test.describe('The homepage', () => {
         await expect(homePage.orderDirection).not.toBeVisible(); 
     });
 
-    // sort    
-    test.skip('shows sort options when search results are displayed', async () => {
-        await expect(homePage.orderKey).not.toBeVisible();
-        await expect(homePage.orderDirection).not.toBeVisible();
+    test.describe('search', () => {
+
+        test('indicates when there are no matching search results', async () => {
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "bananas in pyjamas");
+            await expect(homePage.noMatchingRecordsMessage).toBeVisible();
+        });
+
+        test.skip('displays the number of search results', async () => {
+            // todo
+        });
+
+        test('displays record title, number and date', async () => {
+           await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+           const firstResultText = await homePage.getSummaryCardText(0);
+           expect(firstResultText).toBe("templateSummaryCard\nRecord one\nMonday, 1 January 2001");
+        });
+            
+    });
+
+    test.describe('sort', () => {
+
+        test('shows sort options when search results are displayed', async () => {
+            await expect(homePage.orderKey).not.toBeVisible();
+            await expect(homePage.orderDirection).not.toBeVisible();
+            
+            await homePage.freeTextSearchTextBox.type("pizza");
+    
+            await expect(homePage.orderKey).toBeVisible();
+            await expect(homePage.orderDirection).toBeVisible();
+        });
+    
+        test('sorts results', async () => {
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "chips");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+            
+            // sort by date ascending
+            await homePage.orderByDateAscending();
+            let summary1Text = await homePage.getSummaryCardText(0);
+            let summary2Text = await homePage.getSummaryCardText(1);
+            expect(summary1Text).toContain("Record one");
+            expect(summary2Text).toContain("Record two");
+
+            // sort by date descending
+            await homePage.orderByDateAscending();
+        });
         
-        await homePage.freeTextSearchTextBox.type("pizza");
-
-        await expect(homePage.orderKey).toBeVisible();
-        await expect(homePage.orderDirection).toBeVisible();
     });
+    
+    test.describe('free text search', () => {
 
-    // free text
-    test.skip('displays records match free text search', async () => {        
-        await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+        test('displays records that match \'pizza\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record one");    
+        });
+    
+        test('displays records that contain both \'pizza\' and \'chips\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza chips");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record one");
+        });
+    
+        test('doesn\'t display records that don\'t contain both \'pizza\' and \'bacon\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza bacon");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(0);
+        });    
+            
+    });
+    
+    test.describe('record number search', () => {
+
+        test('displays records where the a record number is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setRecordNumberMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(4);
+        });
+
+        test('displays records where the a record number is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setRecordNumberMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(0);
+        });
         
-        const count = await homePage.getSummaryCardCount();
-        expect(count).toBe(1);
+        test('displays records where the record number is 1', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setRecordNumberMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.recordNumberTextBox, "1")
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
 
-        const text = await homePage.getFirstSummaryCardText();
-        expect(text).toContain("Record one");
+        test('displays records where the record number is between two values', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setRecordNumberMode(ModeOption.BETWEEN);
+            await typeInDebounceTextBox(homePage.recordNumberMinTextBox, "1")
+            await typeInDebounceTextBox(homePage.recordNumberMaxTextBox, "3")
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);
+        });
+    
+    });    
+    
+    test.describe('auto value search', () => {
 
-    });
-
-    test.skip('matches records that contain all free text terms', async () => {        
-        await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza chips");
+        test('displays records where an auto value is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setAutoMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(4);
+        });
+    
+        test('displays records where an auto value is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setAutoMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(0);
+        });
         
-        const count = await homePage.getSummaryCardCount();
-        expect(count).toBe(1);
+        test('displays records where the auto value matches a specified value', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setAutoMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.autoTextBox, "1")
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+    
+        test('displays records where the auto value is between two values', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setAutoMode(ModeOption.BETWEEN);
+            await typeInDebounceTextBox(homePage.autoMinTextBox, "1")
+            await typeInDebounceTextBox(homePage.autoMaxTextBox, "2")
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });    
+    });
+    
+    test.describe('date search', () => {
 
-        const text = await homePage.getFirstSummaryCardText();
-        expect(text).toContain("Record one");
+        // date
+        test('displays records where the date is present', async () => {
+            await homePage.setDateMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);
+        });
+
+        test('displays records where the date is not present', async () => {
+            await homePage.setDateMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+        
+        test('displays records where the date matches a specified value in ISO format', async () => {
+            await homePage.setDateMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.dateSearchTextBox, "2001-01-01");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+
+        test('displays records where the date is between two values in ISO format', async () => {
+            await homePage.setDateMode(ModeOption.BETWEEN);
+            await typeInDebounceTextBox(homePage.dateBetweenFirstTextBox, "2000-12-31");
+            await typeInDebounceTextBox(homePage.dateBetweenLastTextBox, "2001-01-02");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+        
+    });
+        
+    test.describe('title search', () => {
+
+        test('displays records where a title is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);
+        });
+
+        test('displays records where a title is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+        
+        test('displays records where the title matches a specified value', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "Record one");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+
+        test('displays records where the title matches a specified value ignoring casing', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "record ONE");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+
+        test('displays records where the title contains a specified value', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.CONTAINS);
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "two");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });    
+
+        test('displays records where the title contains a specified value ignoring casing', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setTitleMode(ModeOption.CONTAINS);
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "two");
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });    
     });
 
-    test.skip('doesn\'t match records that don\'t contain all free text terms', async () => {        
-        await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza bacon");
-        const count = await homePage.getSummaryCardCount();
-        expect(count).toBe(0);
+    test.describe('size search', () => {
+
+        test('displays records where a size is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setSizeMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);
+        });
+
+        test('displays records where a size is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setSizeMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+        
+        test('displays records where the size is \'medium\' or \'small\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setSizeMode(ModeOption.ONE_OF);
+            await homePage.sizeMediumCheckBox.check();
+            await homePage.sizeSmallCheckBox.check();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });
+
+        test('displays records where the title is \'large\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setSizeMode(ModeOption.IS);
+            await homePage.setSizeLarge();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });    
     });
 
+    test.describe('colour search', () => {
+
+        test('displays records where a colour is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setColourMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);    
+        });
+
+        test('displays records where a colour is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setColourMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+        
+        test('displays records where the colour is \'red\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setColourMode(ModeOption.IS);
+            await homePage.setColourRed();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });
+
+        test('displays records where the colour is \'red\' or \'yellow\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setColourMode(ModeOption.ONE_OF);
+            await homePage.pickColourMultiSelectOptions(['Red', 'Yellow']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);
+        });    
+
+    });
+
+    test.describe('likes search', () => {
+
+        test('displays records where a likes value is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setLikesMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);    
+        });
+
+        test('displays records where a likes value is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setLikesMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+        
+        test('displays records where likes is \'water\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setLikesMode(ModeOption.IS);
+            await homePage.setLikesToWater();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });
+
+        test('displays records where likes is \'pop\' or \'wine\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setLikesMode(ModeOption.ONE_OF);
+            await homePage.pickLikesMultiSelectOptions(['Pop', 'Wine']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });    
+
+    });
+
+    test.describe('food search', () => {
+
+        test('displays records where food is \'pizza\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.pickFoodMultiSelectOptions(['Pizza']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+        });    
+        
+        test('displays records where food is \'pizza\' or \'chips\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.pickFoodMultiSelectOptions(['Pizza', 'Chips']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });    
+    });
+
+    test.describe('drinks search', () => {
+
+        test('displays records where a drinks value is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setDrinksMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);    
+        });
+
+        test('displays records where a drinks value is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setDrinksMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+        
+        test('displays records where drink is \'water\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setDrinksMode(ModeOption.IS);
+            await homePage.setDrinksToWater();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+
+        test('displays records where drink is \'pop\' or \'wine\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setDrinksMode(ModeOption.ONE_OF);
+            await homePage.pickDrinksMultiSelectOptions(['Pop', 'Wine']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);
+        });    
+
+    });
+
+    test.describe('3 character colour search', () => {
+
+        test('displays records where a colour code is present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setThreeCharColourMode(ModeOption.IS_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(3);    
+        });
+
+        test('displays records where a colour code is not present', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setThreeCharColourMode(ModeOption.IS_NOT_PRESENT);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+        
+        test('displays records where colour code is \'Blu\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setThreeCharColourMode(ModeOption.IS);
+            await homePage.setThreeCharColourToBlu();
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);    
+        });
+
+        test('displays records where colour code is \'Blu\' or \'Yel\'', async () => {
+            await homePage.setAdvancedSearch(true);
+            await homePage.setThreeCharColourMode(ModeOption.ONE_OF);
+            await homePage.pickThreeCharColourMultiSelectOptions(['Blu', 'Yel']);
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(2);    
+        });    
+
+    });
+
+    // todo combine different search fields?
 });

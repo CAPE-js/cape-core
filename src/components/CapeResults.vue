@@ -4,6 +4,7 @@
   <div id="results">
     <div
       v-if="results.length == 0"
+      id="cape-no-matching-results"
       class="card mb-1"
     >
       <div class="card-body">
