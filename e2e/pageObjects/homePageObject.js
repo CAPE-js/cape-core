@@ -144,6 +144,14 @@ export class HomePageObject extends BasePageObject {
         await this.sizeMode.selectOption(modeOption);
     }
 
+    async setSizeSmall() {
+        await this.sizeDropDownList.selectOption("Small");
+    }
+
+    async setSizeMedium() {
+        await this.sizeDropDownList.selectOption("Medium");
+    }
+
     async setSizeLarge() {
         await this.sizeDropDownList.selectOption("Large");
     }
@@ -155,6 +163,10 @@ export class HomePageObject extends BasePageObject {
 
     async setColourRed() {
         await this.colourDropDownList.selectOption("Red");
+    }
+
+    async setColourBlue() {
+        await this.colourDropDownList.selectOption("Blue");
     }
 
     async pickColourMultiSelectOptions(selectedOptions) {
@@ -201,6 +213,10 @@ export class HomePageObject extends BasePageObject {
 
     async setDrinksToWater() {
         await this.drinksDropDownList.selectOption("Water");
+    }
+
+    async setDrinksToWine() {
+        await this.drinksDropDownList.selectOption("Wine");
     }
 
     async pickDrinksMultiSelectOptions(selectedOptions) {

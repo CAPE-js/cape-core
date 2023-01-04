@@ -113,8 +113,14 @@ test.describe('The homepage', () => {
             await expect(homePage.noMatchingRecordsMessage).toBeVisible();
         });
 
-        test.skip('displays the number of search results', async () => {
-            // todo
+        test('displays the number of search results when searching for "pizza"', async () => {
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+            const recordCountMessageTop = await homePage.recordCountMessages.first().innerText();
+            const recordCountMessageBottom = await homePage.recordCountMessages.last().innerText();
+            
+            const expectedMessage = "Showing all 1 matching records.";
+            expect(recordCountMessageTop).toBe(expectedMessage);
+            expect(recordCountMessageBottom).toBe(expectedMessage);
         });
 
         test('displays record title, number and date', async () => {
@@ -305,7 +311,7 @@ test.describe('The homepage', () => {
         test('displays records where the title matches a specified value', async () => {
             await homePage.setAdvancedSearch(true);
             await homePage.setTitleMode(ModeOption.IS);
-            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "Record one");
+            await typeInDebounceTextBox(homePage.titleSearchTextBox, "Record one");
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);
         });
@@ -313,7 +319,7 @@ test.describe('The homepage', () => {
         test('displays records where the title matches a specified value ignoring casing', async () => {
             await homePage.setAdvancedSearch(true);
             await homePage.setTitleMode(ModeOption.IS);
-            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "record ONE");
+            await typeInDebounceTextBox(homePage.titleSearchTextBox, "record ONE");
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);
         });
@@ -484,8 +490,7 @@ test.describe('The homepage', () => {
             await homePage.pickDrinksMultiSelectOptions(['Pop', 'Wine']);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(2);
-        });    
-
+        });  
     });
 
     test.describe('3 character colour search', () => {
@@ -522,5 +527,61 @@ test.describe('The homepage', () => {
 
     });
 
-    // todo combine different search fields?
+    test.describe('when combining search fields', () => {
+        
+        test('displays record one when all search fields match record one values', async () => {
+            
+            await homePage.setAdvancedSearch(true);           
+            
+            // all search values match record one values 
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+            
+            await homePage.setRecordNumberMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.recordNumberTextBox, "1")
+
+            await homePage.setDateMode(ModeOption.BETWEEN);
+            await typeInDebounceTextBox(homePage.dateBetweenFirstTextBox, "2000-12-31");
+            await typeInDebounceTextBox(homePage.dateBetweenLastTextBox, "2001-01-02");
+
+            await homePage.setTitleMode(ModeOption.CONTAINS);
+            await typeInDebounceTextBox(homePage.titleSearchTextBox, "one");
+
+            await homePage.setSizeMode(ModeOption.IS);
+            await homePage.setSizeSmall();
+
+            await homePage.setColourMode(ModeOption.IS);
+            await homePage.setColourBlue();
+            
+            await homePage.setLikesMode(ModeOption.ONE_OF);
+            await homePage.pickLikesMultiSelectOptions(['Wine']);
+
+            await homePage.pickFoodMultiSelectOptions(['Pizza', 'Chips']);
+
+            await homePage.setDrinksMode(ModeOption.IS);
+            await homePage.setDrinksToWine();
+
+            await homePage.setThreeCharColourMode(ModeOption.IS);
+            await homePage.setThreeCharColourToBlu();
+
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);    
+        });
+
+        test('does not display any records when not all fields match record values', async () => {
+            await homePage.setAdvancedSearch(true);           
+            
+            // this search value matches record one values
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
+
+            // but this search field does not match record one value
+            await homePage.setRecordNumberMode(ModeOption.IS);
+            await typeInDebounceTextBox(homePage.recordNumberTextBox, "10");
+
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(0);    
+
+        });
+        
+    });
+    
 });
