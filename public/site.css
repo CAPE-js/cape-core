@@ -26,6 +26,12 @@ body {
     font-variant: small-caps;
 }
 
+.previous-record {}
+
+.next-record {
+    float:right;    
+}
+
 /* end of index cards */
 
 /* summary cards */

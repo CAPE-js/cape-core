@@ -119,9 +119,9 @@
 <script type="text/x-template" id="templateIndexCard">
     <div>
         <div class="index-card-nav">
-            <router-link v-if="record.prev" :to="'/record/'+record.prev">⬅️&nbsp;Previous</router-link>
+            <router-link v-if="record.prev" :to="'/record/'+record.prev" class="previous-record">⬅️&nbsp;Previous</router-link>
             &nbsp;
-            <router-link v-if="record.next" style='float:right;display:inline-block' :to="'/record/'+record.next">Next&nbsp;➡️</router-link>
+            <router-link v-if="record.next" :to="'/record/'+record.next" class="next-record">Next&nbsp;➡️</router-link>
         </div>
         <div class="card index-card mb-6">
             <div class="card-body">
