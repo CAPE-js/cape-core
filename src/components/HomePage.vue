@@ -5,6 +5,7 @@
       <div class="col text-right">
         <div>
           <button
+            id="new-search-top"
             class="btn btn-sm btn-secondary "
             @click="resetFilters"
           >
@@ -13,12 +14,12 @@
         </div>
         <div class="switch switch-sm mb-3 mt-3">
           <input
-            id="show-all-filters-lower"
+            id="show-all-filters-top"
             v-model="settings.show_all_filters"
             type="checkbox"
             class="switch"
           >
-          <label for="show-all-filters-lower">Advanced search</label>
+          <label for="show-all-filters-top">Advanced search</label>
         </div>
       </div>
     </div>
@@ -35,6 +36,7 @@
         </div>
         <div class="col-sm-4">
           <select
+            id="order-key"
             key="sort_field"
             v-model="settings.sort_field"
             style="width:auto; display: inline-block"
@@ -49,6 +51,7 @@
             </option>
           </select>
           <select
+            id="order-direction"
             key="sort_dir"
             v-model="settings.sort_dir"
             style="width:auto; display: inline-block"
@@ -67,6 +70,7 @@
         >
           <div>
             <button
+              id="new-search-bottom"  
               class="btn btn-sm btn-secondary "
               @click="resetFilters"
             >
@@ -75,12 +79,12 @@
           </div>
           <div class="switch switch-sm mb-3 mt-3">
             <input
-              id="show-all-filters-lower"
+              id="show-all-filters-bottom"
               v-model="settings.show_all_filters"
               type="checkbox"
               class="switch"
             >
-            <label for="show-all-filters-lower">Advanced search</label>
+            <label for="show-all-filters-bottom">Advanced search</label>
           </div>
         </div>
       </div>

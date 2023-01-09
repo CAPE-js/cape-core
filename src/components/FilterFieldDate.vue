@@ -7,7 +7,7 @@
       class="col-sm-2"
     >
       <select
-        :id="'filter-'+filter.field.id"
+        :id="'filter-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
       >
@@ -44,8 +44,9 @@
           class="form-control form-control-sm between-number-filter"
         />
         and
+        <!-- TODO is the following in the wrong position? this is named 'from' and the box above is named 'to' -->
         <debounced-input
-          :id="'filter-from-'+filter.field.id"
+          :id="'filter-from-'+filter.field.id" 
           v-model.trim="filter.term2"
           :type="'text'"
           :placeholder="filter.placeholder.between[1]"
