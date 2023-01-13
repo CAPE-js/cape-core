@@ -148,7 +148,11 @@ body {
     width:auto
 }
 .form-control::placeholder {
-    color: #ccc;
+    color: #727272;
+}
+
+.multiselect__placeholder {
+    color: #727272;
 }
 
 
