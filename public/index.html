@@ -25,18 +25,18 @@
 </head>
 <body>
     <link href="/site.css" rel="stylesheet">
-<div class="container" id='page'>
-
-  <div class="row small branding">
-    <div class="col">
-      <h1><a href="/" name="servicetitle" id="servicetitle">CAPE</a></h1>
-      Make your data fly a bit.
+    <div class="container" id='page'>
+    
+        <header class="row small branding">
+            <div class="col">
+                <h1><a href="/" name="servicetitle" id="servicetitle">CAPE</a></h1>
+                Make your data fly a bit.
+            </div>
+        </header>
+    
+        <div id="app" class="content"></div>
+    
     </div>
-  </div>
-
-  <div id="app" class="content"></div>
-
-</div>
 
 </body>
 </html>
@@ -46,24 +46,27 @@
         <div class="col">
             <div class="container">
                 <nav class="row">
-                    <nav class="col">
+                    <div class="col">
                         <p>
                             <router-link to="/">Return to search results</router-link>
                             |
                             <router-link to="/data">Dataset schema and download</router-link>
                         </p>
-                    </nav>
+                    </span>
                 </nav>
-                <router-view></router-view>
+                
+                <main>
+                    <router-view></router-view>
+                </main>                
             </div>
         </div>
     </div>
 </script>
 
 <script type="text/x-template" id="templateIntro">
-    <div>
-        <p>Intro goes here</p>
-    </div>
+    <p>
+        <strong>Your intro goes here.</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis feugiat nunc vel interdum. Duis vehicula congue imperdiet. Vivamus sit amet lacus lectus. Proin nec placerat eros, nec eleifend sapien. Suspendisse in ante placerat, sodales arcu id, ornare odio.
+    </p>
 </script>
 
 <script type="text/x-template" id="templateData">
@@ -92,9 +95,6 @@
 <script type="text/x-template" id="templateNoRecord">
     <p>NO SUCH RECORD</p>
 </script>
-
-
-
 
 <script type="text/x-template" id="templateSummaryCard">
     <div class="summary-card card mb-1">
