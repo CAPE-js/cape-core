@@ -1,6 +1,6 @@
 
 <template>
-  <div id="app">    
+  <div>    
     <nonProdWarning />    
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
