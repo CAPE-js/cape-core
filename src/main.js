@@ -54,7 +54,13 @@ fetch( data_location ) // eslint-disable-line
             routes.push( { name: pageId, path: '/'+pageId, component: component } );
         });
             
-        let capeRouter = createRouter({ routes: routes, history: createWebHashHistory() });
+        let capeRouter = createRouter({ 
+            routes: routes, 
+            history: createWebHashHistory(), 
+            linkActiveClass: 'active', 
+            linkExactActiveClass: 'active' 
+        });
+        
         capeRouter.afterEach((to, from) => {
             if( from.name !== null ) {
                 // coming from an existing route, rather than a first time page load

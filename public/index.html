@@ -42,24 +42,24 @@
 </html>
 
 <script type="text/x-template" id="templateDataset">
-    <div class="row content">
-        <div class="col">
-            <div class="container">
-                <nav class="row">
-                    <div class="col">
-                        <p>
-                            <router-link to="/">Return to search results</router-link>
-                            |
-                            <router-link to="/data">Dataset schema and download</router-link>
-                        </p>
-                    </span>
-                </nav>
-                
-                <main>
-                    <router-view></router-view>
-                </main>                
-            </div>
-        </div>
+    <div class="row content">        
+        <div class="container">                
+
+            <nav>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/">Search</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/data">Dataset schema and download</router-link>
+                    </li>            
+                </ul>
+            </nav>
+
+            <main>
+                <router-view></router-view>
+            </main>                
+        </div>        
     </div>
 </script>
 

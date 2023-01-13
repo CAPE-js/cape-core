@@ -7,14 +7,23 @@ h1 {
 }
 
 h2 {
+    margin-top: 1em;
 }
 
 a {
-    color: #0263ca;
+    color: #0263ca;    
+}
+
+p a {
+    text-decoration: underline dotted;
 }
 
 body {
     margin-bottom: 5em;
+}
+
+nav {
+    margin: 1em 0;
 }
 
 /* end of typography */
