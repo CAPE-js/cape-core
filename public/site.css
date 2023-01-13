@@ -10,6 +10,7 @@ h2 {
 }
 
 a {
+    color: #0263ca;
 }
 
 body {
@@ -155,6 +156,7 @@ body {
 
 /* force switch to be more blue */
 .switch input:checked + label::before {
-    background-color: #00f !important;
+    background-color: #0263ca !important;
 }
 /* end force switch to be more blue */
+
