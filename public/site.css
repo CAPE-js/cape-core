@@ -39,6 +39,16 @@ header h1 {
 
 /* index cards */
 
+.index-card h2 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.index-card h3 {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+}
+
 .index-card .card-body {
 }
 .index-card-nav {

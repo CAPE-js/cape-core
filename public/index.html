@@ -126,10 +126,10 @@
         </div>
         <div class="card index-card mb-6">
             <div class="card-body">
-                <h5 class="card-title">Record #{{record.record_number.value}}</h5>
+                <h2 class="card-title">Record #{{record.record_number.value}}</h2>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6>Record contents</h6>
+                        <h3>Record contents</h3>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.record_number" ></field-label-and-value></div>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.date" ></field-label-and-value></div>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.title" ></field-label-and-value></div>
@@ -142,7 +142,7 @@
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.drinks" ></field-label-and-value></div>
                     </div>
                     <div class="col-sm-6">
-                        <h6>Various views on data</h6>
+                        <h3>Various views on data</h3>
                         <div class='row'>
                             <div class='col-md test-box-label'>{{record.record_number.value}}/raw/record_number</div>
                             <div class='col-md test-box-value'><field-value v-bind:typedValue="record.record_number" v-bind:linkValue="false"></field-value></div>
