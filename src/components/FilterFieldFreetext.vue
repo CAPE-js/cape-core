@@ -8,6 +8,7 @@
         v-model.trim="filter.term"
         :type="'text'"
         class="form-control form-control-sm"
+        label="Free text filter"
       />
     </div>
   </div>

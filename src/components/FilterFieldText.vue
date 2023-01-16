@@ -32,6 +32,7 @@
           :type="'text'"
           :placeholder="filter.placeholder[filter.mode]"
           class="form-control form-control-sm"
+          label="Filter text"
         />
       </template>
     </div>
@@ -47,7 +48,7 @@ export default {
     props: { filter: { type: Object, default: null } },
     computed: {
         num_of_cols_for_main_search_area: function () {
-		return( this.filter.change_filter_mode ? 8 : 10 );
+          return( this.filter.change_filter_mode ? 8 : 10 );
         }
     }
 }

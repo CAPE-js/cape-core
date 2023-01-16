@@ -10,6 +10,7 @@
         :id="'filter-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
+        aria-label="Type of date filter"
       >
         <option value="is">
           is
@@ -32,7 +33,8 @@
           v-model.trim="filter.term"
           :type="'text'"
           :placeholder="filter.placeholder.is"
-          class="form-control form-control-sm"
+          class="form-control form-control-sm"          
+          label="Date filter"
         />
       </template>
       <template v-if="filter.mode=='between'">
@@ -42,6 +44,7 @@
           :type="'text'"
           :placeholder="filter.placeholder.between[0]"
           class="form-control form-control-sm between-number-filter"
+          label="First date in filter"
         />
         and
         <!-- TODO is the following in the wrong position? this is named 'from' and the box above is named 'to' -->
@@ -51,6 +54,7 @@
           :type="'text'"
           :placeholder="filter.placeholder.between[1]"
           class="form-control form-control-sm between-number-filter"
+          label="Last date in filter"
         />
       </template>
     </div>

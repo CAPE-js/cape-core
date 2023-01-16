@@ -1,16 +1,22 @@
 
 
 <template>
-  <input @input="debounceInput">
+  <input 
+    :aria-label="label" 
+    @input="debounceInput"
+  >
 </template>
 
 <script>
 export default {
     name: "DebouncedInput", 
-    props: { modelValue: { type: String, default: "" } },
+    props: { 
+        modelValue: { type: String, default: "" }, 
+        label: { type: String, default: "" } 
+    },
     emits: [ "update:modelValue" ],
     data: () => ({
-        debounce: null
+        debounce: null        
     }),
     methods: {
         debounceInput(event) {

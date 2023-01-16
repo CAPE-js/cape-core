@@ -12,6 +12,7 @@
         <span 
           class="dismissable" 
           title="Hide this message"
+          aria-label="Close"
           @click="close"          
         >x</span>
       </div>

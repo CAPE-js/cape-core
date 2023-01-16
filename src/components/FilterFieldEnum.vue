@@ -9,6 +9,7 @@
         :id="'filter-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
+        aria-label="Type of filter"
       >
         <option value="is">
           is
