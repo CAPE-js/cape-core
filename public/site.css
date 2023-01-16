@@ -53,6 +53,7 @@ header h1 {
 }
 .index-card-nav {
     font-variant: small-caps;
+    margin: 0.5rem 0;
 }
 
 .previous-record {}
