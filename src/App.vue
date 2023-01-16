@@ -1,7 +1,7 @@
 
 <template>
   <div>    
-    <nonProdWarning />    
+    <cape-header />
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
@@ -41,16 +41,16 @@
 <script>
 import { CapeTools } from './CapeTools'
 import CapeDataset from './components/CapeDataset.vue'
-import nonProdWarning from './components/NonProdWarning.vue';
 import { useEnvironmentStore } from './stores/environmentStore';
 import { mapState } from 'pinia';
+import CapeHeader from './components/CapeHeader.vue';
 
 export default {
     el: '#app',
     name: 'CapeApp',
     components: {
-      CapeDataset,    
-      nonProdWarning
+      CapeDataset,        
+      CapeHeader
 },
     props: {
         
