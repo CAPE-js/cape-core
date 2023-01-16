@@ -71,7 +71,7 @@
                         "description": "Date description",
                         "quick_search": true,
                         "placeholder": {
-                            "is": "is placeholder",
+                            "is": "e.g. 2022-12-01",
                             "between": [
                                 "e.g. 2022-12-01",
                                 "e.g. 2022-12-31"
