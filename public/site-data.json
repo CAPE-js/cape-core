@@ -42,14 +42,26 @@
                         "type": "integer",
                         "source_heading": "RECORD NUMBER",
                         "label": "Record number label",
-                        "description": "Record number description"
+                        "description": "Record number description",
+                        "placeholder": {
+                            "between": [
+                                "Min",
+                                "Max"
+                            ]
+                        }
                     },
                     {
                         "id": "auto",
                         "type": "integer",
                         "source_heading": "AUTO",
                         "label": "Auto label",
-                        "description": "Auto description"
+                        "description": "Auto description",
+                        "placeholder": {
+                            "between": [
+                                "Min",
+                                "Max"
+                            ]
+                        }
                     },
                     {
                         "id": "date",
@@ -61,8 +73,8 @@
                         "placeholder": {
                             "is": "is placeholder",
                             "between": [
-                                "between placeholder a",
-                                "between placeholder b"
+                                "e.g. 2022-12-01",
+                                "e.g. 2022-12-31"
                             ]
                         }
                     },
