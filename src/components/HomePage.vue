@@ -41,6 +41,7 @@
             v-model="settings.sort_field"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
+            aria-label="Order field"
           >
             <option
               v-for="field in settings.sort_fields"
@@ -56,6 +57,7 @@
             v-model="settings.sort_dir"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
+            aria-label="Order direction"
           >
             <option value="asc">
               Ascending
