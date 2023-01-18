@@ -17,6 +17,7 @@
         :results="results"
         :options="options"
         :visible-records-count="visible_records.length"
+        name="top"
       />
       <div
         v-for="record in visible_records"
@@ -29,6 +30,7 @@
           :results="results"
           :options="options"
           :visible-records-count="visible_records.length"
+          name="floating"
         />
       </div>
     </div>
