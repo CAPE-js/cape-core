@@ -13,7 +13,9 @@
           class="dismissable" 
           title="Hide this message"
           aria-label="Close"
-          @click="close"          
+          tabindex="0"         
+          @click="close" 
+          @keyup.enter="close"          
         >x</span>
       </div>
     </div>
