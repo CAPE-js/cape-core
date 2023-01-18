@@ -16,8 +16,7 @@ export class HomePageObject extends BasePageObject {
         // general form controls
         this.newSearchButtonTop = this.page.locator("#new-search-top");
         this.newSearchButtonBottom = this.page.locator("#new-search-bottom");
-        this.advancedSearchTop = this.page.locator("#show-all-filters-top");
-        this.advancedSearchBottom = this.page.locator("#show-all-filters-bottom");
+        this.advancedSearchTop = this.page.getByText("Advanced search");        
         
         // freetext search
         this.freeTextSearchTextBox = this.page.locator("#filter-freetext");
@@ -89,8 +88,8 @@ export class HomePageObject extends BasePageObject {
     }
 
     // advanced search
-    async setAdvancedSearch(checked) {
-        await this.advancedSearchTop.setChecked(checked);
+    async toggleAdvancedSearch() {
+        await this.advancedSearchTop.click();
     }
 
     async getAdvancedSearch() {
