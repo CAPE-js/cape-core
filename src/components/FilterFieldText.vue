@@ -9,6 +9,7 @@
         :id="'filter-text-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
+        aria-label="Type of filter"
       >
         <option value="is">
           is
@@ -32,6 +33,7 @@
           :type="'text'"
           :placeholder="filter.placeholder[filter.mode]"
           class="form-control form-control-sm"
+          label="Filter text"
         />
       </template>
     </div>
@@ -47,7 +49,7 @@ export default {
     props: { filter: { type: Object, default: null } },
     computed: {
         num_of_cols_for_main_search_area: function () {
-		return( this.filter.change_filter_mode ? 8 : 10 );
+          return( this.filter.change_filter_mode ? 8 : 10 );
         }
     }
 }

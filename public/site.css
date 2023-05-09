@@ -7,23 +7,53 @@ h1 {
 }
 
 h2 {
+    margin-top: 1em;
 }
 
 a {
+    color: #0263ca;    
+}
+
+p a {
+    text-decoration: underline dotted;
 }
 
 body {
     margin-bottom: 5em;
 }
 
+nav {
+    margin: 1em 0 0 0;
+}
+
+header h1 {
+    margin-bottom: 0;
+}
+
 /* end of typography */
 
+/* intro text */
+#intro-text {
+    margin: 2em 0;
+}
+
 /* index cards */
+
+.index-card h2 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.index-card h3 {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+}
 
 .index-card .card-body {
 }
 .index-card-nav {
     font-variant: small-caps;
+    margin: 0.5rem 0;
 }
 
 .previous-record {}
@@ -33,52 +63,6 @@ body {
 }
 
 /* end of index cards */
-
-/* summary cards */
-
-
-/*.summary-card h5.card-title .field-value {*/
-    /*font-size:0.7em;*/
-    /*font-weight: bold;*/
-/*}*/
-
-/*
-.summary-card {
-    background-color: #f3f3f3;
-    border:none;
-    cursor: pointer;
-}
-
-.summary-card .card-title {
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.summary-card .card-body {
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-}
-
-.summary-card .card-body .field-value, .summary-card .card-body .field-label {
-    font-size: 0.9em;
-}
-
-.summary-card .field-label {
-    font-weight: normal;
-}
-
-.summary-card i {
-    color: #5a6268;
-    font-size: 0.6rem;
-}
-.summary-card .label-note {
-    font-size: 0.8rem;
-    color: #999;
-}
-*/ 
-
-/* end of summary cards
- */
 
 /* values and labels */
 
@@ -100,12 +84,6 @@ body {
 }
 
 /* end of values and labels */
-
-/* unsorted css */
-
-
-/* end of unsorted css (don't add under this line) */
-
 
 /* Start results summary */
 
@@ -147,14 +125,21 @@ body {
     width:auto
 }
 .form-control::placeholder {
-    color: #ccc;
+    color: #727272;
+}
+
+.multiselect__placeholder {
+    color: #727272;
 }
 
 
 /* End filter */
 
 /* force switch to be more blue */
+
 .switch input:checked + label::before {
-    background-color: #00f !important;
+    background-color: #0263ca !important;
 }
+
 /* end force switch to be more blue */
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,45 +25,49 @@
 </head>
 <body>
     <link href="/site.css" rel="stylesheet">
-<div class="container" id='page'>
-
-  <div class="row small branding">
-    <div class="col">
-      <h1><a href="/" name="servicetitle" id="servicetitle">CAPE</a></h1>
-      Make your data fly a bit.
+    <div class="container" id='page'>
+    
+        <div id="app" class="content"></div>
+    
     </div>
-  </div>
-
-  <div id="app" class="content"></div>
-
-</div>
 
 </body>
 </html>
 
 <script type="text/x-template" id="templateDataset">
-    <div class="row content">
-        <div class="col">
-            <div class="container">
-                <nav class="row">
-                    <nav class="col">
-                        <p>
-                            <router-link to="/">Return to search results</router-link>
-                            |
-                            <router-link to="/data">Dataset schema and download</router-link>
-                        </p>
-                    </nav>
-                </nav>
+    <div class="row content">        
+        <div class="container">                
+
+            <nav>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/">Search</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/data">Dataset schema and download</router-link>
+                    </li>            
+                </ul>
+            </nav>
+
+            <main>
                 <router-view></router-view>
-            </div>
-        </div>
+            </main>                
+        </div>        
     </div>
 </script>
 
+<script type="text/x-template" id="templateHeader">
+    <header>
+        <h1><a href="/" name="servicetitle" id="servicetitle">CAPE</a></h1>
+        <p>Make your data fly a bit.</p>
+        <nonProdWarning />
+    </header>
+</script>
+
 <script type="text/x-template" id="templateIntro">
-    <div>
-        <p>Intro goes here</p>
-    </div>
+    <p id="intro-text">
+        <strong>Your intro text goes here.</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis feugiat nunc vel interdum. Duis vehicula congue imperdiet. Vivamus sit amet lacus lectus. Proin nec placerat eros, nec eleifend sapien. Suspendisse in ante placerat, sodales arcu id, ornare odio.
+    </p>
 </script>
 
 <script type="text/x-template" id="templateData">
@@ -92,9 +96,6 @@
 <script type="text/x-template" id="templateNoRecord">
     <p>NO SUCH RECORD</p>
 </script>
-
-
-
 
 <script type="text/x-template" id="templateSummaryCard">
     <div class="summary-card card mb-1">
@@ -125,10 +126,10 @@
         </div>
         <div class="card index-card mb-6">
             <div class="card-body">
-                <h5 class="card-title">Record #{{record.record_number.value}}</h5>
+                <h2 class="card-title">Record #{{record.record_number.value}}</h2>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6>Record contents</h6>
+                        <h3>Record contents</h3>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.record_number" ></field-label-and-value></div>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.date" ></field-label-and-value></div>
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.title" ></field-label-and-value></div>
@@ -141,7 +142,7 @@
                         <div class='col-md test-box-value'><field-label-and-value v-bind:typedValue="record.drinks" ></field-label-and-value></div>
                     </div>
                     <div class="col-sm-6">
-                        <h6>Various views on data</h6>
+                        <h3>Various views on data</h3>
                         <div class='row'>
                             <div class='col-md test-box-label'>{{record.record_number.value}}/raw/record_number</div>
                             <div class='col-md test-box-value'><field-value v-bind:typedValue="record.record_number" v-bind:linkValue="false"></field-value></div>

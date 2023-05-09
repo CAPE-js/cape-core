@@ -20,7 +20,7 @@ test.describe('The homepage', () => {
     test('shows all filters when advanced search is selected', async () => {
         
         // check the advanced search box
-        await homePage.setAdvancedSearch(true);
+        await homePage.toggleAdvancedSearch();
         await expect(homePage.recordNumberMode).toBeVisible();
 
         // check filters are all displayed
@@ -63,8 +63,6 @@ test.describe('The homepage', () => {
 
     test('shows only default filters when advanced search is deselected', async () => {
         
-        await homePage.setAdvancedSearch(false);
-
         // validate the initial state
         await expect(homePage.freeTextSearchTextBox).toBeVisible();       
 
@@ -194,21 +192,21 @@ test.describe('The homepage', () => {
     test.describe('record number search', () => {
 
         test('displays records where the a record number is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setRecordNumberMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(4);
         });
 
         test('displays records where the a record number is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setRecordNumberMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(0);
         });
         
         test('displays records where the record number is 1', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setRecordNumberMode(ModeOption.IS);
             await typeInDebounceTextBox(homePage.recordNumberTextBox, "1")
             const count = await homePage.getSummaryCardCount();
@@ -216,7 +214,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where the record number is between two values', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setRecordNumberMode(ModeOption.BETWEEN);
             await typeInDebounceTextBox(homePage.recordNumberMinTextBox, "1")
             await typeInDebounceTextBox(homePage.recordNumberMaxTextBox, "3")
@@ -229,21 +227,21 @@ test.describe('The homepage', () => {
     test.describe('auto value search', () => {
 
         test('displays records where an auto value is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setAutoMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(4);
         });
     
         test('displays records where an auto value is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setAutoMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(0);
         });
         
         test('displays records where the auto value matches a specified value', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setAutoMode(ModeOption.IS);
             await typeInDebounceTextBox(homePage.autoTextBox, "1")
             const count = await homePage.getSummaryCardCount();
@@ -251,7 +249,7 @@ test.describe('The homepage', () => {
         });
     
         test('displays records where the auto value is between two values', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setAutoMode(ModeOption.BETWEEN);
             await typeInDebounceTextBox(homePage.autoMinTextBox, "1")
             await typeInDebounceTextBox(homePage.autoMaxTextBox, "2")
@@ -295,21 +293,21 @@ test.describe('The homepage', () => {
     test.describe('title search', () => {
 
         test('displays records where a title is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);
         });
 
         test('displays records where a title is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);
         });
         
         test('displays records where the title matches a specified value', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.IS);
             await typeInDebounceTextBox(homePage.titleSearchTextBox, "Record one");
             const count = await homePage.getSummaryCardCount();
@@ -317,7 +315,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where the title matches a specified value ignoring casing', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.IS);
             await typeInDebounceTextBox(homePage.titleSearchTextBox, "record ONE");
             const count = await homePage.getSummaryCardCount();
@@ -325,7 +323,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where the title contains a specified value', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.CONTAINS);
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "two");
             const count = await homePage.getSummaryCardCount();
@@ -333,7 +331,7 @@ test.describe('The homepage', () => {
         });    
 
         test('displays records where the title contains a specified value ignoring casing', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setTitleMode(ModeOption.CONTAINS);
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "two");
             const count = await homePage.getSummaryCardCount();
@@ -344,21 +342,21 @@ test.describe('The homepage', () => {
     test.describe('size search', () => {
 
         test('displays records where a size is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setSizeMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);
         });
 
         test('displays records where a size is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setSizeMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);
         });
         
         test('displays records where the size is \'medium\' or \'small\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setSizeMode(ModeOption.ONE_OF);
             await homePage.sizeMediumCheckBox.check();
             await homePage.sizeSmallCheckBox.check();
@@ -367,7 +365,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where the title is \'large\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setSizeMode(ModeOption.IS);
             await homePage.setSizeLarge();
             const count = await homePage.getSummaryCardCount();
@@ -378,21 +376,21 @@ test.describe('The homepage', () => {
     test.describe('colour search', () => {
 
         test('displays records where a colour is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setColourMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);    
         });
 
         test('displays records where a colour is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setColourMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
         });
         
         test('displays records where the colour is \'red\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setColourMode(ModeOption.IS);
             await homePage.setColourRed();
             const count = await homePage.getSummaryCardCount();
@@ -400,7 +398,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where the colour is \'red\' or \'yellow\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setColourMode(ModeOption.ONE_OF);
             await homePage.pickColourMultiSelectOptions(['Red', 'Yellow']);
             const count = await homePage.getSummaryCardCount();
@@ -412,21 +410,21 @@ test.describe('The homepage', () => {
     test.describe('likes search', () => {
 
         test('displays records where a likes value is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setLikesMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);    
         });
 
         test('displays records where a likes value is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setLikesMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
         });
         
         test('displays records where likes is \'water\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setLikesMode(ModeOption.IS);
             await homePage.setLikesToWater();
             const count = await homePage.getSummaryCardCount();
@@ -434,7 +432,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where likes is \'pop\' or \'wine\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setLikesMode(ModeOption.ONE_OF);
             await homePage.pickLikesMultiSelectOptions(['Pop', 'Wine']);
             const count = await homePage.getSummaryCardCount();
@@ -446,14 +444,14 @@ test.describe('The homepage', () => {
     test.describe('food search', () => {
 
         test('displays records where food is \'pizza\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.pickFoodMultiSelectOptions(['Pizza']);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);
         });    
         
         test('displays records where food is \'pizza\' or \'chips\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.pickFoodMultiSelectOptions(['Pizza', 'Chips']);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(2);
@@ -463,21 +461,21 @@ test.describe('The homepage', () => {
     test.describe('drinks search', () => {
 
         test('displays records where a drinks value is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setDrinksMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);    
         });
 
         test('displays records where a drinks value is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setDrinksMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
         });
         
         test('displays records where drink is \'water\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setDrinksMode(ModeOption.IS);
             await homePage.setDrinksToWater();
             const count = await homePage.getSummaryCardCount();
@@ -485,7 +483,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where drink is \'pop\' or \'wine\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setDrinksMode(ModeOption.ONE_OF);
             await homePage.pickDrinksMultiSelectOptions(['Pop', 'Wine']);
             const count = await homePage.getSummaryCardCount();
@@ -496,21 +494,21 @@ test.describe('The homepage', () => {
     test.describe('3 character colour search', () => {
 
         test('displays records where a colour code is present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setThreeCharColourMode(ModeOption.IS_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(3);    
         });
 
         test('displays records where a colour code is not present', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setThreeCharColourMode(ModeOption.IS_NOT_PRESENT);
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
         });
         
         test('displays records where colour code is \'Blu\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setThreeCharColourMode(ModeOption.IS);
             await homePage.setThreeCharColourToBlu();
             const count = await homePage.getSummaryCardCount();
@@ -518,7 +516,7 @@ test.describe('The homepage', () => {
         });
 
         test('displays records where colour code is \'Blu\' or \'Yel\'', async () => {
-            await homePage.setAdvancedSearch(true);
+            await homePage.toggleAdvancedSearch();
             await homePage.setThreeCharColourMode(ModeOption.ONE_OF);
             await homePage.pickThreeCharColourMultiSelectOptions(['Blu', 'Yel']);
             const count = await homePage.getSummaryCardCount();
@@ -531,7 +529,7 @@ test.describe('The homepage', () => {
         
         test('displays record one when all search fields match record one values', async () => {
             
-            await homePage.setAdvancedSearch(true);           
+            await homePage.toggleAdvancedSearch();           
             
             // all search values match record one values 
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");
@@ -568,7 +566,7 @@ test.describe('The homepage', () => {
         });
 
         test('does not display any records when not all fields match record values', async () => {
-            await homePage.setAdvancedSearch(true);           
+            await homePage.toggleAdvancedSearch();           
             
             // this search value matches record one values
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza");

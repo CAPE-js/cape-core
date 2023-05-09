@@ -1,5 +1,7 @@
 import { BasePageObject } from "./basePageObject";
 import * as fs from 'fs';
+import * as path from 'path';
+import os from 'os';
 import { buildPath } from "../testSiteUrls";
 
 export class DataPageObject extends BasePageObject {
@@ -14,29 +16,24 @@ export class DataPageObject extends BasePageObject {
         this.schemaTable = this.page.getByRole("table");
     }
 
+    async downloadFile(elementToClick, fileName) {
+        const downloadPromise = this.page.waitForEvent("download");
+        await elementToClick.click();
+        const download = await downloadPromise;
+        const downloadPath = path.join(os.tmpdir(), fileName);
+        await download.saveAs(downloadPath);
+        const contents = await fs.promises.readFile(downloadPath, "utf8");
+        return this.trimDownloadContents(contents);
+    }
+
     // Gets the downloaded json data.
     async downloadJson() {
-        // download the json file and return its contents
-        const [ download ] = await Promise.all([
-            this.page.waitForEvent('download'),
-            this.downloadJsonButton.click()
-        ]);
-    
-        const path = await download.path();
-        const contents = await fs.promises.readFile(path, "utf8");    
-        return this.trimDownloadContents(contents);      
+        return await this.downloadFile(this.downloadJsonButton, "cape-test.json");        
     }
 
     // Gets the downloaded csv data.
     async downloadCsv() {
-        const [ download ] = await Promise.all([
-            this.page.waitForEvent('download'),
-            this.downloadCsvButton.click()
-          ]);
-      
-          const path = await download.path();
-          const contents = await fs.promises.readFile(path, "utf8");    
-          return this.trimDownloadContents(contents);
+        return await this.downloadFile(this.downloadCsvButton, "cape-test.csv");
     }
 
     // Downloaded files include an initial 'invisible' character, remove this.

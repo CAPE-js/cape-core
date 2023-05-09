@@ -16,14 +16,14 @@
           >
             Showing first {{ visibleRecordsCount }} of {{ results.length }} matching records.
           </div>
-          <div class="switch switch-sm">
+          <div class="switch switch-sm">            
             <input
-              id="show-all-results"
+              :id="id"
               v-model="options.show_all_results"
               type="checkbox"
               class="switch"
             >
-            <label for="show-all-results">Show all matches</label>
+            <label :for="id">Show all matches</label>
           </div>
         </div>
       </div>
@@ -38,7 +38,13 @@ export default {
     props: {
         results: { type: Array, default: null },
         visibleRecordsCount: { type: Number, default: 0 },
-        options: { type: Object, default: null }
+        options: { type: Object, default: null },
+        name: { type: String, default: ''}
+    },
+    computed: {
+      id: function() {
+        return "show-all-results-" + this.name;
+      }
     }
 }
 </script>

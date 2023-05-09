@@ -10,6 +10,7 @@
         :id="'filter-mode-'+filter.field.id"
         v-model.trim="filter.mode"
         class="form-control form-control-sm"
+        aria-label="Type of number filter"        
       >
         <option value="is">
           is
@@ -36,6 +37,7 @@
           :min="filter.field.min"
           :max="filter.field.max"
           :step="filter.field.step"
+          label="Number to filter"
         />
       </template>
       <template v-if="filter.mode=='between'">
@@ -48,6 +50,7 @@
           :min="filter.field.min"
           :max="filter.field.max"
           :step="filter.field.step"
+          label="Min number from range to filter."
         />
         and
         <debounced-input
@@ -59,6 +62,7 @@
           :min="filter.field.min"
           :max="filter.field.max"
           :step="filter.field.step"
+          label="Max number from range to filter."
         /> 
       </template>
     </div>

@@ -14,4 +14,4 @@ const app_status='dev';
 // app_status='prod'
 // app_status='pprd'
 
-const build_id='local build'
+const build_id='build number here'

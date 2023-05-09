@@ -2,7 +2,7 @@
 
 Run the website from a command console:
 
-- `cd [project root]/website`
+- `cd [project root]`
 - `npm run serve`
 
 Run the tests from a second command console:
