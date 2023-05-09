@@ -10,7 +10,7 @@
           This is a {{ environmentDescription }} instance of this service. It uses the following build: <em>{{ buildId }}</em>.
         </div>
         <span 
-          class="dismissable" 
+          class="cape-dismissable"
           title="Hide this message"
           aria-label="Close"
           tabindex="0"         
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-.dismissable {
+.cape-dismissable {
   position: absolute;
   right: 10px;
   top: 0;

@@ -30,12 +30,10 @@ header h1 {
     margin-bottom: 0;
 }
 
-/* end of typography */
-
-/* intro text */
-#intro-text {
+.intro-text {
     margin: 2em 0;
 }
+/* end of typography */
 
 /* index cards */
 
@@ -66,20 +64,20 @@ header h1 {
 
 /* values and labels */
 
-.field-label-and-value {
+.cape-field-label-and-value {
 }
 
-.field-value { 
+.cape-field-value {
     display: inline-block;
 }
-.field-null { 
+.cape-field-null {
     color: #ccc;
     font-size: small;
 }
-.field-label { 
+.cape-field-label {
     display: inline-block;
 }
-.field-label:after { 
+.cape-field-label:after {
     content: ':';
 }
 
@@ -87,40 +85,40 @@ header h1 {
 
 /* Start results summary */
 
-.result-summary .record-count {
+.cape-result-summary .cape-record-count {
     display: inline-block;
     vertical-align: middle;
     margin-right: 1em;
 }
 
-.result-summary .switch {
+.cape-result-summary .switch {
     display: inline-block;
     vertical-align: middle;
 }
 
-.result-summary input[type=checkbox] {
+.cape-result-summary input[type=checkbox] {
     vertical-align: middle;
 }
 
-.result-summary label {
+.cape-result-summary label {
     vertical-align: middle;
     margin-bottom: 0;
 }
 
-.floating-summary {
+.cape-floating-summary {
     position: fixed;
     bottom: 0.5rem;
     right: 0.5rem; 
     z-index: 10;
 }
-.floating-summary .card {
+.cape-floating-summary .card {
     box-shadow: 2px 6px 20px 2px rgba(0,0,0,0.2);
 }
 
 /* End results summary */
 
 /* filter */
-.between-number-filter {
+.cape-between-number-filter {
     display:inline-block;
     width:auto
 }

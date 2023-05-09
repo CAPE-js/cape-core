@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="field-label-and-value">
+    <div class="cape-field-label-and-value">
       <div
         v-if="!typedValue"
         class="cape-error"
@@ -10,7 +10,7 @@
       <template v-else-if="typedValue.field.value != ''">
         <div
           v-if="typedValue.field.description != null"
-          class="field-label"
+          class="cape-field-label"
           data-toggle="tooltip"
           :title="typedValue.field.description"
         >
@@ -18,7 +18,7 @@
         </div>
         <div
           v-else
-          class="field-label"
+          class="cape-field-label"
         >
           {{ typedValue.field.label }}
         </div>
