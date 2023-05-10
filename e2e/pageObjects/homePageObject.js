@@ -11,7 +11,7 @@ export class HomePageObject extends BasePageObject {
 
         // warning
         this.nonProdWarning = this.page.locator("#non-prod-warning");
-        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".dismissable");
+        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".cape-dismissable");
 
         // intro
         this.introText = page.getByTestId('intro-text');
