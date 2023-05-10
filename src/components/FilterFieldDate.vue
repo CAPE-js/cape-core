@@ -39,7 +39,7 @@
       </template>
       <template v-if="filter.mode=='between'">
         <debounced-input
-          :id="'filter-to-'+filter.field.id"
+          :id="'filter-from-'+filter.field.id"
           v-model.trim="filter.term"
           :type="'text'"
           :placeholder="filter.placeholder.between[0]"
@@ -49,7 +49,7 @@
         and
         <!-- TODO is the following in the wrong position? this is named 'from' and the box above is named 'to' -->
         <debounced-input
-          :id="'filter-from-'+filter.field.id" 
+          :id="'filter-to-'+filter.field.id"
           v-model.trim="filter.term2"
           :type="'text'"
           :placeholder="filter.placeholder.between[1]"

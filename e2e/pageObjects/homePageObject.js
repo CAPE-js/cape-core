@@ -39,8 +39,8 @@ export class HomePageObject extends BasePageObject {
         // date
         this.dateSearchMode = this.page.locator("#filter-mode-date");
         this.dateSearchTextBox = this.page.locator("#filter-date");
-        this.dateBetweenFirstTextBox = this.page.locator("#filter-to-date");
-        this.dateBetweenLastTextBox = this.page.locator("#filter-from-date");
+        this.dateBetweenFirstTextBox = this.page.locator("#filter-from-date");
+        this.dateBetweenLastTextBox = this.page.locator("#filter-to-date");
 
         // title
         this.titleSearchMode = this.page.locator("#filter-text-mode-title");
