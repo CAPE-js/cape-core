@@ -15,7 +15,7 @@
         <div class="switch switch-sm mb-3 mt-3">
           <input
             id="show-all-filters-top"
-            v-model="settings.show_all_filters"
+            v-model="filterState.show_all_filters"
             type="checkbox"
             class="switch"
           >
@@ -38,13 +38,13 @@
           <select
             id="order-key"
             key="sort_field"
-            v-model="settings.sort_field"
+            v-model="filterState.sort_field"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
             aria-label="Order field"
           >
             <option
-              v-for="field in settings.sort_fields"
+              v-for="field in filterState.sort_fields"
               :key="field"
               :value="field.id"
             >
@@ -54,7 +54,7 @@
           <select
             id="order-direction"
             key="sort_dir"
-            v-model="settings.sort_dir"
+            v-model="filterState.sort_dir"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
             aria-label="Order direction"
@@ -67,7 +67,7 @@
           </select>
         </div>
         <div
-          v-if="settings.show_all_filters"
+          v-if="filterState.show_all_filters"
           class="col-sm-6 text-sm-right"
         >
           <div>
@@ -82,7 +82,7 @@
           <div class="switch switch-sm mb-3 mt-3">
             <input
               id="show-all-filters-bottom"
-              v-model="settings.show_all_filters"
+              v-model="filterState.show_all_filters"
               type="checkbox"
               class="switch"
             >
@@ -93,7 +93,7 @@
       <div class="row mb-1">
         <div class="col">
           <cape-results
-            :options="settings"
+            :options="filterState"
             :results="filteredAndSortedResults"
           />
         </div>
@@ -130,7 +130,7 @@ export default {
     data: function () {
         var data = {};
         data.dataset = this.$root.defaultDataset;
-        data.settings = this.$root.defaultDatasetSettings;
+        data.filterState = this.$root.filterState;
         data.visible_filters = [];
         data.browse = null;
         return data;
@@ -180,11 +180,11 @@ export default {
             // this is called when a route is updated including on page load.
             // when the route is updated, update the filters
             if( to.name=="browse" && to.params.field != null && to.params.value != null ) {
-                this.settings.show_all_filters = false;
+                this.filterState.show_all_filters = false;
                 this.resetFilters();
                 this.browse= { field: to.params.field, value: to.params.value };
-                this.settings.filters_by_id[ this.browse.field ].mode = "is";
-                this.settings.filters_by_id[ this.browse.field ].term = this.browse.value;
+                this.filterState.filters_by_id[ this.browse.field ].mode = "is";
+                this.filterState.filters_by_id[ this.browse.field ].term = this.browse.value;
             } else {
                 this.browse = null;
             }
@@ -195,12 +195,12 @@ export default {
         },
         visibleFilters: function() {
             let visible_filters = [];
-            for (var i = 0; i < this.settings.filters.length; i++) {
-                var filter = this.settings.filters[i];
+            for (var i = 0; i < this.filterState.filters.length; i++) {
+                var filter = this.filterState.filters[i];
                 if( Object.prototype.hasOwnProperty.call( filter.field, 'search' ) && filter.field['search']===false ) {
                     continue;
                 }
-                if (( this.settings.show_all_filters 
+                if (( this.filterState.show_all_filters
                    || filter.field.quick_search 
                    || ( this.browse!=null && filter.field.id==this.browse.field) )) {
                     visible_filters.push( filter );
@@ -250,8 +250,8 @@ export default {
             // sort records based on sort field
             var component = this;
             results.sort( function(a,b) {
-                var aValue = a[component.settings.sort_field].value;
-                var bValue = b[component.settings.sort_field].value;
+                var aValue = a[component.filterState.sort_field].value;
+                var bValue = b[component.filterState.sort_field].value;
 
                 // if the value is a list of values, we sort by the first
                 if(Array.isArray(aValue)) { aValue = aValue[0]; }
@@ -264,15 +264,15 @@ export default {
                 aValue = aValue.toLowerCase();
                 bValue = bValue.toLowerCase();
                 if( aValue==bValue ) { return 0; }
-                if( component.settings.sort_dir == 'asc'  && aValue>bValue ) { return 1; }
-                if( component.settings.sort_dir == 'desc' && aValue<bValue ) { return 1; }
+                if( component.filterState.sort_dir == 'asc'  && aValue>bValue ) { return 1; }
+                if( component.filterState.sort_dir == 'desc' && aValue<bValue ) { return 1; }
                 return -1;
             });
             return results;
         },
         resetFilters: function() {
-            for (var i = 0; i < this.settings.filters.length; i++) {
-                this.settings.filters[i].reset();
+            for (var i = 0; i < this.filterState.filters.length; i++) {
+                this.filterState.filters[i].reset();
             }
         },
         ignoreEnter: function(e) { e.stopPropagation(); return true; }
