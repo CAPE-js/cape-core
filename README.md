@@ -25,7 +25,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Additional Vue Components
 
-To register additional vue components for the application...
+To register additional vue components for the application. Pass the vue configuration in
+a global variable in a script tag in your index.html page.
+
+    cape_extensions = { components: {} }
+    cape_extensions["components"]["<<<componentID>>>"] = { <<<component spec>>> }
+
+Please note, for any function calls use old JS function(){} format not ES6 ()=>{} format,
+as the old format will set "this" to the expected object.
 
 ## CSS Classes
 

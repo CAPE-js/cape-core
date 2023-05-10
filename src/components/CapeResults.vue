@@ -25,7 +25,7 @@
       >
         <summary-card :record="record" />
       </div>
-      <div class="floating-summary">
+      <div class="cape-floating-summary">
         <results-summary
           :results="results"
           :options="options"

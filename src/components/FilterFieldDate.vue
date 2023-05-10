@@ -43,7 +43,7 @@
           v-model.trim="filter.term"
           :type="'text'"
           :placeholder="filter.placeholder.between[0]"
-          class="form-control form-control-sm between-number-filter"
+          class="form-control form-control-sm cape-between-number-filter"
           label="First date in filter"
         />
         and
@@ -53,7 +53,7 @@
           v-model.trim="filter.term2"
           :type="'text'"
           :placeholder="filter.placeholder.between[1]"
-          class="form-control form-control-sm between-number-filter"
+          class="form-control form-control-sm cape-between-number-filter"
           label="Last date in filter"
         />
       </template>

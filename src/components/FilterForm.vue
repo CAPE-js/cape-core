@@ -1,7 +1,7 @@
 
 
 <template>
-  <div class="filter-form">
+  <div class="cape-filter-form">
     <div
       v-for="filter in filters"
       :key="filter.field.id"
