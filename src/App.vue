@@ -87,14 +87,25 @@ TODO fix load error messages
         this.datasets_by_id = {};
         // populate records by ID. Nb. This is using the wrong ID data for now. TODO
         for (let ds_i = 0; ds_i < this.siteData.datasets.length; ++ds_i) {
-            let dataset = {};
+            // build the dataset to be consumed by the website.
+            // contains
 
-            let source = this.siteData.datasets[ds_i];
+            // config - the config from the json data
+            // raw_records - records from the json data. Used when downloading json
+            // fields_by_id - dictonary of fields keyed on string identifier (value is the field details).
+            // records_by_id - dictionary of processed records keyed on value of the id field. 
+            // records - array of processed records
+            // Notes:
+            //  Processed records is a dictionary mapping field id (e.g. author) to an object: { value (e.g. 'David Pepper') , field (field configuration from config.json)
+            let destinationDataset = {};
+
+            // single dataset in config.json file
+            let sourceDataset = this.siteData.datasets[ds_i];
 
             // add config to dataset
-            dataset.config = source.config;
+            destinationDataset.config = sourceDataset.config;
             // this is used for outputting as a JSON dataset
-            dataset.raw_records = source.records;
+            destinationDataset.raw_records = sourceDataset.records;
 
             // initialise enum registries
             let enums = {};
@@ -102,11 +113,11 @@ TODO fix load error messages
             let intmin = {};
 
             // add fields mapped by ID, and populate the filter object
-            dataset.fields_by_id = {};
+            destinationDataset.fields_by_id = {};
 
-            for (let field_i = 0; field_i < source.config.fields.length; ++field_i) {
-                let field = source.config.fields[field_i];
-                dataset.fields_by_id[field.id] = field;
+            for (let field_i = 0; field_i < sourceDataset.config.fields.length; ++field_i) {
+                let field = sourceDataset.config.fields[field_i];
+                destinationDataset.fields_by_id[field.id] = field;
 
                 if (field.type == "enum") {
                     // init enum registry for an enum field
@@ -119,24 +130,24 @@ TODO fix load error messages
             }
 
             // create a lookup table for record by id
-            dataset.records_by_id = {};
-            dataset.records = [];
+            destinationDataset.records_by_id = {};
+            destinationDataset.records = [];
             let prev_id=null;
-            source.records.sort( (a,b)=>{
-                if( Number(a[dataset.config.id_field]) < Number(b[dataset.config.id_field]) ) {
+            sourceDataset.records.sort( (a,b)=>{
+                if( Number(a[destinationDataset.config.id_field]) < Number(b[destinationDataset.config.id_field]) ) {
                     return -1;
                 }
-                if( Number(a[dataset.config.id_field]) > Number(b[dataset.config.id_field]) ) {
+                if( Number(a[destinationDataset.config.id_field]) > Number(b[destinationDataset.config.id_field]) ) {
                     return 1;
                 }
                 return 0;
             });
                 
-            for (let record_i = 0; record_i < source.records.length; ++record_i) {
-                let source_record = source.records[record_i];
+            for (let record_i = 0; record_i < sourceDataset.records.length; ++record_i) {
+                let source_record = sourceDataset.records[record_i];
                 let record = {};
-                for (let field_i = 0; field_i < source.config.fields.length; ++field_i) {
-                    let field = source.config.fields[field_i];
+                for (let field_i = 0; field_i < sourceDataset.config.fields.length; ++field_i) {
+                    let field = sourceDataset.config.fields[field_i];
                     let value = source_record[field.id];
                     if (field.type == 'date' && value) {
                         // convert 25/12/2001 to 2001-12-25 TODO: this should use sprintf or date functions
@@ -168,13 +179,13 @@ TODO fix load error messages
 
                     record[field.id] = {value: value, field: field};
                 }
-                let id = source_record[dataset.config.id_field];
+                let id = source_record[destinationDataset.config.id_field];
                 if( prev_id !== null ) {
                     record.prev = prev_id;
-                    dataset.records_by_id[prev_id].next = id;
+                    destinationDataset.records_by_id[prev_id].next = id;
                 } 
-                dataset.records_by_id[id] = record;
-                dataset.records.push(record);
+                destinationDataset.records_by_id[id] = record;
+                destinationDataset.records.push(record);
                 prev_id = id;
             }
 
@@ -182,7 +193,7 @@ TODO fix load error messages
             let enum_fields = Object.keys(enums);
             for (let enum_i = 0; enum_i < enum_fields.length; enum_i++) {
                 let fieldname = enum_fields[enum_i];
-                dataset.fields_by_id[fieldname].options = Object.keys(enums[fieldname]).sort(function(a, b) {
+                destinationDataset.fields_by_id[fieldname].options = Object.keys(enums[fieldname]).sort(function(a, b) {
                     let a_value = a.toLowerCase();
                     let b_value = b.toLowerCase();
                     return a_value.localeCompare(b_value);
@@ -193,21 +204,38 @@ TODO fix load error messages
             for (let int_i = 0; int_i < int_fields.length; int_i++) {
                 let fieldname = int_fields[int_i];
                 // nb. force these to be strings
-                dataset.fields_by_id[fieldname].min = ""+intmin[fieldname];
-                dataset.fields_by_id[fieldname].max = ""+intmax[fieldname];
+                destinationDataset.fields_by_id[fieldname].min = ""+intmin[fieldname];
+                destinationDataset.fields_by_id[fieldname].max = ""+intmax[fieldname];
             }
 
-            /* Init options for this dataset, used by subcomponents */
+            // add dataset to our dataset collection
+            this.datasets_by_id[destinationDataset.config.id] = destinationDataset;
+
+            // first dataset becomes the default
+            if (ds_i == 0) {
+                this.defaultDataset = destinationDataset;                
+            }
+
+
+
+            // ==============
+            // settings
+
+            /* Init settings for this dataset, used by subcomponents */
             let settings = {};
             settings.filters_by_id = {};
             settings.filters = [];
             settings.show_all_filters = false;
     
+
             let free_text_filter = CapeTools.makeFilter( { label:"Search", quick_search:true, type:"freetext", id:"freetext", description:"Search for terms anywhere in the record" } );
             settings.filters.push(free_text_filter);
-            let field_ids = Object.keys( dataset.fields_by_id );
+            let field_ids = Object.keys( destinationDataset.fields_by_id );
+            // iterate over fields and make filter per field - add to settings
             for (let i=0; i<field_ids.length; ++i ) {
-                let field = dataset.fields_by_id[field_ids[i]];
+                let field = destinationDataset.fields_by_id[field_ids[i]];
+                // don't include filter if it is set to false (undefined equates to true)
+                // refactor? 
                 if( field.filter === undefined ) { 
                     field.filter = true; 
                 }
@@ -219,24 +247,19 @@ TODO fix load error messages
                     continue; 
                 }
                 settings.filters_by_id[field.id] = filter;
-                settings.filters.push(filter);
+                settings.filters.push(filter);                
             }
     
             // expand sort field names into actual field objects for MVC
             settings.sort_dir = "asc"; // or desc
             settings.sort_fields = [];
-            for( let i=0; i<dataset.config.sort.length; ++i ) {
-                 let field = dataset.fields_by_id[ dataset.config.sort[i] ];
+            for( let i=0; i<destinationDataset.config.sort.length; ++i ) {
+                 let field = destinationDataset.fields_by_id[ destinationDataset.config.sort[i] ];
                  settings.sort_fields.push( field );
             }
             settings.sort_field = settings.sort_fields[0].id;
 
-            // add dataset to our dataset collection
-            this.datasets_by_id[dataset.config.id] = dataset;
-
-            // first dataset becomes the default
             if (ds_i == 0) {
-                this.defaultDataset = dataset;
                 this.defaultDatasetSettings = settings;
             }
         }
