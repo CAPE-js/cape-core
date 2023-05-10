@@ -22,6 +22,23 @@
     <script src="./js/respond.min.js"></script>
     <![endif]-->
 
+    <script>
+        cape_extensions = { components: {} }
+        cape_extensions["components"]["recordCount"] = {
+            data: function () {
+                let data = {};
+                data.dataset = this.$root.defaultDataset;
+                return data;
+            },
+            computed: {
+                recordCount: function () {
+                    return this.dataset.records.length;
+                }
+            },
+            template: "<span>{{ recordCount }}</span>"
+        }
+    </script>
+
 </head>
 <body>
     <link href="/site.css" rel="stylesheet">
@@ -65,8 +82,8 @@
 </script>
 
 <script type="text/x-template" id="templateIntro">
-    <p class="intro-text">
-        <strong>Your intro text goes here.</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis feugiat nunc vel interdum. Duis vehicula congue imperdiet. Vivamus sit amet lacus lectus. Proin nec placerat eros, nec eleifend sapien. Suspendisse in ante placerat, sodales arcu id, ornare odio.
+    <p class="intro-text" data-testid="intro-text">
+	<strong>Your intro text goes here.</strong> This repository contains <recordCount /> records. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis feugiat nunc vel interdum. Duis vehicula congue imperdiet. Vivamus sit amet lacus lectus. Proin nec placerat eros, nec eleifend sapien. Suspendisse in ante placerat, sodales arcu id, ornare odio.
     </p>
 </script>
 
@@ -209,4 +226,3 @@
         </div>
     </div>
 </script>
-

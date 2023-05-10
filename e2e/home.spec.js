@@ -581,5 +581,12 @@ test.describe('The homepage', () => {
         });
         
     });
-    
+
+    test.describe('extension component', () => {
+        test('shows the correct record count', async () => {
+            const introText = await homePage.getIntroText();
+            expect(introText).toContain("This repository contains 4 records.");
+        });
+    });
+
 });

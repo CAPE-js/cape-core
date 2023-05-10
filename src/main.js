@@ -81,6 +81,16 @@ fetch( data_location ) // eslint-disable-line
         environmentStore.appStatus = app_status; // eslint-disable-line
         environmentStore.buildId = build_id; // eslint-disable-line
 
+        // eslint-disable-next-line no-undef
+        if (cape_extensions && Object.prototype.hasOwnProperty.call(cape_extensions, 'components')) {
+            // eslint-disable-next-line no-undef
+            const extensionIds = Object.keys( cape_extensions["components"] );
+            extensionIds.forEach(componentId => {
+                // eslint-disable-next-line no-undef
+                app.component(componentId, cape_extensions["components"][componentId] );
+            });
+        }
+
         app.mount('#app')
     });
 

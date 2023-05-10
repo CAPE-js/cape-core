@@ -11,8 +11,11 @@ export class HomePageObject extends BasePageObject {
 
         // warning
         this.nonProdWarning = this.page.locator("#non-prod-warning");
-        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".dismissable");        
-        
+        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".cape-dismissable");
+
+        // intro
+        this.introText = page.getByTestId('intro-text');
+
         // general form controls
         this.newSearchButtonTop = this.page.locator("#new-search-top");
         this.newSearchButtonBottom = this.page.locator("#new-search-bottom");
@@ -85,6 +88,11 @@ export class HomePageObject extends BasePageObject {
 
     async dismissNonProdWarning() {
         await this.nonProdWarningCloseButton.click();    
+    }
+
+    // intro text
+    async getIntroText() {
+        return await this.introText.innerText();
     }
 
     // advanced search
