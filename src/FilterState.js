@@ -3,11 +3,10 @@ import {CapeTools} from "@/CapeTools";
 
 export class FilterState {
 
-
     constructor(dataset) {
         this.filters_by_id = {};         // filter objects by ID
         this.filters = [];               // filter objects in order
-        this.show_all_filters = false;   // are advanced search fields being used
+        this.show_all_filters = true;   // are advanced search fields being used
         this.sort_dir = "asc";           // or desc. sort direction.
         this.sort_fields = [];           // fields that may be used for sorting
         this.sort_field = "";            // id of current sort fields
