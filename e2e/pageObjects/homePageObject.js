@@ -11,7 +11,10 @@ export class HomePageObject extends BasePageObject {
 
         // warning
         this.nonProdWarning = this.page.locator("#non-prod-warning");
-        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".dismissable");        
+        this.nonProdWarningCloseButton = this.nonProdWarning.locator(".dismissable");
+
+        // intro
+        this.introText = this.page.locator(".introText")
         
         // general form controls
         this.newSearchButtonTop = this.page.locator("#new-search-top");

@@ -581,5 +581,10 @@ test.describe('The homepage', () => {
         });
         
     });
-    
+
+    test.describe('extension component', () => {
+        test('shows the correct record count', async () => {
+
+    This repository contains <recordCount /> records.
+
 });
