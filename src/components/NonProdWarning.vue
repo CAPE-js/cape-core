@@ -49,7 +49,7 @@ export default {
         case "test":
           return "test";
         default:
-          throw new "Invalid appStatus";
+          throw new Error("Invalid appStatus");
       }
     },
 
