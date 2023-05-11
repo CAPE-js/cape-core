@@ -15,7 +15,7 @@
         <div class="switch switch-sm mb-3 mt-3">
           <input
             id="show-all-filters-top"
-            v-model="filterState.show_all_filters"
+            v-model="filterFormState.show_all_filters"
             type="checkbox"
             class="switch"
           >
@@ -38,13 +38,13 @@
           <select
             id="order-key"
             key="sort_field"
-            v-model="filterState.sort_field"
+            v-model="filterFormState.sort_field"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
             aria-label="Order field"
           >
             <option
-              v-for="field in filterState.sort_fields"
+              v-for="field in filterFormState.sort_fields"
               :key="field"
               :value="field.id"
             >
@@ -54,7 +54,7 @@
           <select
             id="order-direction"
             key="sort_dir"
-            v-model="filterState.sort_dir"
+            v-model="filterFormState.sort_dir"
             style="width:auto; display: inline-block"
             class="form-control form-control-sm"
             aria-label="Order direction"
@@ -68,7 +68,7 @@
           </select>
         </div>
         <div
-          v-if="filterState.show_all_filters"
+          v-if="filterFormState.show_all_filters"
           class="col-sm-6 text-sm-right"
         >
           <div>
@@ -83,7 +83,7 @@
           <div class="switch switch-sm mb-3 mt-3">
             <input
               id="show-all-filters-bottom"
-              v-model="filterState.show_all_filters"
+              v-model="filterFormState.show_all_filters"
               type="checkbox"
               class="switch"
             >
@@ -94,7 +94,7 @@
       <div class="row mb-1">
         <div class="col">
           <cape-results
-            :options="filterState"
+            :options="filterFormState"
             :results="filteredAndSortedResults"
           />
         </div>
@@ -116,11 +116,10 @@
 </template>
 
 <script>
-//import jQuery from 'jquery'
 import FilterForm from './FilterForm.vue'
 import CapeResults from './CapeResults.vue'
 import CapeIntro from './CapeIntro.vue'
-import {CapeTools} from "@/CapeTools";
+import {FilterBuilder} from "@/builders/FilterBuilder";
 
 export default {
   name: "HomePage",
@@ -132,9 +131,9 @@ export default {
     });
   },
   data: function () {
-    var data = {};
+    const data = {};
     data.dataset = this.$root.defaultDataset;
-    data.filterState = this.$root.filterState;
+    data.filterFormState = this.$root.filterFormState;
     data.visible_filters = [];
     data.browse = null;
     return data;
@@ -142,8 +141,8 @@ export default {
   computed: {
     // more efficient to have this as a computed as the results are cached
     filteredAndSortedResults: function () {
-      var results = this.filterResults();
-      results = this.sortResults(results);
+      const unsortedResults = this.filterResults()
+      const results = this.sortResults(unsortedResults);
       // argh, this is a side effect! It lets the record view know the prev and next result
       // eslint-disable-next-line
       this.$root.currentSearchResults = {};
@@ -166,7 +165,7 @@ export default {
       // triggered when the fragment changes
       this.onRouteUpdate(to);
     },
-    'filterState.show_all_filters': function () {
+    'filterFormState.show_all_filters': function () {
       this.setVisibleFilters();
     }
   },
@@ -184,11 +183,11 @@ export default {
       // this is called when a route is updated including on page load.
       // when the route is updated, update the filters
       if (to.name == "browse" && to.params.field != null && to.params.value != null) {
-        this.filterState.show_all_filters = false;
+        this.filterFormState.show_all_filters = false;
         this.resetFilters();
         this.browse = {field: to.params.field, value: to.params.value};
-        this.filterState.filters_by_id[this.browse.field].mode = "is";
-        this.filterState.filters_by_id[this.browse.field].term = this.browse.value;
+        this.filterFormState.filters_by_id[this.browse.field].mode = "is";
+        this.filterFormState.filters_by_id[this.browse.field].term = this.browse.value;
       } else {
         this.browse = null;
       }
@@ -199,12 +198,12 @@ export default {
     },
     visibleFilters: function () {
       let visible_filters = [];
-      for (let i = 0; i < this.filterState.filters.length; i++) {
-        const filter = this.filterState.filters[i];
+      for (let i = 0; i < this.filterFormState.filters.length; i++) {
+        const filter = this.filterFormState.filters[i];
         if (Object.prototype.hasOwnProperty.call(filter.field, 'search') && filter.field['search'] === false) {
           continue;
         }
-        if ((this.filterState.show_all_filters
+        if ((this.filterFormState.show_all_filters
             || filter.field.quick_search
             || (this.browse != null && filter.field.id == this.browse.field))) {
           visible_filters.push(filter);
@@ -231,8 +230,8 @@ export default {
       this.dataset.records.forEach((record) => {
         // iterate over each active filter
         let all_match = true;
-        active_filters.forEach( (filterState)=>{
-          const filter = CapeTools.buildFilterForFilterState(filterState);
+        active_filters.forEach( (filterFormState)=>{
+          const filter = FilterBuilder.build(filterFormState);
           if (!filter.matchesRecord(record)) {
             all_match = false;
           }
@@ -249,8 +248,8 @@ export default {
       // sort records based on sort field
       const component = this;
       results.sort(function (a, b) {
-        let aValue = a[component.filterState.sort_field].value;
-        let bValue = b[component.filterState.sort_field].value;
+        let aValue = a[component.filterFormState.sort_field].value;
+        let bValue = b[component.filterFormState.sort_field].value;
 
         // if the value is a list of values, we sort by the first
         if (Array.isArray(aValue)) {
@@ -273,10 +272,10 @@ export default {
         if (aValue == bValue) {
           return 0;
         }
-        if (component.filterState.sort_dir == 'asc' && aValue > bValue) {
+        if (component.filterFormState.sort_dir == 'asc' && aValue > bValue) {
           return 1;
         }
-        if (component.filterState.sort_dir == 'desc' && aValue < bValue) {
+        if (component.filterFormState.sort_dir == 'desc' && aValue < bValue) {
           return 1;
         }
         return -1;
@@ -284,7 +283,7 @@ export default {
       return results;
     },
     resetFilters: function () {
-      this.filterState.filters.forEach((filter) => {
+      this.filterFormState.filters.forEach((filter) => {
         filter.reset()
       })
     },

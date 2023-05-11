@@ -1,5 +1,5 @@
 import {Dataset} from "@/models/Dataset";
-import { distinct, caseInsensitiveLocalComparer, notEmptyOrNull } from "./utils/collectionUtils";
+import { distinct, caseInsensitiveLocalComparer, notEmptyOrNull } from "@/utils/collectionUtils";
 
 export class DatasetBuilder {
 
@@ -59,9 +59,10 @@ export class DatasetBuilder {
                         value = "" + value;
                     }
                 }
-
                 record[field.id] = {value: value, field: field};
             }
+
+            // set next/prev id and store record
             let id = source_record[dataset.config.id_field];
             if (prev_id !== null) {
                 record.prev = prev_id;

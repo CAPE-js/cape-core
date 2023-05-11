@@ -41,8 +41,8 @@ import CapeDataset from './components/CapeDataset.vue'
 import {useEnvironmentStore} from './stores/environmentStore';
 import {mapState} from 'pinia';
 import CapeHeader from './components/CapeHeader.vue';
-import {FilterFormState} from "@/models/FilterFormState";
 import {DatasetBuilder} from "@/builders/DatasetBuilder";
+import {FilterFormStateBuilder} from "@/builders/FilterFormStateBuilder";
 
 
 export default {
@@ -98,7 +98,7 @@ export default {
         this.defaultDataset = destinationDataset;
       }
     }
-    this.filterState = new FilterFormState(this.defaultDataset);
+    this.filterFormState = FilterFormStateBuilder.build( this.defaultDataset);
   }
 }
 
