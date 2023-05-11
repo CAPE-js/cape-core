@@ -41,8 +41,8 @@ import CapeDataset from './components/CapeDataset.vue'
 import {useEnvironmentStore} from './stores/environmentStore';
 import {mapState} from 'pinia';
 import CapeHeader from './components/CapeHeader.vue';
-import {Dataset} from "./models/Dataset";
 import {FilterFormState} from "@/models/FilterFormState";
+import {DatasetBuilder} from "@/builders/DatasetBuilder";
 
 
 export default {
@@ -88,7 +88,7 @@ export default {
     // populate records by ID. Nb. This is using the wrong ID data for now. TODO
     for (let ds_i = 0; ds_i < this.siteData.datasets.length; ++ds_i) {
 
-      let destinationDataset = new Dataset(this.siteData.datasets[ds_i]);
+      let destinationDataset = DatasetBuilder.build(this.siteData.datasets[ds_i]);
 
       // add dataset to our dataset collection
       this.datasets_by_id[destinationDataset.config.id] = destinationDataset;
