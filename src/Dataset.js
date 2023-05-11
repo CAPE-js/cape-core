@@ -81,7 +81,7 @@ export class Dataset {
             this.records.push(record);
             prev_id = id;
         })
-        
+
         return this;
     }
 

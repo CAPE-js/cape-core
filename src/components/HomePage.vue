@@ -162,7 +162,7 @@ export default {
             // triggered when the fragment changes
             this.onRouteUpdate( to );
         },
-        'settings.show_all_filters': function() {
+        'filterState.show_all_filters': function() {
             this.setVisibleFilters();
         }
     },
@@ -205,7 +205,7 @@ export default {
                    || ( this.browse!=null && filter.field.id==this.browse.field) )) {
                     visible_filters.push( filter );
                 }
-            } 
+            }
             return visible_filters;
         },
         activeFilters: function() {  
