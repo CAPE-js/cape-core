@@ -1,3 +1,5 @@
+import { distinct, caseInsensitiveLocalComparer, notEmptyOrNull } from "./utils/collectionUtils";
+
 
 export class Dataset {
 
@@ -85,41 +87,24 @@ export class Dataset {
         return this;
     }
 
+    // sets the field.min and field.max values to the smallest and largest numeric values in that field.
     setIntegerFieldMinMax(sourceDataset, field) {
-        let intmin = null;
-        let intmax = null;
-        sourceDataset.records.forEach((source_record) => {
-            const value = parseInt(source_record[field.id]);
-            if (!isNaN(value)) {
-                if (intmin == null || value < intmin) {
-                    intmin = value;
-                }
-                if (intmax == null || value > intmax) {
-                    intmax = value;
-                }
-            }
-        });
-        field.min = "" + intmin;
-        field.max = "" + intmax;
+        const numbers = sourceDataset.records
+            .map(record => parseInt(record[field.id]))
+            .filter(item => !isNaN(item));
+        
+        // get the max and min values
+        field.min = Math.min(...numbers).toString() ?? null;
+        field.max = Math.max(...numbers).toString() ?? null;
     }
 
+    // sets the field.options value to a distinct set of values from that field.
     setEnumFieldOptions(sourceDataset, field) {
-        let enums = {};
-        sourceDataset.records.forEach((source_record) => {
-            let enum_values = source_record[field.id];
-            if (!field.multiple) {
-                enum_values = [enum_values];
-            }
-            enum_values.forEach((enum_value) => {
-                if (enum_value != "" && enum_value != null) {
-                    enums[enum_value] = true;
-                }
-            })
-        })
-        field.options = Object.keys(enums).sort(function (a, b) {
-            let a_value = a.toLowerCase();
-            let b_value = b.toLowerCase();
-            return a_value.localeCompare(b_value);
-        })
+        field.options = sourceDataset.records
+                        .map(record => record[field.id]) 
+                        .flat() 
+                        .filter(notEmptyOrNull) 
+                        .filter(distinct) 
+                        .sort(caseInsensitiveLocalComparer);
     }
 }
