@@ -6,27 +6,27 @@ export default {
     props: { typedValue: { type: Object, default: null }, linkValue: { type: Boolean, default: true } },
     methods: {
         renderSingleValue: function( value ) {
-            var rvalue = value;
+            let rvalue = value;
             if( this.typedValue.field.type == 'date' ) {
-                var day = moment( rvalue );
+                const day = moment( rvalue );
                 rvalue = day.format("dddd, D MMMM YYYY");
             }
             if( this.linkValue ) {
-                var path = "/browse/" + this.typedValue.field.id + "/" + value;
+                const path = "/browse/" + this.typedValue.field.id + "/" + value;
                 rvalue = h( "router-link", {attrs:{to: path}}, rvalue );
             }
             return rvalue;
         }
     },
     render: function () {
-        var rendered_value;
-        var classList = ["field-value"];
+        let rendered_value;
+        let classList = ["field-value"];
         if (!this.typedValue.value || (this.typedValue.field.multiple===true&&this.typedValue.value.length==0)) {
             rendered_value = "unspecified";
             classList.push( "field-null" );
         } else if (this.typedValue.field.multiple === true) {
             rendered_value = [];
-            for (var i = 0; i < this.typedValue.value.length; ++i) {
+            for (let i = 0; i < this.typedValue.value.length; ++i) {
                 if (rendered_value.length) {
                     rendered_value.push("; ");
                 }

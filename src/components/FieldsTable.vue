@@ -36,7 +36,7 @@
 export default {
     name: "FieldsTable", 
     data: function () {
-        var data = {};
+        const data = {};
         data.dataset = this.$root.defaultDataset;
         return data;
     }
