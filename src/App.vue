@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cape-header/>
+    <cape-header />
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
@@ -19,9 +19,8 @@
           <div class="card bg-primary text-white my-2">
             <div class="card-body text-center">
               <div
-                  class="spinner-border"
-                  role="status"
-              >
+                class="spinner-border"
+                role="status">
                 <span class="sr-only">Loading...</span>
               </div>
               <p>Please wait while the data loads.</p>
@@ -42,8 +41,8 @@ import CapeDataset from './components/CapeDataset.vue'
 import {useEnvironmentStore} from './stores/environmentStore';
 import {mapState} from 'pinia';
 import CapeHeader from './components/CapeHeader.vue';
-import {Dataset} from "./Dataset";
-import {FilterState} from "@/FilterState";
+import {Dataset} from "./models/Dataset";
+import {FilterFormState} from "@/models/FilterFormState";
 
 
 export default {
@@ -88,6 +87,7 @@ export default {
     this.datasets_by_id = {};
     // populate records by ID. Nb. This is using the wrong ID data for now. TODO
     for (let ds_i = 0; ds_i < this.siteData.datasets.length; ++ds_i) {
+
       let destinationDataset = new Dataset(this.siteData.datasets[ds_i]);
 
       // add dataset to our dataset collection
@@ -98,7 +98,7 @@ export default {
         this.defaultDataset = destinationDataset;
       }
     }
-    this.filterState = new FilterState(this.defaultDataset);
+    this.filterState = new FilterFormState(this.defaultDataset);
   }
 }
 

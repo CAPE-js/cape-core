@@ -4,21 +4,40 @@ import { IntegerFilter } from "./filters/IntegerFilter.js";
 import { EnumFilter } from  "./filters/EnumFilter.js";
 import { DateFilter } from "./filters/DateFilter.js";
 import { FreeTextFilter } from "./filters/FreeTextFilter.js";
+import {TextFilterState} from "@/models/TextFilterState";
+import {IntegerFilterState} from "@/models/IntegerFilterState";
+import {EnumFilterState} from "@/models/EnumFilterState";
+import {DateFilterState} from "@/models/DateFilterState";
+import {FreeTextFilterState} from "@/models/FreeTextFilterState";
 
 // utility functions
 export class CapeTools {
    
-    // filter factory
-    static makeFilter( field ) {
+    // filter state factory
+    static buildFilterState(field) {
         switch (field.type) {
-            case "text":    return new TextFilter( field ); 
-            case "integer": return new IntegerFilter( field ); 
-            case "enum":    return new EnumFilter( field ); 
-            case "date":    return new DateFilter( field ); 
-            case "freetext":return new FreeTextFilter( field ); 
+            case "text":    return new TextFilterState( field );
+            case "integer": return new IntegerFilterState( field );
+            case "enum":    return new EnumFilterState( field );
+            case "date":    return new DateFilterState( field );
+            case "freetext":return new FreeTextFilterState( field );
             case "ignore":  return false;
         }
-        console.warn("Could not create a search filter for field type '"+field.type+"'");
+        console.warn("Could not create a search filter state for field type '"+field.type+"'");
+        return false;
+    }
+
+    // filter factory
+    static buildFilterForFilterState(state) {
+        switch (state.field.type) {
+            case "text":    return new TextFilter( state );
+            case "integer": return new IntegerFilter( state );
+            case "enum":    return new EnumFilter( state );
+            case "date":    return new DateFilter( state );
+            case "freetext":return new FreeTextFilter( state );
+            case "ignore":  return false;
+        }
+        console.warn("Could not create a search filter for field type '"+state.field.type+"'");
         return false;
     }
 
