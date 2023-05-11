@@ -1,4 +1,4 @@
-import { CapeTools } from '../CapeTools.js'
+import { CapeTools } from '../utils/CapeTools.js'
 /*
  *  Filter
  *  abstract base class, should not be instantiated directly

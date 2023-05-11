@@ -5,7 +5,7 @@ import App from './App.vue'
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { defineComponent } from 'vue'
 import jQuery from 'jquery'
-import { CapeTools } from './CapeTools.js'
+import { CapeTools } from './utils/CapeTools.js'
 
 import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'

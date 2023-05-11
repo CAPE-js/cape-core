@@ -1,4 +1,4 @@
-import {CapeTools} from '../CapeTools.js'
+import {CapeTools} from '../utils/CapeTools.js'
 import {Filter} from "./Filter.js";
 
 export class FreeTextFilter extends Filter {
