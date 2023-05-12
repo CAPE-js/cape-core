@@ -20,7 +20,7 @@ export default {
     name: "RecordPage",
     components: { IndexCard, NoRecord },
     data: function () {
-        var data = {};
+        const data = {};
         data.dataset = this.$root.defaultDataset;
         return data;
     }

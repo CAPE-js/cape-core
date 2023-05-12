@@ -6,7 +6,12 @@ module.exports = {
     // 'plugin:vue/recommended' // Use this if you are using Vue.js 2.x.
   ],
   rules: {
-    'vue/no-mutating-props': 'off'
+    'vue/no-mutating-props': 0,
+    'vue/html-closing-bracket-newline': 0,
+    'vue/html-closing-bracket-spacing': 0
+  },
+  parserOptions: {
+    ecmaVersion: 2022,
   }
 }
 

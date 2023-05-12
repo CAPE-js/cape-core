@@ -1,26 +1,7 @@
 
-import { TextFilter } from "./filters/TextFilter.js";
-import { IntegerFilter } from "./filters/IntegerFilter.js";
-import { EnumFilter } from  "./filters/EnumFilter.js";
-import { DateFilter } from "./filters/DateFilter.js";
-import { FreeTextFilter } from "./filters/FreeTextFilter.js";
 
 // utility functions
 export class CapeTools {
-   
-    // filter factory
-    static makeFilter( field ) {
-        switch (field.type) {
-            case "text":    return new TextFilter( field ); 
-            case "integer": return new IntegerFilter( field ); 
-            case "enum":    return new EnumFilter( field ); 
-            case "date":    return new DateFilter( field ); 
-            case "freetext":return new FreeTextFilter( field ); 
-            case "ignore":  return false;
-        }
-        console.warn("Could not create a search filter for field type '"+field.type+"'");
-        return false;
-    }
 
     static is_object(value) {
         return value && typeof value === 'object' && value.constructor === Object;
