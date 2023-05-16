@@ -20,7 +20,7 @@ export class DetailsPageObject extends BasePageObject {
     }
 
     async getFieldValueText(index) {
-        return await this.page.locator(".field-value").nth(index).innerText();
+        return await this.page.locator(".cape-field-value").nth(index).innerText();
     }
 
     async getRecordNumberText() {
