@@ -81,7 +81,7 @@ export class HomePageObject extends BasePageObject {
         this.orderDirection = this.page.locator("#order-direction");
 
         // search results
-        this.recordCountMessages = this.page.locator('.record-count');
+        this.recordCountMessages = this.page.locator('.cape-record-count');
         this.results = this.page.locator('#results');
         this.noMatchingRecordsMessage = this.page.locator('#cape-no-matching-results');
     }

@@ -20,10 +20,10 @@ export default {
     },
     render: function () {
         let rendered_value;
-        let classList = ["field-value"];
+        let classList = ["cape-field-value"];
         if (!this.typedValue.value || (this.typedValue.field.multiple===true&&this.typedValue.value.length==0)) {
             rendered_value = "unspecified";
-            classList.push( "field-null" );
+            classList.push( "cape-field-null" );
         } else if (this.typedValue.field.multiple === true) {
             rendered_value = [];
             for (let i = 0; i < this.typedValue.value.length; ++i) {

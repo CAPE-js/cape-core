@@ -1,18 +1,18 @@
 
 <template>
-  <div class="results-summary">
+  <div class="cape-results-summary">
     <div class="card mb-1">
       <div class="card-body">
         <div>
           <div
             v-if="visibleRecordsCount==results.length"
-            class="record-count"
+            class="cape-record-count"
           >
             Showing all {{ visibleRecordsCount }} matching records.
           </div>
           <div
             v-else
-            class="record-count"
+            class="cape-record-count"
           >
             Showing first {{ visibleRecordsCount }} of {{ results.length }} matching records.
           </div>
