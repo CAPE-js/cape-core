@@ -1,5 +1,3 @@
-import {FilterStateBuilder} from "@/builders/FilterStateBuilder";
-
 export class FilterFormState {
 
     filters_by_id = {};         // filter objects by ID
