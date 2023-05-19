@@ -5,15 +5,27 @@ import App from './App.vue'
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { defineComponent } from 'vue'
 import jQuery from 'jquery'
+// @ts-ignore TODO convert CapeTools to typescript
 import { CapeTools } from './utils/CapeTools.js'
+import * as localSettings from '../public/local'
 
 import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'
 import FieldsTable from './components/FieldsTable.vue'
 import { useEnvironmentStore } from './stores/environmentStore';
 
-fetch( data_location ) // eslint-disable-line
-    .then( response => response.json() ) 
+// todo move elsewhere?
+class pageData {
+
+    readonly dataset: any;
+
+    constructor(dataset: any) {
+        this.dataset = dataset
+    }    
+}
+
+fetch(localSettings.data_location)
+    .then( response => response.json()) 
     .then( response => { 
 
         let pages = [ 'data' ];
@@ -21,31 +33,30 @@ fetch( data_location ) // eslint-disable-line
             pages = pages.concat( response.datasets[0]['config']['extra_pages'] );
         }
 
-        let routes = [
+        const routes = [
             {name: 'root',   path: '/',                     component: HomePage},
             {name: 'record', path: '/record/:id',           component: RecordPage},
             {name: 'browse', path: '/browse/:field/:value', component: HomePage},
         ];
+
         pages.forEach( pageId => {
-            let templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
-            // eslint-disable-next-line
-            let component = defineComponent( {
+            const templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
+            const component = defineComponent( {
                 name: pageId + "-page",
                 components: { FieldsTable },
-                data: function () {
-                    let data = {};
-                    data.dataset = this.$root.defaultDataset;
-                    return data;
+                data: function (): pageData {
+                    // @ts-ignore TODO replace with state object
+                    return new pageData(this.$root.defaultDataset);                    
                 },
                 methods: {
                     downloadJSON: function() {
-                        let filename = this.dataset.config.id+".json";
+                        const filename = this.dataset.config.id+".json";
                         CapeTools.download( filename, JSON.stringify(this.dataset.raw_records), "application/json" );
                     },
                     downloadCSV: function() {
-                        let table = CapeTools.records_to_table( this.dataset.config.fields, this.dataset.records );
-                        let csv = CapeTools.table_to_csv( table );
-                        let filename = this.dataset.config.id+".csv";
+                        const table = CapeTools.records_to_table( this.dataset.config.fields, this.dataset.records );
+                        const csv = CapeTools.table_to_csv( table );
+                        const filename = this.dataset.config.id+".csv";
                         CapeTools.download( filename, csv, "text/csv;charset=utf-8" );
                     }
                 }, 
@@ -54,7 +65,7 @@ fetch( data_location ) // eslint-disable-line
             routes.push( { name: pageId, path: '/'+pageId, component: component } );
         });
             
-        let capeRouter = createRouter({ 
+        const capeRouter = createRouter({ 
             routes: routes, 
             history: createWebHashHistory(), 
             linkActiveClass: 'active', 
@@ -64,8 +75,10 @@ fetch( data_location ) // eslint-disable-line
         capeRouter.afterEach((to, from) => {
             if( from.name !== null ) {
                 // coming from an existing route, rather than a first time page load
-                let content_vertical_offset = jQuery("#app").offset().top;
-                jQuery('html,body').scrollTop(content_vertical_offset);
+                const content_vertical_offset = jQuery("#app")?.offset()?.top;
+                if (content_vertical_offset) {
+                    jQuery('html,body').scrollTop(content_vertical_offset);
+                }                
             }
         });
 
@@ -78,15 +91,15 @@ fetch( data_location ) // eslint-disable-line
 
         // read data from local.js and populate the values into the environment store
         const environmentStore = useEnvironmentStore();
-        environmentStore.appStatus = app_status; // eslint-disable-line
-        environmentStore.buildId = build_id; // eslint-disable-line
+        environmentStore.appStatus = localSettings.app_status; // eslint-disable-line
+        environmentStore.buildId = localSettings.build_id; // eslint-disable-line
 
-        // eslint-disable-next-line no-undef
+        // @ts-ignore - cape extensions comes from the consuming application
         if (typeof cape_extensions !== 'undefined' && cape_extensions && Object.prototype.hasOwnProperty.call(cape_extensions, 'components')) {
-            // eslint-disable-next-line no-undef
+            // @ts-ignore - cape extensions comes from the consuming application
             const extensionIds = Object.keys( cape_extensions["components"] );
             extensionIds.forEach(componentId => {
-                // eslint-disable-next-line no-undef
+                // @ts-ignore - cape extensions comes from the consuming application
                 app.component(componentId, cape_extensions["components"][componentId] );
             });
         }

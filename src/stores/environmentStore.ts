@@ -7,7 +7,7 @@ export const useEnvironmentStore = defineStore("environment", {
     state: () => (
         { 
             appStatus: '', 
-            buildId: 0, 
+            buildId: '0', 
             dataLocation: '' 
         })
 });
