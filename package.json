@@ -5,7 +5,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "npx playwright test"
+    "test-e2e": "npx playwright test",
+    "test": "vitest"
   },
   "dependencies": {
     "@playwright/test": "^1.28.1",
@@ -30,7 +31,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^8.17.0",
-    "eslint-plugin-vue": "^9.1.1"
+    "eslint-plugin-vue": "^9.1.1",
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "> 1%",
