@@ -30,7 +30,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^8.17.0",
-    "eslint-plugin-vue": "^9.1.1"
+    "eslint-plugin-vue": "^9.1.1",
+    "vitest": "^0.34.6"
   },
   "browserslist": [
     "> 1%",
