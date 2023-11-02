@@ -8,4 +8,4 @@ Run the website from a command console:
 Run the tests from a second command console:
 
 - `cd [project root]`
-- `npm run test`
+- `npm run test-e2e`
