@@ -1,3 +1,4 @@
+import { flattenDiacritics } from '@/utils/flattenDiacritics.js';
 import {CapeTools} from '../utils/CapeTools.js'
 import {Filter} from "./Filter.js";
 
@@ -6,12 +7,14 @@ export class FreeTextFilter extends Filter {
     matchesRecord(record) {
         // check that all the terms are found in the record
 
-        const terms = this.state.term.toLowerCase().split(/\s+/);
+        const flattenedTerms = flattenDiacritics(this.state.term);
+        const terms = flattenedTerms.toLowerCase().split(/\s+/);
 
         for (let i = 0; i < terms.length; i++) {
             const term = CapeTools.make_pattern(terms[i]);
             let term_found = false;
             const fieldnames = Object.keys(record);
+            
             fieldnames.forEach((fieldname) => {
                 let values = record[fieldname].value;
                 if (values == undefined) {
@@ -20,8 +23,10 @@ export class FreeTextFilter extends Filter {
                 if (!record[fieldname].field.multiple) {
                     values = [values];
                 }
-                for (let k = 0; k < values.length; k++) {
-                    const value = "" + values[k]; // force it into a string
+                for (let k = 0; k < values.length; k++) {                    
+                    const valueAsString = "" + values[k]; // force it into a string
+                    const value = flattenDiacritics(valueAsString);
+                    
                     if (value.match(term)) {
                         term_found = true;
                         return;

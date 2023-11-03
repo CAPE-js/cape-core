@@ -185,7 +185,27 @@ test.describe('The homepage', () => {
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza bacon");
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(0);
-        });    
+        });
+        
+        test('displays records that match \'creme brulee\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "creme brulee");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record three");    
+        });
+
+        test('displays records that match \'crème brulée\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "crème brulée");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record three");    
+        });
             
     });
     
@@ -560,6 +580,8 @@ test.describe('The homepage', () => {
 
             await homePage.setThreeCharColourMode(ModeOption.IS);
             await homePage.setThreeCharColourToBlu();
+
+            await new Promise(r => setTimeout(r, 500));
 
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
