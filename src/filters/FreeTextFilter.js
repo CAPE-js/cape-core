@@ -43,8 +43,6 @@ export class FreeTextFilter extends Filter {
 
         return true;
     }
-
-
 }
 
     

@@ -581,8 +581,6 @@ test.describe('The homepage', () => {
             await homePage.setThreeCharColourMode(ModeOption.IS);
             await homePage.setThreeCharColourToBlu();
 
-            await new Promise(r => setTimeout(r, 500));
-
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(1);    
         });
