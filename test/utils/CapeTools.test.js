@@ -48,6 +48,27 @@ describe('CapeTools', () => {
             expect(result).toBeNull();
         });
 
+        test('returns a regular expression which matches a single word in a string', () => {
+            const phrase = "The quick brown fox jumps over the lazy dog";
+            const searchTerm = "brown";
+
+            const regex = CapeTools.make_pattern(searchTerm);
+
+            const result = phrase.match(regex);
+
+            expect(result).not.toBeNull();
+        });
+
+        test('returns a regular expression which matches a part of a word in a string', () => {
+            const phrase = "The quick brown fox jumps over the lazy dog";
+            const searchTerm = "azy";
+
+            const regex = CapeTools.make_pattern(searchTerm);
+
+            const result = phrase.match(regex);
+
+            expect(result).not.toBeNull();
+        });
     });   
 });
 
