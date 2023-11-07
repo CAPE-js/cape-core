@@ -205,7 +205,7 @@ export class HomePageObject extends BasePageObject {
 
     // food
     async pickFoodMultiSelectOptions(selectedOptions) {
-        const options = { 'Chips': 0, 'Pizza': 1 };
+        const options = { 'Chips': 0, 'Crème Brûlée': 1, 'Pizza': 2 };
         
         for await (const value of selectedOptions) {
             const index = options[value];
