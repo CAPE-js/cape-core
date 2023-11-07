@@ -185,7 +185,27 @@ test.describe('The homepage', () => {
             await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "pizza bacon");
             const count = await homePage.getSummaryCardCount();
             expect(count).toBe(0);
-        });    
+        });
+        
+        test('displays records that match \'creme brulee\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "creme brulee");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record three");    
+        });
+
+        test('displays records that match \'crème brûlée\'', async () => {        
+            await typeInDebounceTextBox(homePage.freeTextSearchTextBox, "crème brûlée");
+            
+            const count = await homePage.getSummaryCardCount();
+            expect(count).toBe(1);
+    
+            const text = await homePage.getSummaryCardText(0);
+            expect(text).toContain("Record three");    
+        });
             
     });
     
