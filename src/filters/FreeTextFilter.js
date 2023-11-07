@@ -5,7 +5,6 @@ export class FreeTextFilter extends Filter {
 
     matchesRecord(record) {
         // check that all the terms are found in the record
-
         const terms = this.state.term.toLowerCase().split(/\s+/);
 
         for (let i = 0; i < terms.length; i++) {
@@ -33,13 +32,8 @@ export class FreeTextFilter extends Filter {
             if (!term_found) {
                 return false;
             }
-
         }
 
         return true;
     }
-
-
-}
-
-    
+}   
