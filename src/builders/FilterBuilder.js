@@ -1,4 +1,3 @@
-
 // filter factory
 import {TextFilter} from "@/filters/TextFilter";
 import {IntegerFilter} from "@/filters/IntegerFilter";

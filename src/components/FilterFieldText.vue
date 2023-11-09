@@ -1,15 +1,15 @@
 <template>
   <div class="form-row mb-1">
-    <filter-field-label :filter="filter" />
+    <filter-field-label :filter="filter"/>
     <div
-      v-if="filter.change_filter_mode"
-      class="col-sm-2"
+        v-if="filter.change_filter_mode"
+        class="col-sm-2"
     >
       <select
-        :id="'filter-text-mode-'+filter.field.id"
-        v-model.trim="filter.mode"
-        class="form-control form-control-sm"
-        aria-label="Type of filter"
+          :id="'filter-text-mode-'+filter.field.id"
+          v-model.trim="filter.mode"
+          aria-label="Type of filter"
+          class="form-control form-control-sm"
       >
         <option value="is">
           is
@@ -28,12 +28,12 @@
     <div :class="'col-sm-'+num_of_cols_for_main_search_area">
       <template v-if="filter.mode=='is' || filter.mode=='contains'">
         <debounced-input
-          :id="'filter-'+filter.field.id"
-          v-model.trim="filter.term"
-          :type="'text'"
-          :placeholder="filter.placeholder[filter.mode]"
-          class="form-control form-control-sm"
-          label="Filter text"
+            :id="'filter-'+filter.field.id"
+            v-model.trim="filter.term"
+            :placeholder="filter.placeholder[filter.mode]"
+            :type="'text'"
+            class="form-control form-control-sm"
+            label="Filter text"
         />
       </template>
     </div>
@@ -43,15 +43,16 @@
 <script>
 import DebouncedInput from "./DebouncedInput.vue"
 import FilterFieldLabel from "./FilterFieldLabel.vue"
+
 export default {
-    name: "FilterFieldText",
-    components: { DebouncedInput, FilterFieldLabel },
-    props: { filter: { type: Object, default: null } },
-    computed: {
-        num_of_cols_for_main_search_area: function () {
-          return( this.filter.change_filter_mode ? 8 : 10 );
-        }
+  name: "FilterFieldText",
+  components: {DebouncedInput, FilterFieldLabel},
+  props: {filter: {type: Object, default: null}},
+  computed: {
+    num_of_cols_for_main_search_area: function () {
+      return (this.filter.change_filter_mode ? 8 : 10);
     }
+  }
 }
 </script>
 

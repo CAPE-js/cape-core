@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cape-header />
+    <cape-header/>
     <template v-if="siteData.status == 'ERROR'">
       <div class="row content">
         <div class="col">
@@ -19,8 +19,8 @@
           <div class="card bg-primary text-white my-2">
             <div class="card-body text-center">
               <div
-                class="spinner-border"
-                role="status">
+                  class="spinner-border"
+                  role="status">
                 <span class="sr-only">Loading...</span>
               </div>
               <p>Please wait while the data loads.</p>
@@ -98,7 +98,7 @@ export default {
         this.defaultDataset = destinationDataset;
       }
     }
-    this.filterFormState = FilterFormStateBuilder.build( this.defaultDataset);
+    this.filterFormState = FilterFormStateBuilder.build(this.defaultDataset);
   }
 }
 

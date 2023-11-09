@@ -1,68 +1,67 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia';
+import {createApp, defineComponent} from 'vue'
+import {createPinia} from 'pinia';
 import App from './App.vue'
 
-import { createRouter, createWebHashHistory } from 'vue-router';
-import { defineComponent } from 'vue'
+import {createRouter, createWebHashHistory} from 'vue-router';
 import jQuery from 'jquery'
-import { CapeTools } from './utils/CapeTools.js'
+import {CapeTools} from './utils/CapeTools.js'
 
 import HomePage from './components/HomePage.vue'
 import RecordPage from './components/RecordPage.vue'
 import FieldsTable from './components/FieldsTable.vue'
-import { useEnvironmentStore } from './stores/environmentStore';
+import {useEnvironmentStore} from './stores/environmentStore';
 
-fetch( data_location ) // eslint-disable-line
-    .then( response => response.json() ) 
-    .then( response => { 
+fetch(data_location) // eslint-disable-line
+    .then(response => response.json())
+    .then(response => {
 
-        let pages = [ 'data' ];
-        if( Object.prototype.hasOwnProperty.call( response.datasets[0]['config'], 'extra_pages' ) ) {
-            pages = pages.concat( response.datasets[0]['config']['extra_pages'] );
+        let pages = ['data'];
+        if (Object.prototype.hasOwnProperty.call(response.datasets[0]['config'], 'extra_pages')) {
+            pages = pages.concat(response.datasets[0]['config']['extra_pages']);
         }
 
         let routes = [
-            {name: 'root',   path: '/',                     component: HomePage},
-            {name: 'record', path: '/record/:id',           component: RecordPage},
+            {name: 'root', path: '/', component: HomePage},
+            {name: 'record', path: '/record/:id', component: RecordPage},
             {name: 'browse', path: '/browse/:field/:value', component: HomePage},
         ];
-        pages.forEach( pageId => {
+        pages.forEach(pageId => {
             let templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
             // eslint-disable-next-line
-            let component = defineComponent( {
+            let component = defineComponent({
                 name: pageId + "-page",
-                components: { FieldsTable },
+                components: {FieldsTable},
                 data: function () {
                     let data = {};
                     data.dataset = this.$root.defaultDataset;
                     return data;
                 },
                 methods: {
-                    downloadJSON: function() {
-                        let filename = this.dataset.config.id+".json";
-                        CapeTools.download( filename, JSON.stringify(this.dataset.raw_records), "application/json" );
+                    downloadJSON: function () {
+                        let filename = this.dataset.config.id + ".json";
+                        CapeTools.download(filename, JSON.stringify(this.dataset.raw_records), "application/json");
                     },
-                    downloadCSV: function() {
-                        let table = CapeTools.records_to_table( this.dataset.config.fields, this.dataset.records );
-                        let csv = CapeTools.table_to_csv( table );
-                        let filename = this.dataset.config.id+".csv";
-                        CapeTools.download( filename, csv, "text/csv;charset=utf-8" );
+                    downloadCSV: function () {
+                        let table = CapeTools.records_to_table(this.dataset.config.fields, this.dataset.records);
+                        let csv = CapeTools.table_to_csv(table);
+                        let filename = this.dataset.config.id + ".csv";
+                        CapeTools.download(filename, csv, "text/csv;charset=utf-8");
                     }
-                }, 
-                template: "#"+templateId
+                },
+                template: "#" + templateId
             });
-            routes.push( { name: pageId, path: '/'+pageId, component: component } );
+            routes.push({name: pageId, path: '/' + pageId, component: component});
         });
-            
-        let capeRouter = createRouter({ 
-            routes: routes, 
-            history: createWebHashHistory(), 
-            linkActiveClass: 'active', 
-            linkExactActiveClass: 'active' 
+
+        let capeRouter = createRouter({
+            routes: routes,
+            history: createWebHashHistory(),
+            linkActiveClass: 'active',
+            linkExactActiveClass: 'active'
         });
-        
+
         capeRouter.afterEach((to, from) => {
-            if( from.name !== null ) {
+            if (from.name !== null) {
                 // coming from an existing route, rather than a first time page load
                 let content_vertical_offset = jQuery("#app").offset().top;
                 jQuery('html,body').scrollTop(content_vertical_offset);
@@ -71,7 +70,7 @@ fetch( data_location ) // eslint-disable-line
 
         // pinia is a framework used for managing global state.
         const pinia = createPinia();
-        const app = createApp(App, { siteData: response }); // eslint-disable-line
+        const app = createApp(App, {siteData: response}); // eslint-disable-line
 
         app.use(capeRouter);
         app.use(pinia);
@@ -84,10 +83,10 @@ fetch( data_location ) // eslint-disable-line
         // eslint-disable-next-line no-undef
         if (typeof cape_extensions !== 'undefined' && cape_extensions && Object.prototype.hasOwnProperty.call(cape_extensions, 'components')) {
             // eslint-disable-next-line no-undef
-            const extensionIds = Object.keys( cape_extensions["components"] );
+            const extensionIds = Object.keys(cape_extensions["components"]);
             extensionIds.forEach(componentId => {
                 // eslint-disable-next-line no-undef
-                app.component(componentId, cape_extensions["components"][componentId] );
+                app.component(componentId, cape_extensions["components"][componentId]);
             });
         }
 

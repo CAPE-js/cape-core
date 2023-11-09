@@ -5,19 +5,19 @@
       <div class="col text-right">
         <div>
           <button
-            id="new-search-top"
-            class="btn btn-sm btn-secondary "
-            @click="resetFilters"
+              id="new-search-top"
+              class="btn btn-sm btn-secondary "
+              @click="resetFilters"
           >
             New search
           </button>
         </div>
         <div class="switch switch-sm mb-3 mt-3">
           <input
-            id="show-all-filters-top"
-            v-model="filterFormState.show_all_filters"
-            type="checkbox"
-            class="switch"
+              id="show-all-filters-top"
+              v-model="filterFormState.show_all_filters"
+              class="switch"
+              type="checkbox"
           >
           <label for="show-all-filters-top">Advanced search</label>
         </div>
@@ -36,28 +36,28 @@
         </div>
         <div class="col-sm-4">
           <select
-            id="order-key"
-            key="sort_field"
-            v-model="filterFormState.sort_field"
-            style="width:auto; display: inline-block"
-            class="form-control form-control-sm"
-            aria-label="Order field"
+              id="order-key"
+              key="sort_field"
+              v-model="filterFormState.sort_field"
+              aria-label="Order field"
+              class="form-control form-control-sm"
+              style="width:auto; display: inline-block"
           >
             <option
-              v-for="field in filterFormState.sort_fields"
-              :key="field"
-              :value="field.id"
+                v-for="field in filterFormState.sort_fields"
+                :key="field"
+                :value="field.id"
             >
               {{ field.label }}
             </option>
           </select>
           <select
-            id="order-direction"
-            key="sort_dir"
-            v-model="filterFormState.sort_dir"
-            style="width:auto; display: inline-block"
-            class="form-control form-control-sm"
-            aria-label="Order direction"
+              id="order-direction"
+              key="sort_dir"
+              v-model="filterFormState.sort_dir"
+              aria-label="Order direction"
+              class="form-control form-control-sm"
+              style="width:auto; display: inline-block"
           >
             <option value="asc">
               Ascending
@@ -68,24 +68,24 @@
           </select>
         </div>
         <div
-          v-if="filterFormState.show_all_filters"
-          class="col-sm-6 text-sm-right"
+            v-if="filterFormState.show_all_filters"
+            class="col-sm-6 text-sm-right"
         >
           <div>
             <button
-              id="new-search-bottom"  
-              class="btn btn-sm btn-secondary "
-              @click="resetFilters"
+                id="new-search-bottom"
+                class="btn btn-sm btn-secondary "
+                @click="resetFilters"
             >
               New search
             </button>
           </div>
           <div class="switch switch-sm mb-3 mt-3">
             <input
-              id="show-all-filters-bottom"
-              v-model="filterFormState.show_all_filters"
-              type="checkbox"
-              class="switch"
+                id="show-all-filters-bottom"
+                v-model="filterFormState.show_all_filters"
+                class="switch"
+                type="checkbox"
             >
             <label for="show-all-filters-bottom">Advanced search</label>
           </div>
@@ -94,15 +94,15 @@
       <div class="row mb-1">
         <div class="col">
           <cape-results
-            :options="filterFormState"
-            :results="filteredAndSortedResults"
+              :options="filterFormState"
+              :results="filteredAndSortedResults"
           />
         </div>
       </div>
     </template>
     <div
-      v-else
-      class="row"
+        v-else
+        class="row"
     >
       <div class="col">
         <div class="card">
@@ -230,7 +230,7 @@ export default {
       this.dataset.records.forEach((record) => {
         // iterate over each active filter
         let all_match = true;
-        active_filters.forEach( (filterFormState)=>{
+        active_filters.forEach((filterFormState) => {
           const filter = FilterBuilder.build(filterFormState);
           if (!filter.matchesRecord(record)) {
             all_match = false;

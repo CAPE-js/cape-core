@@ -1,41 +1,39 @@
-
-
 // utility functions
 export class CapeTools {
 
     static is_object(value) {
         return value && typeof value === 'object' && value.constructor === Object;
     }
-    
+
     // this can take a dataset or a vue component with the same properties
-    static records_to_table( fields, records ) {
+    static records_to_table(fields, records) {
         let table = [[]];
-        
-        for( let i=0; i<fields.length; ++i ) {
-            table[0].push( fields[i].id );
+
+        for (let i = 0; i < fields.length; ++i) {
+            table[0].push(fields[i].id);
         }
-        for( let i=0; i<records.length; ++i ) {
+        for (let i = 0; i < records.length; ++i) {
             let record = records[i];
             let row = [];
-            for( let j=0; j<fields.length; ++j ) {
+            for (let j = 0; j < fields.length; ++j) {
                 let field = fields[j];
                 let v = record[field.id].value;
-                if( field.multiple && v!=null ) {
-                    v = v.join( "; " );
+                if (field.multiple && v != null) {
+                    v = v.join("; ");
                 }
-                row.push( v );
+                row.push(v);
             }
-            table.push( row );
+            table.push(row);
         }
         return table;
     }
 
 
-    static table_to_csv( table ) {
-        let csv_rows = table.map( (row) => {
-            let csv_cells = row.map( (cell) => {
+    static table_to_csv(table) {
+        let csv_rows = table.map((row) => {
+            let csv_cells = row.map((cell) => {
                 let csv_cell = '';
-                if( cell !== null && cell !== undefined) {
+                if (cell !== null && cell !== undefined) {
                     if (cell instanceof Date) {
                         csv_cell = cell.toLocaleString();
                     } else {
@@ -44,19 +42,18 @@ export class CapeTools {
                 }
                 return csv_cell.replace(/"/g, '""').replace(/\r\n/g, "\n");
             });
-            return '"'+csv_cells.join( "\",\"" )+"\"\n";
+            return '"' + csv_cells.join("\",\"") + "\"\n";
         });
-        return csv_rows.join( '' );
+        return csv_rows.join('');
     }
-    
+
     /* this function creates a download of a file with a given filename and mimetype. */
     static download(filename, data, mimetype) {
         // create a blob starting with a utf8 BOM (you did want utf-8, right)
-        let blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]),data], {type: mimetype});
-        if(window.navigator.msSaveOrOpenBlob) {
+        let blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), data], {type: mimetype});
+        if (window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveBlob(blob, filename);
-        }
-        else {
+        } else {
             let elem = window.document.createElement('a');
             elem.href = window.URL.createObjectURL(blob);
             elem.download = filename;
@@ -65,9 +62,8 @@ export class CapeTools {
             document.body.removeChild(elem);
         }
     }
-    
-    
-    
+
+
     /**
      * Creates a RegExp that matches the words in the search string.
      * Case and accent insensitive.
@@ -102,17 +98,17 @@ export class CapeTools {
             'Y': '[Yy\xdd\xfd\xff\u0176-\u0178\u0232\u0233\u02b8\u1e8e\u1e8f\u1e99\u1ef2-\u1ef9\u24b4\u24ce\u24e8\u33c9\uff39\uff59]',
             'Z': '[Zz\u0179-\u017e\u01f1-\u01f3\u1dbb\u1e90-\u1e95\u2124\u2128\u24b5\u24cf\u24e9\u3390-\u3394\uff3a\uff5a]'
         };
-    
+
         // escape meta characters
-        search_string = search_string.replace(/([|()[{.+*?^$\\])/g,"\\$1");
-    
+        search_string = search_string.replace(/([|()[{.+*?^$\\])/g, "\\$1");
+
         // replace characters by their compositors
-        let accent_replacer = function(chr) {
+        let accent_replacer = function (chr) {
             return accented[chr.toUpperCase()] || chr;
         }
-        search_string = search_string.replace(/\S/g,accent_replacer);
-    
-        return new RegExp(search_string,'g');
+        search_string = search_string.replace(/\S/g, accent_replacer);
+
+        return new RegExp(search_string, 'g');
     }
-    
+
 } 

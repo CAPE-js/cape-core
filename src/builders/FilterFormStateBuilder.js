@@ -41,7 +41,7 @@ export class FilterFormStateBuilder {
 
 
         // expand sort field names into actual field objects for MVC
-        dataset.config.sort.forEach((fieldname)=>{
+        dataset.config.sort.forEach((fieldname) => {
             const field = dataset.fields_by_id[fieldname];
             filterFormState.sort_fields.push(field);
         })

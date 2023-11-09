@@ -1,5 +1,5 @@
 import {Dataset} from "@/models/Dataset";
-import { distinct, caseInsensitiveLocalComparer, notEmptyOrNull } from "@/utils/collectionUtils";
+import {caseInsensitiveLocalComparer, distinct, notEmptyOrNull} from "@/utils/collectionUtils";
 
 export class DatasetBuilder {
 
@@ -90,11 +90,11 @@ export class DatasetBuilder {
     // sets the field.options value to a distinct set of values from that field.
     static #setEnumFieldOptions(sourceDataset, field) {
         field.options = sourceDataset.records
-                        .map(record => record[field.id])
-                        .flat()
-                        .filter(notEmptyOrNull)
-                        .filter(distinct)
-                        .sort(caseInsensitiveLocalComparer);
+            .map(record => record[field.id])
+            .flat()
+            .filter(notEmptyOrNull)
+            .filter(distinct)
+            .sort(caseInsensitiveLocalComparer);
     }
 
 }

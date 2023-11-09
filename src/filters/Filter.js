@@ -1,11 +1,12 @@
-import { CapeTools } from '../utils/CapeTools.js'
+import {CapeTools} from '../utils/CapeTools.js'
+
 /*
  *  Filter
  *  abstract base class, should not be instantiated directly
  */
 export class Filter {
 
-    constructor( state ) {
+    constructor(state) {
         this.state = state;
     }
 
@@ -22,32 +23,32 @@ export class Filter {
 
     matchesValuesContains(values) {
         // check that all the terms are found in the record
-        
+
         const terms = this.state.term.toLowerCase().split(/\s+/);
-    
+
         for (let i = 0; i < terms.length; i++) {
             const term = CapeTools.make_pattern(terms[i]);
             let term_found = false;
             for (let j = 0; j < values.length; j++) {
-                if (values[j].match( term ) ) {
+                if (values[j].match(term)) {
                     term_found = true;
                     break;
                 }
             }
-    
+
             // has to match all terms
             if (!term_found) {
                 return false;
             }
-    
+
         }
-    
+
         return true;
     }
 
     matchesValuesSet(values) {
         for (let j = 0; j < values.length; j++) {
-            if( values[j] !== null && values[j] !== "" ) {
+            if (values[j] !== null && values[j] !== "") {
                 return true;
             }
         }
@@ -55,30 +56,32 @@ export class Filter {
     }
 
     matchesValuesNotSet(values) {
-        return ! this.matchesValuesSet(values);
+        return !this.matchesValuesSet(values);
     }
-    
+
     matchesRecord(record) {
         /* Assumes that the filter is set */
-        
+
         let values = record[this.state.field.id].value;
-        if ( values === null || (this.state.field.multiple && values.length==0) ) {
+        if (values === null || (this.state.field.multiple && values.length == 0)) {
             // special case for not-set where not matching is a success
-            if( this.state.mode=="not-set" ) { return true; }
+            if (this.state.mode == "not-set") {
+                return true;
+            }
             return false;
         }
-    
+
         // to simplify things always work with arrays.
         if (!this.state.field.multiple) {
             values = [values];
         }
-    
-        return this.matchesValues( values );
+
+        return this.matchesValues(values);
     }
-    
+
     matchesValues(values) {
-        console.log( "matchesValues must be overridden!");
-        console.log( values );
+        console.log("matchesValues must be overridden!");
+        console.log(values);
         return false;
     }
 }
