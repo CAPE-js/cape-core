@@ -1,9 +1,9 @@
 <template>
   <div id="results">
     <div
-        v-if="results.length == 0"
-        id="cape-no-matching-results"
-        class="card mb-1"
+      v-if="results.length == 0"
+      id="cape-no-matching-results"
+      class="card mb-1"
     >
       <div class="card-body">
         No records match your filter terms.
@@ -12,23 +12,23 @@
 
     <div v-else>
       <results-summary
-          :options="options"
-          :results="results"
-          :visible-records-count="visible_records.length"
-          name="top"
+        :options="options"
+        :results="results"
+        :visible-records-count="visible_records.length"
+        name="top"
       />
       <div
-          v-for="record in visible_records"
-          :key="record"
+        v-for="record in visible_records"
+        :key="record"
       >
         <summary-card :record="record"/>
       </div>
       <div class="cape-floating-summary">
         <results-summary
-            :options="options"
-            :results="results"
-            :visible-records-count="visible_records.length"
-            name="floating"
+          :options="options"
+          :results="results"
+          :visible-records-count="visible_records.length"
+          name="floating"
         />
       </div>
     </div>
@@ -37,19 +37,19 @@
 
 
 <script>
-import ResultsSummary from "./ResultsSummary.vue";
-import SummaryCard from "./SummaryCard.vue";
+import ResultsSummary from './ResultsSummary.vue'
+import SummaryCard from './SummaryCard.vue'
 
 export default {
-  name: "CapeResults",
-  components: {ResultsSummary, SummaryCard},
-  props: {options: {type: Object, default: null}, results: {type: Array, default: () => []}},
+  name: 'CapeResults',
+  components: { ResultsSummary, SummaryCard },
+  props: { options: { type: Object, default: null }, results: { type: Array, default: () => [] } },
   computed: {
     visible_records: function () {
       if (this.options.show_all_results) {
-        return this.results;
+        return this.results
       } else {
-        return this.results.slice(0, 50);
+        return this.results.slice(0, 50)
       }
     }
   }

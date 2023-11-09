@@ -1,28 +1,28 @@
 <template>
   <div class="cape-filter-form">
     <div
-        v-for="filter in filters"
-        :key="filter.field.id"
+      v-for="filter in filters"
+      :key="filter.field.id"
     >
       <filter-field-text
-          v-if="filter.field.type=='text'"
-          :filter="filter"
+        v-if="filter.field.type=='text'"
+        :filter="filter"
       />
       <filter-field-integer
-          v-else-if="filter.field.type=='integer'"
-          :filter="filter"
+        v-else-if="filter.field.type=='integer'"
+        :filter="filter"
       />
       <filter-field-date
-          v-else-if="filter.field.type=='date'"
-          :filter="filter"
+        v-else-if="filter.field.type=='date'"
+        :filter="filter"
       />
       <filter-field-enum
-          v-else-if="filter.field.type=='enum'"
-          :filter="filter"
+        v-else-if="filter.field.type=='enum'"
+        :filter="filter"
       />
       <filter-field-freetext
-          v-else-if="filter.field.type=='freetext'"
-          :filter="filter"
+        v-else-if="filter.field.type=='freetext'"
+        :filter="filter"
       />
       <template v-else>
         <div class="col-sm-10">

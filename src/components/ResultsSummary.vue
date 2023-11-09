@@ -4,23 +4,23 @@
       <div class="card-body">
         <div>
           <div
-              v-if="visibleRecordsCount==results.length"
-              class="cape-record-count"
+            v-if="visibleRecordsCount==results.length"
+            class="cape-record-count"
           >
             Showing all {{ visibleRecordsCount }} matching records.
           </div>
           <div
-              v-else
-              class="cape-record-count"
+            v-else
+            class="cape-record-count"
           >
             Showing first {{ visibleRecordsCount }} of {{ results.length }} matching records.
           </div>
           <div class="switch switch-sm">
             <input
-                :id="id"
-                v-model="options.show_all_results"
-                class="switch"
-                type="checkbox"
+              :id="id"
+              v-model="options.show_all_results"
+              class="switch"
+              type="checkbox"
             >
             <label :for="id">Show all matches</label>
           </div>

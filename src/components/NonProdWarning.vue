@@ -1,8 +1,8 @@
 <template>
   <div
-      v-if="showWarning"
-      id="non-prod-warning"
-      class="row content"
+    v-if="showWarning"
+    id="non-prod-warning"
+    class="row content"
   >
     <div class="col">
       <div class="card bg-warning my-2">
@@ -12,12 +12,12 @@
           }}</em>.
         </div>
         <span
-            aria-label="Close"
-            class="cape-dismissable"
-            tabindex="0"
-            title="Hide this message"
-            @click="close"
-            @keyup.enter="close"
+          aria-label="Close"
+          class="cape-dismissable"
+          tabindex="0"
+          title="Hide this message"
+          @click="close"
+          @keyup.enter="close"
         >x</span>
       </div>
     </div>

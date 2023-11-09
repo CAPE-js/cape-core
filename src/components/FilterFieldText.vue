@@ -2,14 +2,14 @@
   <div class="form-row mb-1">
     <filter-field-label :filter="filter"/>
     <div
-        v-if="filter.change_filter_mode"
-        class="col-sm-2"
+      v-if="filter.change_filter_mode"
+      class="col-sm-2"
     >
       <select
-          :id="'filter-text-mode-'+filter.field.id"
-          v-model.trim="filter.mode"
-          aria-label="Type of filter"
-          class="form-control form-control-sm"
+        :id="'filter-text-mode-'+filter.field.id"
+        v-model.trim="filter.mode"
+        aria-label="Type of filter"
+        class="form-control form-control-sm"
       >
         <option value="is">
           is
@@ -28,12 +28,12 @@
     <div :class="'col-sm-'+num_of_cols_for_main_search_area">
       <template v-if="filter.mode=='is' || filter.mode=='contains'">
         <debounced-input
-            :id="'filter-'+filter.field.id"
-            v-model.trim="filter.term"
-            :placeholder="filter.placeholder[filter.mode]"
-            :type="'text'"
-            class="form-control form-control-sm"
-            label="Filter text"
+          :id="'filter-'+filter.field.id"
+          v-model.trim="filter.term"
+          :placeholder="filter.placeholder[filter.mode]"
+          :type="'text'"
+          class="form-control form-control-sm"
+          label="Filter text"
         />
       </template>
     </div>

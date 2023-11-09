@@ -2,14 +2,14 @@
   <div class="form-row mb-1">
     <filter-field-label :filter="filter"/>
     <div
-        v-if="filter.change_filter_mode"
-        class="col-sm-2"
+      v-if="filter.change_filter_mode"
+      class="col-sm-2"
     >
       <select
-          :id="'filter-mode-'+filter.field.id"
-          v-model.trim="filter.mode"
-          aria-label="Type of number filter"
-          class="form-control form-control-sm"
+        :id="'filter-mode-'+filter.field.id"
+        v-model.trim="filter.mode"
+        aria-label="Type of number filter"
+        class="form-control form-control-sm"
       >
         <option value="is">
           is
@@ -28,40 +28,40 @@
     <div :class="'col-sm-'+num_of_cols_for_main_search_area">
       <template v-if="filter.mode=='is'">
         <debounced-input
-            :id="'filter-'+filter.field.id"
-            v-model.trim="filter.term"
-            :max="filter.field.max"
-            :min="filter.field.min"
-            :placeholder="filter.placeholder.is"
-            :step="filter.field.step"
-            :type="'number'"
-            class="form-control form-control-sm"
-            label="Number to filter"
+          :id="'filter-'+filter.field.id"
+          v-model.trim="filter.term"
+          :max="filter.field.max"
+          :min="filter.field.min"
+          :placeholder="filter.placeholder.is"
+          :step="filter.field.step"
+          :type="'number'"
+          class="form-control form-control-sm"
+          label="Number to filter"
         />
       </template>
       <template v-if="filter.mode=='between'">
         <debounced-input
-            :id="'filter-min-'+filter.field.id"
-            v-model.number="filter.term"
-            :max="filter.field.max"
-            :min="filter.field.min"
-            :placeholder="filter.placeholder.between[0]"
-            :step="filter.field.step"
-            :type="'number'"
-            class="form-control form-control-sm cape-between-number-filter"
-            label="Min number from range to filter."
+          :id="'filter-min-'+filter.field.id"
+          v-model.number="filter.term"
+          :max="filter.field.max"
+          :min="filter.field.min"
+          :placeholder="filter.placeholder.between[0]"
+          :step="filter.field.step"
+          :type="'number'"
+          class="form-control form-control-sm cape-between-number-filter"
+          label="Min number from range to filter."
         />
         and
         <debounced-input
-            :id="'filter-max-'+filter.field.id"
-            v-model.number="filter.term2"
-            :max="filter.field.max"
-            :min="filter.field.min"
-            :placeholder="filter.placeholder.between[1]"
-            :step="filter.field.step"
-            :type="'number'"
-            class="form-control form-control-sm cape-between-number-filter"
-            label="Max number from range to filter."
+          :id="'filter-max-'+filter.field.id"
+          v-model.number="filter.term2"
+          :max="filter.field.max"
+          :min="filter.field.min"
+          :placeholder="filter.placeholder.between[1]"
+          :step="filter.field.step"
+          :type="'number'"
+          class="form-control form-control-sm cape-between-number-filter"
+          label="Max number from range to filter."
         />
       </template>
     </div>

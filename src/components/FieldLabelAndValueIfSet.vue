@@ -1,15 +1,15 @@
 <template>
   <div>
     <div
-        v-if="!typedValue"
-        class="cape-error"
+      v-if="!typedValue"
+      class="cape-error"
     >
       [Error, trying to render non-existant field]
     </div>
     <field-label-and-value
-        v-else-if="typedValue.value != '' && typedValue.value != null && !(typeof typedValue.value=='array' && typedValue.value.length==0)"
-        :link-value="linkValue"
-        :typed-value="typedValue"
+      v-else-if="typedValue.value != '' && typedValue.value != null && !(typeof typedValue.value=='array' && typedValue.value.length==0)"
+      :link-value="linkValue"
+      :typed-value="typedValue"
     />
   </div>
 </template>
