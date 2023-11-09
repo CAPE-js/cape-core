@@ -1,39 +1,41 @@
 <template>
-  <div 
-    v-if="showWarning" 
-    id="non-prod-warning"
-    class="row content"    
+  <div
+      v-if="showWarning"
+      id="non-prod-warning"
+      class="row content"
   >
     <div class="col">
       <div class="card bg-warning my-2">
         <div class="card-body text-center">
-          This is a {{ environmentDescription }} instance of this service. It uses the following build: <em>{{ buildId }}</em>.
+          This is a {{ environmentDescription }} instance of this service. It uses the following build: <em>{{
+            buildId
+          }}</em>.
         </div>
-        <span 
-          class="cape-dismissable"
-          title="Hide this message"
-          aria-label="Close"
-          tabindex="0"         
-          @click="close" 
-          @keyup.enter="close"          
+        <span
+            aria-label="Close"
+            class="cape-dismissable"
+            tabindex="0"
+            title="Hide this message"
+            @click="close"
+            @keyup.enter="close"
         >x</span>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 
 <script>
-import { useEnvironmentStore } from '../stores/environmentStore'
-import { mapState } from 'pinia'
+import {useEnvironmentStore} from '../stores/environmentStore'
+import {mapState} from 'pinia'
 
 export default {
 
   data() {
     return {
-        closed: false
-      }
-    },
+      closed: false
+    }
+  },
 
   computed: {
 
@@ -41,9 +43,9 @@ export default {
     ...mapState(useEnvironmentStore, ['appStatus', 'buildId']),
 
     environmentDescription: (store) => {
-      switch(store.appStatus) {
+      switch (store.appStatus) {
         case "dev":
-          return "development";   
+          return "development";
         case "pprd":
           return "pre-production";
         case "test":
@@ -64,10 +66,10 @@ export default {
     }
   }
 
-  
+
 }
 
-  
+
 </script>
 
 <style scoped>

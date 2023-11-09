@@ -1,7 +1,6 @@
-
 <script>
 export default {
-    name: "CapeIntro",
-    template: "#templateIntro"
+  name: "CapeIntro",
+  template: "#templateIntro"
 }
 </script>

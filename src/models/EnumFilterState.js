@@ -6,40 +6,49 @@ export class EnumFilterState extends FilterState {
     default_terms = [];
     default_mode = "one-of";
 
-    constructor( field ) {
-        super( field );
+    constructor(field) {
+        super(field);
 
-        if( field.default_filter_mode !== undefined ) {
-                this.default_mode = this.field['default_filter_mode'];
+        if (field.default_filter_mode !== undefined) {
+            this.default_mode = this.field['default_filter_mode'];
         }
 
-        if( field.default !== undefined ) {
-            this.default_term  = field['default'][0];
+        if (field.default !== undefined) {
+            this.default_term = field['default'][0];
             this.default_terms = [];
-            field['default'].forEach( (term) => { this.default_terms.push( { 'name': term } ); } );
+            field['default'].forEach((term) => {
+                this.default_terms.push({'name': term});
+            });
         }
 
         // prep options just the way multiselect likes them
         // but ugh, this should not live on the field
         this.field.multiselectOptions = [];
-        field.options.forEach( (option) => {  this.field.multiselectOptions.push( { name: option }) })
+        field.options.forEach((option) => {
+            this.field.multiselectOptions.push({name: option})
+        })
 
         this.reset();
     }
 
     isSet() {
-        if( this.mode == "set" || this.mode == "not-set" ) { return true; }
+        if (this.mode == "set" || this.mode == "not-set") {
+            return true;
+        }
         if (this.mode == "is") {
             return this.term != this.default_term;
         } else if (this.mode == "one-of") {
             // this one is the pain. We need to compare the name properties of two unordered object lists
-            const current_terms_code = this.terms.map( item => item["name"] ).sort().join(":");
-            const default_terms_code = this.default_terms.map( item => item["name"] ).sort().join(":");
+            const current_terms_code = this.terms.map(item => item["name"]).sort().join(":");
+            const default_terms_code = this.default_terms.map(item => item["name"]).sort().join(":");
             return current_terms_code != default_terms_code;
         }
     }
+
     isActive() {
-        if( this.isSet() ) { return true; }
+        if (this.isSet()) {
+            return true;
+        }
         if (this.mode == "is") {
             return this.term != '';
         } else if (this.mode == "one-of") {
@@ -48,9 +57,9 @@ export class EnumFilterState extends FilterState {
     }
 
     reset() {
-        this.mode  = this.default_mode;
-        this.term  = this.default_term;
+        this.mode = this.default_mode;
+        this.term = this.default_term;
         // need to ensure it's not the same actual list reference
-        this.terms = this.default_terms.map( item=>item );
+        this.terms = this.default_terms.map(item => item);
     }
 }

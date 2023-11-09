@@ -1,5 +1,3 @@
-
-
 export class Dataset {
 
     config = {}; // the config from the json data
@@ -10,7 +8,6 @@ export class Dataset {
 
     // Notes:
     //  Processed records is a dictionary mapping field id (e.g. author) to an object: { value (e.g. 'David Pepper') , field (field configuration from config.json)
-
 
 
 }
