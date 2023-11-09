@@ -2,14 +2,14 @@
   <div class="form-row mb-1">
     <filter-field-label :filter="filter"/>
     <div
-        v-if="filter.change_filter_mode"
-        class="col-sm-2"
+      v-if="filter.change_filter_mode"
+      class="col-sm-2"
     >
       <select
-          :id="'filter-mode-'+filter.field.id"
-          v-model.trim="filter.mode"
-          aria-label="Type of filter"
-          class="form-control form-control-sm"
+        :id="'filter-mode-'+filter.field.id"
+        v-model.trim="filter.mode"
+        aria-label="Type of filter"
+        class="form-control form-control-sm"
       >
         <option value="is">
           is
@@ -30,52 +30,52 @@
       <template v-if="filter.mode=='is'">
         <div v-if="filterStyle['is'] == 'radio'">
           <div
-              v-for="option in filter.field.options"
-              :key="option"
-              class="form-check form-check-inline"
+            v-for="option in filter.field.options"
+            :key="option"
+            class="form-check form-check-inline"
           >
             <input
-                :id="'filter-'+filter.field.id+'-'+option"
-                v-model="filter.term"
-                :value="option"
-                class="form-check-input"
-                type="radio"
+              :id="'filter-'+filter.field.id+'-'+option"
+              v-model="filter.term"
+              :value="option"
+              class="form-check-input"
+              type="radio"
             >
             <label
-                :for="'filter-'+filter.field.id+'-'+option"
-                class="form-check-label"
+              :for="'filter-'+filter.field.id+'-'+option"
+              class="form-check-label"
             >{{ option }}</label>
           </div>
           <div class="form-check form-check-inline">
             <input
-                :id="'filter-'+filter.field.id+'-'"
-                v-model="filter.term"
-                class="form-check-input"
-                type="radio"
-                value=""
+              :id="'filter-'+filter.field.id+'-'"
+              v-model="filter.term"
+              class="form-check-input"
+              type="radio"
+              value=""
             >
             <label
-                :for="'filter-'+filter.field.id+'-'"
-                class="form-check-label"
+              :for="'filter-'+filter.field.id+'-'"
+              class="form-check-label"
             ><em>any</em></label>
           </div>
         </div>
         <div v-if="filterStyle['is'] == 'select'">
           <select
-              :id="'filter-'+filter.field.id"
-              v-model="filter.term"
-              class="form-control form-control-sm"
+            :id="'filter-'+filter.field.id"
+            v-model="filter.term"
+            class="form-control form-control-sm"
           >
             <option
-                selected="selected"
-                value=""
+              selected="selected"
+              value=""
             >
               Select
             </option>
             <option
-                v-for="option in filter.field.options"
-                :key="option"
-                :value="option"
+              v-for="option in filter.field.options"
+              :key="option"
+              :value="option"
             >
               {{ option }}
             </option>
@@ -86,43 +86,43 @@
       <template v-if="filter.mode=='one-of'">
         <div v-if="filterStyle['one-of'] == 'checkbox'">
           <div
-              v-for="option in filter.field.options"
-              :key="option"
-              class="form-check form-check-inline"
+            v-for="option in filter.field.options"
+            :key="option"
+            class="form-check form-check-inline"
           >
             <input
-                :id="'filter-'+filter.field.id+'-'+option"
-                v-model="filter.terms"
-                :value="{'name':option}"
-                class="form-check-input"
-                type="checkbox"
+              :id="'filter-'+filter.field.id+'-'+option"
+              v-model="filter.terms"
+              :value="{'name':option}"
+              class="form-check-input"
+              type="checkbox"
             >
             <label
-                :for="'filter-'+filter.field.id+'-'+option"
-                class="form-check-label"
+              :for="'filter-'+filter.field.id+'-'+option"
+              class="form-check-label"
             >{{ option }}</label>
           </div>
         </div>
         <div
-            v-if="filterStyle['one-of'] == 'multiselect'"
-            :id="'filter-multiselect-wrapper-' + filter.field.id"
+          v-if="filterStyle['one-of'] == 'multiselect'"
+          :id="'filter-multiselect-wrapper-' + filter.field.id"
         >
           <vue-multiselect
-              :id="'filter-multiselect-' + filter.field.id"
-              v-model="filter.terms"
-              :clear-on-select="false"
-              :close-on-select="true"
-              :multiple="true"
-              :options="filter.field.multiselectOptions"
-              :preserve-search="true"
-              label="name"
-              placeholder="Select (1 or more)"
-              track-by="name"
+            :id="'filter-multiselect-' + filter.field.id"
+            v-model="filter.terms"
+            :clear-on-select="false"
+            :close-on-select="true"
+            :multiple="true"
+            :options="filter.field.multiselectOptions"
+            :preserve-search="true"
+            label="name"
+            placeholder="Select (1 or more)"
+            track-by="name"
           >
             <template #tag="{ option, remove }">
               <span class="custom__tag"><span>{{ option.name }}</span><span
-                  class="custom__remove"
-                  @click="remove(option)"
+                class="custom__remove"
+                @click="remove(option)"
               >❌</span></span>
             </template>
           </vue-multiselect>

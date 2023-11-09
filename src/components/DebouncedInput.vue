@@ -1,7 +1,7 @@
 <template>
   <input
-      :aria-label="label"
-      @input="debounceInput"
+    :aria-label="label"
+    @input="debounceInput"
   >
 </template>
 

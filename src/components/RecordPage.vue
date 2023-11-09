@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col">
         <index-card
-            v-if="dataset.records_by_id[ $route.params.id ]"
-            :record="dataset.records_by_id[ $route.params.id ]"
+          v-if="dataset.records_by_id[ $route.params.id ]"
+          :record="dataset.records_by_id[ $route.params.id ]"
         />
         <no-record v-else/>
       </div>
