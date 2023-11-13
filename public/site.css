@@ -11,7 +11,7 @@ h2 {
 }
 
 a {
-    color: #0263ca;    
+    color: #0056b3;    
 }
 
 p a {
@@ -141,3 +141,7 @@ header h1 {
 
 /* end force switch to be more blue */
 
+/* fix adjacent form controls */
+.form-control ~ .form-control {
+    margin-left: 0.5em;
+}
