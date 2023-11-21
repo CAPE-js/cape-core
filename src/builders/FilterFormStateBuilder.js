@@ -12,9 +12,9 @@ export class FilterFormStateBuilder {
       description: 'Search for terms anywhere in the record'
     })
     filterFormState.filters.push(freetextFilter)
-    const field_ids = Object.keys(dataset.fields_by_id)
+    const fieldIds = Object.keys(dataset.fields_by_id)
     // make default options implicit
-    field_ids.forEach((fieldId) => {
+    fieldIds.forEach((fieldId) => {
       const field = dataset.fields_by_id[fieldId]
       if (field.filter === undefined) {
         field.filter = true
@@ -22,7 +22,7 @@ export class FilterFormStateBuilder {
     })
 
     // iterate over fields and make filter per field - add to filterState
-    field_ids.forEach((fieldId) => {
+    fieldIds.forEach((fieldId) => {
       const field = dataset.fields_by_id[fieldId]
       // don't include filter if it is set to false (undefined equates to true)
       // refactor?
