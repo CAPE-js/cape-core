@@ -53,7 +53,7 @@ describe('FreeTextFilter', () => {
       expect(freeTextFilter.matchesRecord(record)).toEqual(true)
     })
 
-    test('when the record contains the search terms spread over several multiple fields: return true', () => {
+    test('when all the search terms are present but not in the same field: return true', () => {
       const record = {
         title: { field: { multiple: true }, value: ['fish', 'hatstand', 'The quick brown'] },
         description: { field: { multiple: true }, value: ['Jumped over'] },
