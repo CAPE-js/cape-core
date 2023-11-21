@@ -6,7 +6,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test-e2e": "npx playwright test",
-    "test": "vitest"
+    "test": "vitest",
+    "standard": "npx standard"
   },
   "dependencies": {
     "@playwright/test": "^1.28.1",
