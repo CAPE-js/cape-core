@@ -1,5 +1,5 @@
 import { CapeTools } from '../../src/utils/CapeTools'
-import { expect, test } from 'vitest'
+import { expect, describe, test } from 'vitest'
 
 describe('CapeTools', () => {
   describe('make_pattern', () => {
