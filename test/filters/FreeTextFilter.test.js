@@ -35,7 +35,7 @@ describe('FreeTextFilter', () => {
       const record = {
         title: { field: {}, value: 'The quick brown' },
         description: { field: {}, value: 'Jumped over' },
-        comment: { field: {}, value: 'The lazy black dog' },
+        comment: { field: {}, value: 'The lazy black dog' }
       }
       const freeTextFilter = new FreeTextFilter({ term: 'quick over cat' })
 
@@ -64,56 +64,22 @@ describe('FreeTextFilter', () => {
       expect(freeTextFilter.matchesRecord(record)).toEqual(true)
     })
 
-    test('when the record contains a null value for a field, but otherwise the terms match: return true', () => {
+    test('when the record has properties that are not {field,value} objects: ignore these properties', () => {
       const record = {
         title: { field: {}, value: 'The quick brown' },
         description: { field: {}, value: 'Jumped over' },
         comment: { field: {}, value: 'The lazy black dog' },
-        missing: null
+        next: undefined,
+        prev: 23,
+        noField: { value: 'Mystery time' },
+        noValue: { field: {} },
+        emptyObject: {},
+        nullValue: null,
+        arrayValue: [1,2,3]
       }
-      const freeTextFilter = new FreeTextFilter({ term: 'quick over dog' })
+      const freeTextFilter = new FreeTextFilter({ term: 'Mystery' })
 
-      expect(freeTextFilter.matchesRecord(record)).toEqual(true)
+      expect(freeTextFilter.matchesRecord(record)).toEqual(false)
     })
   })
 })
-
-/*
-
-export class FreeTextFilter extends Filter {
-  matchesRecord (record) {
-    // check that all the terms are found in the record
-    const terms = this.state.term.toLowerCase().split(/\s+/)
-
-    for (let i = 0; i < terms.length; i++) {
-      const term = CapeTools.make_pattern(terms[i])
-      let termFound = false
-      const fieldNames = Object.keys(record)
-      fieldNames.forEach((fieldName) => {
-        let values = record[fieldName].value
-        if (values === undefined) {
-          return
-        }
-        if (!record[fieldName].field.multiple) {
-          values = [values]
-        }
-        for (let k = 0; k < values.length; k++) {
-          const value = '' + values[k] // force it into a string
-          if (value.match(term)) {
-            termFound = true
-            return
-          }
-        }
-      })
-
-      // has to match all terms
-      if (!termFound) {
-        return false
-      }
-    }
-
-    return true
-  }
-}
-
- */
