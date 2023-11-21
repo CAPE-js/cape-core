@@ -11,6 +11,12 @@ export class FreeTextFilter extends Filter {
       let termFound = false
       const fieldNames = Object.keys(record)
       fieldNames.forEach((fieldName) => {
+        if (typeof record[fieldName] !== 'object') { return }
+        if (Array.isArray(record[fieldName])) { return }
+        if (record[fieldName] === null) { return }
+        if (!Object.hasOwn(record[fieldName],'field')) { return }
+        if (!Object.hasOwn(record[fieldName],'value')) { return }
+
         let values = record[fieldName].value
         if (values === undefined) {
           return
