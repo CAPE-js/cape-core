@@ -27,7 +27,7 @@ fetch(data_location) // eslint-disable-line
     pages.forEach(pageId => {
       const templateId = 'template' + pageId.charAt(0).toUpperCase() + pageId.slice(1)
       // eslint-disable-next-line
-            let component = defineComponent({
+      let component = defineComponent({
         name: pageId + '-page',
         components: { FieldsTable },
         data: function () {
@@ -69,23 +69,23 @@ fetch(data_location) // eslint-disable-line
 
     // pinia is a framework used for managing global state.
     const pinia = createPinia()
-        const app = createApp(App, {siteData: response}); // eslint-disable-line
+    const app = createApp(App, { siteData: response }) // eslint-disable-line
 
     app.use(capeRouter)
     app.use(pinia)
 
     // read data from local.js and populate the values into the environment store
     const environmentStore = useEnvironmentStore()
-        environmentStore.appStatus = app_status; // eslint-disable-line
-        environmentStore.buildId = build_id; // eslint-disable-line
+    environmentStore.appStatus = app_status // eslint-disable-line
+    environmentStore.buildId = build_id // eslint-disable-line
 
-    // eslint-disable-next-line no-undef
-    if (typeof cape_extensions !== 'undefined' && cape_extensions && Object.prototype.hasOwnProperty.call(cape_extensions, 'components')) {
-      // eslint-disable-next-line no-undef
-      const extensionIds = Object.keys(cape_extensions.components)
+    // add any vue extensions if defined. Remap the variable name for cleaner linting
+    const capeExtensions = cape_extensions // eslint-disable-line
+
+    if (typeof capeExtensions !== 'undefined' && capeExtensions && Object.prototype.hasOwnProperty.call(capeExtensions, 'components')) {
+      const extensionIds = Object.keys(capeExtensions.components)
       extensionIds.forEach(componentId => {
-        // eslint-disable-next-line no-undef
-        app.component(componentId, cape_extensions.components[componentId])
+        app.component(componentId, capeExtensions.components[componentId])
       })
     }
 

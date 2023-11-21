@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+
 // relative path to the data
-// eslint-disable-next-line no-unused-vars
 const data_location = '/site-data.json'
 
 // on preprod and prod this should be
@@ -11,7 +13,6 @@ const data_location = '/site-data.json'
 // and this file should have
 // data_location = "data.json";
 
-// eslint-disable-next-line no-unused-vars
 const app_status = 'dev'
 // app_status='prod'
 // app_status='pprd'
